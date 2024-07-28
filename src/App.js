@@ -1,24 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import axios from 'axios';
+
+import Signup from './Signup';
+import Login from './Login';
+import FirstPage from './FirstPage';
+import PrivateRoute from './PrivateRoute';
+import Mypage from './Mypage';
 
 function App() {
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (accessToken && refreshToken) {
+      axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+      axios.defaults.headers.common['Refresh'] = `${refreshToken}`;
+    }
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/signup' element={<Signup/>} />
+        <Route path='/login' element={<Login/>} />
+        <Route path="/" element={
+          <PrivateRoute>
+            <FirstPage />
+          </PrivateRoute>
+        } />
+        <Route path="/mypage" element={
+          <PrivateRoute>
+            <Mypage />
+          </PrivateRoute>
+        } />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
