@@ -69,10 +69,10 @@ const Login = () => {
             <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="비밀번호를 입력해주세요" required />
             <div class="button-container">
                 <button class="login" type="submit">로그인</button>
+                <Link to = "/signup"><button class="register">회원가입</button></Link>
             </div>
         </div>
     </form>
-    <button class="register"><Link to = "/signup">회원가입</Link></button>
     </>
   );
 };
