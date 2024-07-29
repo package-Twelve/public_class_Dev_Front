@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
-import Signup from './Signup';
-import Login from './Login';
+import Signup from './Users/Signup';
+import Login from './Users/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
-import Mypage from './Mypage';
+import Mypage from './Users/Mypage';
 
 function App() {
   useEffect(() => {
