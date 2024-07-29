@@ -9,6 +9,11 @@ import Login from './Users/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
 import Mypage from './Users/Mypage';
+import CodeReview from "./CodeReview/CodeReview";
+
+function CodeReviewWrite() {
+  return null;
+}
 
 function App() {
   useEffect(() => {
@@ -32,6 +37,16 @@ function App() {
         <Route path="/mypage" element={
           <PrivateRoute>
             <Mypage />
+          </PrivateRoute>
+        } />
+        <Route path="/codereviews" element={
+          <PrivateRoute>
+            <CodeReview />
+          </PrivateRoute>
+        } />
+        <Route path="/codereviews/write" element={
+          <PrivateRoute>
+            <CodeReviewWrite />
           </PrivateRoute>
         } />
       </Routes>
