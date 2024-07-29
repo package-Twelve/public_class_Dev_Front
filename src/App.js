@@ -10,10 +10,7 @@ import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
 import Mypage from './Users/Mypage';
 import CodeReview from "./CodeReview/CodeReview";
-
-function CodeReviewWrite() {
-  return null;
-}
+import CodeReviewWrite from './CodeReview/CodeReviewWrite';
 
 function App() {
   useEffect(() => {
