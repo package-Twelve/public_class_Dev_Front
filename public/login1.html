@@ -1,0 +1,96 @@
+<html><head><base href="https://websim.creation.engine/"><title>Login Page</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+.container {
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+input {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+button {
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    opacity: 0.9;
+}
+.login {
+    background-color: #007bff;
+    color: white;
+}
+.register {
+    background-color: #28a745;
+    color: white;
+}
+.top-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #007bff;
+    padding: 0.5em;
+    display: flex;
+    justify-content: flex-end;
+}
+.top-menu button {
+    margin-left: 0.5em;
+    background-color: white;
+    color: #007bff;
+}
+</style>
+</head>
+<body>
+<div class="top-menu">
+    <button onclick="alert('커뮤니티 기능은 준비 중입니다.')">커뮤니티</button>
+    <button onclick="alert('Code Review 기능은 준비 중입니다.')">Code Review</button>
+    <button onclick="alert('Group 기능은 준비 중입니다.')">Group</button>
+    <button onclick="alert('로그인 기능은 준비 중입니다.')">로그인</button>
+    <button onclick="alert('회원가입 기능은 준비 중입니다.')">회원가입</button>
+</div>
+<div class="container">
+    <h1>login</h1>
+    <input type="email" placeholder="이메일을 입력해주세요" required>
+    <input type="password" placeholder="비밀번호를 입력해주세요" required>
+    <div class="button-container">
+        <button class="login" onclick="alert('로그인 기능은 준비 중입니다.')">로그인</button>
+        <button class="register" onclick="alert('회원가입 기능은 준비 중입니다.')">회원가입</button>
+    </div>
+</div>
+<script>
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('focus', function() {
+        this.style.boxShadow = '0 0 5px rgba(0, 123, 255, 0.5)';
+    });
+    input.addEventListener('blur', function() {
+        this.style.boxShadow = 'none';
+    });
+});
+</script>
+</body></html>
