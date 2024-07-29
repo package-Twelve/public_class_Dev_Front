@@ -9,6 +9,8 @@ import Login from './Users/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
 import Mypage from './Users/Mypage';
+import UpdateMypage from './Users/UpdateMyPage';
+import UpdatePassword from './Users/UpdatePassword';
 
 function App() {
   useEffect(() => {
@@ -32,6 +34,16 @@ function App() {
         <Route path="/mypage" element={
           <PrivateRoute>
             <Mypage />
+          </PrivateRoute>
+        } />
+        <Route path="/mypage/update" element={
+          <PrivateRoute>
+            <UpdateMypage />
+          </PrivateRoute>
+        } />
+        <Route path="/mypage/update/password" element={
+          <PrivateRoute>
+            <UpdatePassword />
           </PrivateRoute>
         } />
       </Routes>
