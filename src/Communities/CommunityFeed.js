@@ -4,11 +4,14 @@ import './Community.css';
 
 function CommunityFeed() {
   const [posts, setPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [popularKeywords, setPopularKeywords] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
 
   const categoryMapping = {
     INFO: '정보',
@@ -20,9 +23,13 @@ function CommunityFeed() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/community', { timeout: 10000 });
-        if (response.data && Array.isArray(response.data.data)) {
-          setPosts(response.data.data);
+        const response = await axios.get('http://localhost:8080/api/community', {
+          timeout: 10000
+        });
+        console.log('Fetched Posts:', response.data);
+        if (response.data && response.data.data) {
+          setAllPosts(response.data.data || []);
+          setPosts(response.data.data || []); // Initialize posts with all data
         } else {
           setError('Unexpected data format received.');
         }
@@ -49,46 +56,39 @@ function CommunityFeed() {
     };
 
     fetchPopularKeywords();
-    const intervalId = setInterval(fetchPopularKeywords, 1800000); // 1800000 ms = 30 minutes
-
+    const intervalId = setInterval(fetchPopularKeywords, 1800000); // 30 minutes
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (!searchTerm.trim()) {
       alert('검색어를 입력해 주세요.');
       return;
     }
 
-    try {
-      setLoading(true);
-      // Convert search term to lowercase
-      const lowercaseSearchTerm = searchTerm.trim().toLowerCase();
-      const response = await axios.get('http://localhost:8080/api/community/search', {
-        params: { keyword: lowercaseSearchTerm }
-      });
-      if (response.data && Array.isArray(response.data.data)) {
-        setPosts(response.data.data);
-      } else {
-        setError('Unexpected data format received.');
-      }
-    } catch (error) {
-      console.error('Error fetching search results:', error);
-      setError('검색 결과를 가져오는 데 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
+    const lowercaseSearchTerm = searchTerm.trim().toLowerCase();
+    const filtered = allPosts.filter(post =>
+        (selectedCategory === 'ALL' || post.category === selectedCategory) &&
+        (post.title.toLowerCase().includes(lowercaseSearchTerm))
+    );
+    setPosts(filtered);
+    setCurrentPage(1); // Reset to page 1 on search
   };
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
+    setCurrentPage(1); // Reset to page 1 when category changes
   };
 
-  // 필터링된 게시글 목록
-  const filteredPosts = posts.filter(post =>
-      (selectedCategory === 'ALL' || post.category === selectedCategory) &&
-      (searchTerm.trim() === '' || post.title.toLowerCase().includes(searchTerm.trim().toLowerCase()))
-  );
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  // Calculate total pages and slice posts for the current page
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const paginatedPosts = posts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -126,8 +126,8 @@ function CommunityFeed() {
           <div className="post-list">
             {loading && <p>Loading...</p>}
             {error && <p className="error-message">{error}</p>}
-            {!loading && !error && filteredPosts.length === 0 && <p>게시글이 없습니다.</p>}
-            {filteredPosts.map((post, index) => (
+            {!loading && !error && paginatedPosts.length === 0 && <p>게시글이 없습니다.</p>}
+            {paginatedPosts.map((post, index) => (
                 <div className="post" key={index} onClick={() => window.location.href = `/community/post/${encodeURIComponent(post.title)}`}>
                   <h3>{post.title}</h3>
                   <p className="post-info">
@@ -137,13 +137,17 @@ function CommunityFeed() {
             ))}
           </div>
           <div className="pagination">
-            <button>이전</button>
-            <button className="active">1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>다음</button>
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>이전</button>
+            {[...Array(totalPages)].map((_, index) => (
+                <button
+                    key={index}
+                    className={currentPage === index + 1 ? 'active' : ''}
+                    onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </button>
+            ))}
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>다음</button>
           </div>
         </div>
         <div className="sidebar">
