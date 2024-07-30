@@ -26,7 +26,6 @@ function CommunityFeed() {
         const response = await axios.get('http://localhost:8080/api/community', {
           timeout: 10000
         });
-        console.log('Fetched Posts:', response.data);
         if (response.data && response.data.data) {
           setAllPosts(response.data.data || []);
           setPosts(response.data.data || []); // Initialize posts with all data
@@ -49,15 +48,22 @@ function CommunityFeed() {
         const response = await axios.get('http://localhost:8080/api/community/searchRank');
         if (response.data && Array.isArray(response.data.data)) {
           setPopularKeywords(response.data.data);
+        } else {
+          console.error('Unexpected data format for popular keywords');
         }
       } catch (error) {
         console.error('인기 검색어를 가져오는 데 실패했습니다:', error.message);
       }
     };
 
+    // Fetch popular keywords initially
     fetchPopularKeywords();
+
+    // Set interval to fetch popular keywords every 3 minutes
     const intervalId = setInterval(fetchPopularKeywords, 180000); // 3 minutes
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleSearch = async () => {
