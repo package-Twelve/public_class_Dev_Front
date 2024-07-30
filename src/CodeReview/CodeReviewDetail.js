@@ -57,7 +57,7 @@ const CodeReviewDetail = () => {
   };
 
   const handleEdit = () => {
-    navigate(`/codereviews/edit/${id}`);
+    navigate(`/codereviews/${id}/edit`); // 리뷰 수정 페이지로 이동
   };
 
   const handleLikeClick = async (commentId) => {
@@ -122,8 +122,6 @@ const CodeReviewDetail = () => {
       setIsSubmitting(false); // 제출 상태를 false로 변경
     }
   };
-
-
 
   const handleCommentDelete = async (commentId) => {
     const confirmed = window.confirm('댓글을 삭제하시겠습니까?');
@@ -211,12 +209,12 @@ const CodeReviewDetail = () => {
                         <span className="comment-name">{comment.name}</span>
                         {editingCommentId === comment.id ? (
                             <div className="edit-comment-container">
-                        <textarea
-                            className="edit-textarea"
-                            value={editedCommentContent}
-                            onChange={(e) => setEditedCommentContent(e.target.value)}
-                            rows="4"
-                        />
+                      <textarea
+                          className="edit-textarea"
+                          value={editedCommentContent}
+                          onChange={(e) => setEditedCommentContent(e.target.value)}
+                          rows="4"
+                      />
                               <div className="edit-comment-buttons">
                                 <button
                                     className="save-comment-button"
@@ -255,9 +253,6 @@ const CodeReviewDetail = () => {
             ) : (
                 <p>댓글이 없습니다.</p>
             )}
-
-
-
 
             <div className="pagination">
               {Array.from(

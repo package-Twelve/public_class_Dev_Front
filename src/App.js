@@ -12,6 +12,7 @@ import Mypage from './Users/Mypage';
 import CodeReview from "./CodeReview/CodeReview";
 import CodeReviewWrite from './CodeReview/CodeReviewWrite';
 import CodeReviewDetail from './CodeReview/CodeReviewDetail';
+import CodeReviewEdit from './CodeReview/CodeReviewEdit';
 
 function App() {
   useEffect(() => {
@@ -23,37 +24,42 @@ function App() {
     }
   }, []);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/signup' element={<Signup/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path="/" element={
-          <PrivateRoute>
-            <FirstPage />
-          </PrivateRoute>
-        } />
-        <Route path="/mypage" element={
-          <PrivateRoute>
-            <Mypage />
-          </PrivateRoute>
-        } />
-        <Route path="/codereviews" element={
-          <PrivateRoute>
-            <CodeReview />
-          </PrivateRoute>
-        } />
-        <Route path="/codereviews/write" element={
-          <PrivateRoute>
-            <CodeReviewWrite />
-          </PrivateRoute>
-        } />
-        <Route path="/codereviews/:id" element={
-          <PrivateRoute>
-            <CodeReviewDetail />
-          </PrivateRoute>
-        } />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/signup' element={<Signup/>} />
+          <Route path='/login' element={<Login/>} />
+          <Route path="/" element={
+            <PrivateRoute>
+              <FirstPage />
+            </PrivateRoute>
+          } />
+          <Route path="/mypage" element={
+            <PrivateRoute>
+              <Mypage />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews" element={
+            <PrivateRoute>
+              <CodeReview />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews/write" element={
+            <PrivateRoute>
+              <CodeReviewWrite />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews/:id" element={
+            <PrivateRoute>
+              <CodeReviewDetail />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews/:id/edit" element={
+            <PrivateRoute>
+              <CodeReviewEdit />
+            </PrivateRoute>
+          } />
+        </Routes>
+      </BrowserRouter>
   );
 }
 

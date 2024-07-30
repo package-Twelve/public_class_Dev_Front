@@ -165,9 +165,9 @@
 }
 
 .form-buttons {
-  margin-top: 30px;
+  margin-top: 10px !important;
   display: flex;
-  justify-content: center; /* 버튼을 중앙으로 정렬 */
+  justify-content: center !important; /* 버튼을 중앙으로 정렬 */
 }
 
 .back-btn {
