@@ -14,15 +14,15 @@ const CodeReview = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCodeReviews(currentPage, searchCategory); // 페이지와 검색 카테고리를 기반으로 데이터를 로드합니다.
-  }, [currentPage, searchCategory]); // currentPage와 searchCategory가 변경될 때마다 데이터 로드
+    fetchCodeReviews(currentPage, searchCategory);
+  }, [currentPage, searchCategory]);
 
   const fetchCodeReviews = async (page, category = '') => {
-    let url = 'http://localhost:8080/api/codereviews'; // 기본 URL
+    let url = 'http://localhost:8080/api/codereviews';
     if (category) {
-      url += `/search?category=${category}&page=${page}`; // 검색 요청 시 URL
+      url += `/search?category=${category}&page=${page}`;
     } else {
-      url += `?page=${page}`; // 페이지 이동 요청 시 URL
+      url += `?page=${page}`;
     }
 
     const accessToken = localStorage.getItem('accessToken');
@@ -38,7 +38,7 @@ const CodeReview = () => {
       setTotalPages(data.totalPages || 1);
       setTotalItems(data.totalItems || 0);
       if (category) {
-        setSearchCategory(category); // 검색 카테고리 설정
+        setSearchCategory(category);
       } else {
         setSearchCategory('');
       }
@@ -48,17 +48,21 @@ const CodeReview = () => {
   };
 
   const handleSearch = () => {
-    setCurrentPage(1); // 검색 시 첫 페이지로 이동
-    fetchCodeReviews(1, searchText); // 검색 시 첫 페이지 데이터 로드
+    setCurrentPage(1);
+    fetchCodeReviews(1, searchText);
   };
 
   const handlePageClick = (page) => {
-    setCurrentPage(page); // 페이지 클릭 시 현재 페이지 상태 업데이트
-    fetchCodeReviews(page, searchCategory); // 페이지 클릭 시 해당 페이지 데이터 로드
+    setCurrentPage(page);
+    fetchCodeReviews(page, searchCategory);
   };
 
   const handleWriteReview = () => {
     navigate('/codereviews/write');
+  };
+
+  const handleItemClick = (id) => {
+    navigate(`/codereviews/${id}`);
   };
 
   return (
@@ -79,7 +83,7 @@ const CodeReview = () => {
                   type="text"
                   placeholder="검색할 카테고리를 태그를 입력해주세요"
                   value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)} // 입력값을 상태에 저장
+                  onChange={(e) => setSearchText(e.target.value)}
               />
               <button className="search-btn" onClick={handleSearch}>
                 검색
@@ -93,7 +97,12 @@ const CodeReview = () => {
             <div className="code-reviews">
               {codeReviews.length > 0 ? (
                   codeReviews.map((review) => (
-                      <div key={review.id} className="code-review-item">
+                      <div
+                          key={review.id}
+                          className="code-review-item"
+                          onClick={() => handleItemClick(review.id)}
+                          style={{ cursor: 'pointer' }}
+                      >
                         <div className="item-header">
                           <h3 className="item-title">{review.title}</h3>
                           <p className="item-created-at">{new Date(review.createdAt).toLocaleDateString()}</p>

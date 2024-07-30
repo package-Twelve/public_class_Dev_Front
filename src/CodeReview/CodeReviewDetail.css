@@ -1,0 +1,199 @@
+/* CSS 추가 */
+.code-review-detail-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.white-box {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+}
+
+.edit-button,
+.delete-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: blue;
+  color: white;
+}
+
+.delete-button {
+  background-color: gray;
+  color: white;
+}
+
+.detail-field {
+  margin-bottom: 15px;
+}
+
+.field-name {
+  font-weight: bold;
+  color: gray;
+}
+
+.category {
+  font-weight: bold;
+  color: #ff4100;
+}
+
+.detail-contents {
+  margin-top: 10px;
+}
+
+.contents-text {
+  white-space: pre-wrap; /* 줄바꿈을 유지 */
+}
+
+.detail-code pre {
+  background-color: black;
+  color: white;
+  font-family: 'Source Code Pro', monospace; /* Google Fonts에서 가져온 폰트를 사용 */
+  padding:30px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+
+.comments-section {
+  margin-top: 20px;
+}
+
+.comments-section h3 {
+  color: blue;
+}
+
+.comment-item {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-name {
+  font-weight: bold;
+}
+
+.comment-contents {
+  flex: 1;
+  margin: 0 10px;
+  color: black;
+}
+
+.comment-date {
+  color: gray;
+}
+
+.comment-likes {
+  display: flex;
+  align-items: center;
+}
+
+.like-button {
+  background: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  color: darkred;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  margin-right: 5px;
+  font-size: 10px;
+  margin-left: 5px;
+  width: 60px;
+}
+
+.pagination {
+  margin-top: 10px;
+}
+
+.page-number {
+  cursor: pointer;
+  padding: 5px;
+  margin: 0 3px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.page-number.current {
+  background-color: #ddd;
+}
+
+.edit-comment-container {
+  width: 300%;
+}
+
+.edit-comment-button {
+  background: transparent;
+  color: gray;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+  margin-left: 5px;
+  width: 60px;
+}
+
+.save-comment-button, .delete-comment-button{
+  background: transparent;
+  color: gray;
+  cursor: pointer;
+  padding: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+  margin-left: 5px;
+  width: 50px;
+}
+
+.form-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center; /* 버튼을 중앙으로 정렬 */
+}
+
+.back-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #6c757d;
+  color: white;
+  width: 200px;
+}
+
+.new-comment-section {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.submit-comment-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 100px;
+  height: 65px;
+}

@@ -190,7 +190,7 @@ body {
   color: gray;
   font-weight: bold;
   margin-top: 10px;
-  align-self: flex-end; /* 오른쪽 정렬 */
+  align-self: flex-end;
 }
 /* .item-contents: 코드 리뷰 아이템의 내용 스타일 */
 

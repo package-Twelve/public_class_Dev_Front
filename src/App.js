@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute';
 import Mypage from './Users/Mypage';
 import CodeReview from "./CodeReview/CodeReview";
 import CodeReviewWrite from './CodeReview/CodeReviewWrite';
+import CodeReviewDetail from './CodeReview/CodeReviewDetail';
 
 function App() {
   useEffect(() => {
@@ -44,6 +45,11 @@ function App() {
         <Route path="/codereviews/write" element={
           <PrivateRoute>
             <CodeReviewWrite />
+          </PrivateRoute>
+        } />
+        <Route path="/codereviews/:id" element={
+          <PrivateRoute>
+            <CodeReviewDetail />
           </PrivateRoute>
         } />
       </Routes>
