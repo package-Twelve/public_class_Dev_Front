@@ -31,7 +31,8 @@ const CodeReviewEdit = () => {
         setCode(review.code);
       } catch (error) {
         console.error('Error fetching the code review:', error);
-        alert('Failed to fetch code review details.');
+        const errorMessage = error.response?.data?.message || 'Failed to fetch code review details.';
+        alert(errorMessage);
       }
     };
     fetchReview();
@@ -57,7 +58,8 @@ const CodeReviewEdit = () => {
       navigate(`/codereviews/${id}`); // 수정된 리뷰 페이지로 이동
     } catch (error) {
       console.error('Error updating code review:', error);
-      alert('Failed to update code review. Please try again.');
+      const errorMessage = error.response?.data?.message || 'Failed to update code review. Please try again.';
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false); // 제출 상태를 false로 변경
     }
@@ -115,7 +117,7 @@ const CodeReviewEdit = () => {
             </div>
             <div className="form-buttons">
               <button type="submit" className="submit-btn" disabled={isSubmitting}>
-                {isSubmitting ? '저장 중...' : '저장하기'}
+                {isSubmitting ? '저장 중...' : '수정하기'}
               </button>
               <button type="button" className="back-btn" onClick={handleBack}>
                 취소
