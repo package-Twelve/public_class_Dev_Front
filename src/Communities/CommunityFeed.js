@@ -11,7 +11,7 @@ function CommunityFeed() {
   const [popularKeywords, setPopularKeywords] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 10;
+  const [postsPerPage] = useState(10);
 
   const categoryMapping = {
     INFO: '정보',
@@ -56,23 +56,34 @@ function CommunityFeed() {
     };
 
     fetchPopularKeywords();
-    const intervalId = setInterval(fetchPopularKeywords, 1800000); // 30 minutes
+    const intervalId = setInterval(fetchPopularKeywords, 180000); // 3 minutes
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchTerm.trim()) {
       alert('검색어를 입력해 주세요.');
       return;
     }
 
-    const lowercaseSearchTerm = searchTerm.trim().toLowerCase();
-    const filtered = allPosts.filter(post =>
-        (selectedCategory === 'ALL' || post.category === selectedCategory) &&
-        (post.title.toLowerCase().includes(lowercaseSearchTerm))
-    );
-    setPosts(filtered);
-    setCurrentPage(1); // Reset to page 1 on search
+    try {
+      setLoading(true);
+      const response = await axios.get('http://localhost:8080/api/community/search', {
+        params: { keyword: searchTerm.trim() }
+      });
+      if (response.data && Array.isArray(response.data.data)) {
+        setAllPosts(response.data.data || []);
+        setPosts(response.data.data || []); // Initialize posts with search results
+        setCurrentPage(1); // Reset to page 1 on search
+      } else {
+        setError('Unexpected data format received.');
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      setError('검색 결과를 가져오는 데 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCategoryChange = (event) => {
@@ -86,9 +97,15 @@ function CommunityFeed() {
     }
   };
 
+  // Filtered posts based on category and search term
+  const filteredPosts = allPosts.filter(post =>
+      (selectedCategory === 'ALL' || post.category === selectedCategory) &&
+      (post.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
   // Calculate total pages and slice posts for the current page
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-  const paginatedPosts = posts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const paginatedPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
