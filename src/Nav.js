@@ -29,23 +29,23 @@ function Nav() {
         window.location.reload();
     };
     return(
-        <div class="top-menu">
-            <button class="top-menu-button" onclick="alert('커뮤니티 기능은 준비 중입니다.')">커뮤니티</button>
-            <button class="top-menu-button" onclick="alert('Code Review 기능은 준비 중입니다.')">Code Review</button>
-            <button class="top-menu-button" onclick="alert('Group 기능은 준비 중입니다.')">Group</button>
+        <div className="top-menu">
+            <Link to="/community"><button className="top-menu-button" onClick="alert('커뮤니티 기능은 준비 중입니다.')">커뮤니티</button></Link>
+            <button className="top-menu-button" onClick="alert('Code Review 기능은 준비 중입니다.')">Code Review</button>
+            <button className="top-menu-button" onClick="alert('Group 기능은 준비 중입니다.')">Group</button>
             {isAuthenticated ? (
                 <>
-                <Link to="/mypage"><button class="top-menu-button" onclick="alert('로그인 기능은 준비 중입니다.')">마이페이지</button></Link>
-                <button class="top-menu-button" onClick={handleLogout}>로그아웃</button>
+                <Link to="/mypage"><button className="top-menu-button" onClick="alert('로그인 기능은 준비 중입니다.')">마이페이지</button></Link>
+                <button className="top-menu-button" onClick={handleLogout}>로그아웃</button>
                 </>
             ) : (
                 <>
-                <Link to="/login"><button class="top-menu-button" onclick="alert('로그인 기능은 준비 중입니다.')">로그인</button></Link>
-                <Link to="/signup"><button class="top-menu-button" onclick="alert('회원가입 기능은 준비 중입니다.')">회원가입</button></Link>
+                <Link to="/login"><button className="top-menu-button" onClick="alert('로그인 기능은 준비 중입니다.')">로그인</button></Link>
+                <Link to="/signup"><button className="top-menu-button" onClick="alert('회원가입 기능은 준비 중입니다.')">회원가입</button></Link>
                 </>
             )}
         </div>
-        
+
     );
 }
 
