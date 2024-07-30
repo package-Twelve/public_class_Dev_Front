@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute';
 import Mypage from './Users/Mypage';
 import UpdateMypage from './Users/UpdateMyPage';
 import UpdatePassword from './Users/UpdatePassword';
+import CommunityApp from "./Communities/CommunityApp";
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,11 @@ function App() {
       <Routes>
         <Route path='/signup' element={<Signup/>} />
         <Route path='/login' element={<Login/>} />
+        <Route path="/community" element={
+          <PrivateRoute>
+            <CommunityApp />
+          </PrivateRoute>
+        } />
         <Route path="/" element={
           <PrivateRoute>
             <FirstPage />

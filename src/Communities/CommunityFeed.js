@@ -14,11 +14,19 @@ function CommunityFeed() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/community');
-        setPosts(response.data);
+        const response = await axios.get('http://localhost:8080/api/community', { timeout: 10000 });
+        console.log('API Response:', response.data);
+
+        // Extract posts from response.data.data
+        if (response.data && Array.isArray(response.data.data)) {
+          setPosts(response.data.data);
+        } else {
+          console.error('Unexpected data format:', response.data);
+          setError('Unexpected data format received.');
+        }
       } catch (error) {
         setError('게시글을 가져오는 데 실패했습니다.');
-        console.error('게시글을 가져오는 데 실패했습니다:', error);
+        console.error('게시글을 가져오는 데 실패했습니다:', error.message);
       } finally {
         setLoading(false);
       }
@@ -26,6 +34,7 @@ function CommunityFeed() {
 
     fetchPosts();
   }, []);
+
 
   // 검색 처리 함수
   const handleSearch = async () => {
