@@ -13,6 +13,8 @@ import CodeReview from "./CodeReview/CodeReview";
 import CodeReviewWrite from './CodeReview/CodeReviewWrite';
 import CodeReviewDetail from './CodeReview/CodeReviewDetail';
 import CodeReviewEdit from './CodeReview/CodeReviewEdit';
+import UpdateMypage from './Users/UpdateMyPage';
+import UpdatePassword from './Users/UpdatePassword';
 
 function App() {
   useEffect(() => {
@@ -26,8 +28,8 @@ function App() {
   return (
       <BrowserRouter>
         <Routes>
-          <Route path='/signup' element={<Signup/>} />
-          <Route path='/login' element={<Login/>} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
           <Route path="/" element={
             <PrivateRoute>
               <FirstPage />
@@ -36,6 +38,16 @@ function App() {
           <Route path="/mypage" element={
             <PrivateRoute>
               <Mypage />
+            </PrivateRoute>
+          } />
+          <Route path="/mypage/update" element={
+            <PrivateRoute>
+              <UpdateMypage />
+            </PrivateRoute>
+          } />
+          <Route path="/mypage/update/password" element={
+            <PrivateRoute>
+              <UpdatePassword />
             </PrivateRoute>
           } />
           <Route path="/codereviews" element={
