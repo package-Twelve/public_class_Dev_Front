@@ -12,6 +12,8 @@ import Mypage from './Users/Mypage';
 import UpdateMypage from './Users/UpdateMyPage';
 import UpdatePassword from './Users/UpdatePassword';
 import CommunityApp from "./Communities/CommunityApp";
+import WritePost from "./Communities/WritePost";
+import CommunityPostApp from "./Communities/CommunityPostApp";
 
 function App() {
   useEffect(() => {
@@ -30,6 +32,11 @@ function App() {
         <Route path="/community" element={
           <PrivateRoute>
             <CommunityApp />
+          </PrivateRoute>
+        } />
+        <Route path="/community/write" element={
+          <PrivateRoute>
+            <CommunityPostApp />
           </PrivateRoute>
         } />
         <Route path="/" element={
