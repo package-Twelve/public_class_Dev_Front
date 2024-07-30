@@ -40,8 +40,9 @@ const CodeReviewWrite = () => {
     } catch (error) {
       console.error('Error creating code review:', error);
 
-      // 에러 메시지를 알림으로 표시
-      alert('Failed to create code review. Please try again.');
+      // 서버 응답에서 error 메시지를 추출하여 알림으로 표시
+      const errorMessage = error.response?.data?.message || 'Failed to create code review. Please try again.';
+      alert(errorMessage);
     }
   };
 

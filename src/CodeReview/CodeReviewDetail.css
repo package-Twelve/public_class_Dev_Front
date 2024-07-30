@@ -119,7 +119,14 @@
   font-size: 10px;
   margin-left: 5px;
   width: 60px;
+  transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
 }
+
+.like-button:hover {
+  background: darkred;
+  color: white;
+}
+
 
 .pagination {
   margin-top: 10px;

@@ -62,6 +62,7 @@ const CodeReviewDetail = () => {
 
   const handleLikeClick = async (commentId) => {
     try {
+      // 서버에 LIKE 요청 보내기
       const response = await axios.post(`http://localhost:8080/api/codereviews/${id}/comments/${commentId}/like`);
       if (response.status === 200) {
         await fetchReview(); // 댓글 상태 최신화
@@ -244,7 +245,10 @@ const CodeReviewDetail = () => {
                       </div>
                       <div className="comment-footer">
                         <span className="comment-date">{new Date(comment.createdAt).toLocaleString()}</span>
-                        <button className="like-button" onClick={() => handleLikeClick(comment.id)}>
+                        <button
+                            className="like-button"
+                            onClick={() => handleLikeClick(comment.id)}
+                        >
                           {comment.likes} LIKE♥️
                         </button>
                       </div>
