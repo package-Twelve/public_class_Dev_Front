@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './WritePost.css'; // Import the CSS file
+import './WritePost.css';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const WritePost = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
@@ -14,26 +17,71 @@ const WritePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title && category && content) {
-      try {
-        const backendCategory = categoryMapping[category];
-        const postData = { title, content, category: backendCategory };
 
-        const response = await fetch('http://localhost:8080/api/community', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(postData),
+    const accessToken = localStorage.getItem('accessToken');
+    console.log(accessToken);
+    if (title && category && content) {
+      const backendCategory = categoryMapping[category];
+      const postData = { title, content, category: backendCategory };
+      try {
+        console.log("past"+accessToken);
+        const response = await axios.post('http://localhost:8080/api/community', postData, {
+          headers: {
+            Authorization: `${accessToken}`
+          }
         });
 
-        if (response.ok) {
+        if (response.status === 200 || response.status === 201) {
           alert('게시글이 성공적으로 등록되었습니다.');
           window.location.href = '/community';
         } else {
           alert('게시글 등록에 실패했습니다.');
         }
       } catch (error) {
-        console.error('Error:', error);
-        alert('게시글 등록 중 오류가 발생했습니다.');
+        if (error.response && error.response.status === 401) {
+          const refreshToken = localStorage.getItem('refreshToken');
+          try {
+            const refreshResponse = await axios.post('http://localhost:8080/api/users/reissue-token', {
+              refreshToken: refreshToken
+            });
+            console.log(refreshResponse);
+            const newAccessToken = refreshResponse.data.data.accessToken;
+            const newRefreshToken = refreshResponse.data.data.refreshToken;
+
+            if (refreshResponse.data.statusCode === 200) {
+              localStorage.setItem('accessToken', newAccessToken);
+              localStorage.setItem('refreshToken', newRefreshToken);
+
+              // Retry the post submission with the new token
+              try {
+                console.log("new" + newAccessToken);
+                const retryResponse = await axios.post('http://localhost:8080/api/community', postData, {
+                  headers: {
+                    Authorization: `Bearer ${newAccessToken}`
+                  }
+                });
+
+                if (retryResponse.status === 200 || retryResponse.status === 201) {
+                  alert('게시글이 성공적으로 등록되었습니다.');
+                  window.location.href = '/community';
+                } else {
+                  alert('게시글 등록에 실패했습니다.');
+                }
+              } catch (retryError) {
+                console.error('Retry Error:', retryError);
+                alert('게시물 생성 중 오류가 발생하였습니다.');
+              }
+            }
+          } catch (err) {
+            console.error('Refresh Token Error:', err);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            navigate("/login");
+          }
+        } else {
+          console.error('Error:', error);
+          alert('게시물 생성 중 오류가 발생하였습니다.');
+        }
       }
     } else {
       alert('모든 필드를 채워주세요.');
