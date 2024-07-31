@@ -21,7 +21,7 @@ const WritePost = () => {
     e.preventDefault();
 
     const accessToken = localStorage.getItem('accessToken');
-    if (title && category && content) {
+    if (title && category && content && content.length >= 3) {
       const backendCategory = categoryMapping[category];
       const postData = { title, content, category: backendCategory };
       try {
@@ -30,7 +30,7 @@ const WritePost = () => {
             Authorization: `${accessToken}`
           }
         });
-
+        console.log(response);
         if (response.status === 200 || response.status === 201) {
           alert('게시글이 성공적으로 등록되었습니다.');
           navigate('/community'); // Use navigate for routing instead of window.location.href
@@ -43,7 +43,11 @@ const WritePost = () => {
         }
       }
     } else {
-      alert('모든 필드를 채워주세요.');
+      if (!title || !category || !content) {
+        alert('모든 필드를 채워주세요.');
+      } else if (content.length < 3) {
+        alert('내용은 최소 3글자 이상이어야 합니다.');
+      }
     }
   };
 
