@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './CommunityDetail.css';
+import style from './CommunityDetail.module.css'; // CSS Module import
 import Nav from "../Nav";
 import reissueToken from "../reissueToken";
 
@@ -29,7 +29,7 @@ const DetailComponent = () => {
     } catch (err) {
       setError('Failed to fetch post data.');
       console.error('Error fetching post data:', err);
-      if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+      if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(err);
       }
     }
@@ -68,7 +68,7 @@ const DetailComponent = () => {
     } catch (error) {
       console.error('Error adding comment:', error);
       alert('Failed to add comment.');
-      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+      if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
     } finally {
@@ -91,7 +91,7 @@ const DetailComponent = () => {
         await fetchPostData();
       } catch (error) {
         console.error('Error updating post:', error);
-        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+        if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
         alert('게시물을 수정할 수 없습니다.');
@@ -114,7 +114,7 @@ const DetailComponent = () => {
         navigate('/community'); // Redirect to community list or home
       } catch (error) {
         console.error('Error deleting post:', error);
-        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+        if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
         alert('게시글을 삭제할 수 없습니다.');
@@ -145,7 +145,7 @@ const DetailComponent = () => {
       await fetchPostData();
     } catch (error) {
       console.error('Error updating comment:', error);
-      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+      if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
       alert('댓글을 수정할 수 없습니다.');
@@ -167,7 +167,7 @@ const DetailComponent = () => {
         await fetchPostData(); // Refresh comments after deletion
       } catch (error) {
         console.error('Error deleting comment:', error);
-        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+        if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
         alert('댓글을 삭제할 수 없습니다.');
@@ -192,25 +192,25 @@ const DetailComponent = () => {
   return (
       <div>
         <Nav />
-        <div className="article-container">
-          <div className="article-header">
-            <h1 className="article-title">{post.title || 'No Title'}</h1>
-            <p className="article-info">
+        <div className={style["article-container"]}>
+          <div className={style["article-header"]}>
+            <h1 className={style["article-title"]}>{post.title || 'No Title'}</h1>
+            <p className={style["article-info"]}>
               작성자: {post.name || 'Unknown'} | 작성일: {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Unknown'} | 카테고리: {post.category || 'Unknown'}
             </p>
           </div>
 
-          <div className="article-content">
+          <div className={style["article-content"]}>
             <p>{post.content || 'No Content Available'}</p>
-            <div className="post-actions">
+            <div className={style["post-actions"]}>
               <button onClick={handleEditPost}>게시글 수정</button>
               <button onClick={handleDeletePost}>게시글 삭제</button>
             </div>
           </div>
 
-          <div className="comments-section">
+          <div className={style["comments-section"]}>
             <h3>댓글</h3>
-            <div className="comment-form">
+            <div className={style["comment-form"]}>
             <textarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
@@ -219,11 +219,11 @@ const DetailComponent = () => {
             ></textarea>
               <button onClick={handleAddComment} disabled={isSubmitting}>댓글 작성</button>
             </div>
-            <div className="comments">
+            <div className={style.comments}>
               {comments.length > 0 ? (
                   comments.map((comment) => (
-                      <div className="comment" key={comment.commentId}>
-                        <p className="comment-content">{comment.content || 'No Content'}</p>
+                      <div className={style["comment"]} key={comment.commentId}>
+                        <p className={style["comment-content"]}>{comment.content || 'No Content'}</p>
                         <button onClick={() => handleEditComment(comment.commentId, comment.content)}>댓글 수정</button>
                         <button onClick={() => handleDeleteComment(comment.commentId)}>댓글 삭제</button>
                       </div>
@@ -232,7 +232,7 @@ const DetailComponent = () => {
                   <p>댓글이 없습니다.</p>
               )}
             </div>
-            <div className="pagination">
+            <div className={style.pagination}>
               <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1}>이전</button>
               <span>페이지 {currentPage} / {Math.ceil(totalComments / PAGE_SIZE)}</span>
               <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= Math.ceil(totalComments / PAGE_SIZE)}>다음</button>

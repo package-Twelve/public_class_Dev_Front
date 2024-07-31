@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import './WritePost.css';
+import style from './WritePost.module.css'; // CSS Module import
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import reissueToken from "../reissueToken";
+import Nav from "../Nav";
 
 const WritePost = () => {
   const navigate = useNavigate();
@@ -20,12 +21,10 @@ const WritePost = () => {
     e.preventDefault();
 
     const accessToken = localStorage.getItem('accessToken');
-    console.log(accessToken);
     if (title && category && content) {
       const backendCategory = categoryMapping[category];
       const postData = { title, content, category: backendCategory };
       try {
-        console.log("past"+accessToken);
         const response = await axios.post('http://localhost:8080/api/community', postData, {
           headers: {
             Authorization: `${accessToken}`
@@ -34,12 +33,12 @@ const WritePost = () => {
 
         if (response.status === 200 || response.status === 201) {
           alert('게시글이 성공적으로 등록되었습니다.');
-          window.location.href = '/community';
+          navigate('/community'); // Use navigate for routing instead of window.location.href
         } else {
           alert('게시글 등록에 실패했습니다.');
         }
       } catch (error) {
-        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+        if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
       }
@@ -50,21 +49,22 @@ const WritePost = () => {
 
   const handleCancel = () => {
     if (window.confirm('작성 중인 내용이 저장되지 않습니다. 정말 취소하시겠습니까?')) {
-      window.location.href = '/community';
+      navigate('/community'); // Use navigate for routing instead of window.location.href
     }
   };
 
   return (
-      <div className="write-post-container">
-        <h1 className="write-post-title">새 글 작성하기</h1>
-        <form className="write-post-form" onSubmit={handleSubmit}>
-          <div className="write-post-form-group">
-            <label className="write-post-label" htmlFor="title">제목</label>
+      <div className={style["write-post-container"]}>
+        <Nav />
+        <h1 className={style["write-post-title"]}>새 글 작성하기</h1>
+        <form className={style["write-post-form"]} onSubmit={handleSubmit}>
+          <div className={style["write-post-form-group"]}>
+            <label className={style["write-post-label"]} htmlFor="title">제목</label>
             <input
                 type="text"
                 id="title"
                 name="title"
-                className="write-post-input"
+                className={style["write-post-input"]}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
@@ -72,12 +72,12 @@ const WritePost = () => {
             />
           </div>
 
-          <div className="write-post-form-group">
-            <label className="write-post-label" htmlFor="category">카테고리</label>
+          <div className={style["write-post-form-group"]}>
+            <label className={style["write-post-label"]} htmlFor="category">카테고리</label>
             <select
                 id="category"
                 name="category"
-                className="write-post-select"
+                className={style["write-post-select"]}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
@@ -89,12 +89,12 @@ const WritePost = () => {
             </select>
           </div>
 
-          <div className="write-post-form-group">
-            <label className="write-post-label" htmlFor="content">내용</label>
+          <div className={style["write-post-form-group"]}>
+            <label className={style["write-post-label"]} htmlFor="content">내용</label>
             <textarea
                 id="content"
                 name="content"
-                className="write-post-textarea"
+                className={style["write-post-textarea"]}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 required
@@ -102,15 +102,15 @@ const WritePost = () => {
             ></textarea>
           </div>
 
-          <div className="write-post-button-group">
+          <div className={style["write-post-button-group"]}>
             <button
                 type="button"
-                className="write-post-cancel-button"
+                className={style["write-post-cancel-button"]}
                 onClick={handleCancel}
             >
               취소
             </button>
-            <button type="submit" className="write-post-submit-button">
+            <button type="submit" className={style["write-post-submit-button"]}>
               등록
             </button>
           </div>

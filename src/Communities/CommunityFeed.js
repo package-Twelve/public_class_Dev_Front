@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Community.css';
+import style from './Community.module.css'; // CSS Module import
 import reissueToken from "../reissueToken";
+import Nav from "../Nav";
 
 function CommunityFeed() {
   const [posts, setPosts] = useState([]);
@@ -27,7 +28,6 @@ function CommunityFeed() {
       try {
         setLoading(true);
         const response = await axios.get('http://localhost:8080/api/community', { timeout: 10000 });
-        console.log(response);
         if (response.data && response.data.data) {
           setAllPosts(response.data.data || []);
           setPosts(response.data.data || []);
@@ -35,7 +35,7 @@ function CommunityFeed() {
           setError('Unexpected data format received.');
         }
       } catch (err) {
-        if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+        if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(err);
         }
         console.error('Error fetching posts:', err);
@@ -58,7 +58,7 @@ function CommunityFeed() {
         }
       } catch (err) {
         console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
-        if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+        if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(err);
         }
       }
@@ -92,7 +92,7 @@ function CommunityFeed() {
     } catch (err) {
       console.error('Error fetching search results:', err);
       setError('검색 결과를 가져오는 데 실패했습니다.');
-      if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+      if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(err);
       }
     } finally {
@@ -125,89 +125,96 @@ function CommunityFeed() {
   };
 
   const handlePostClick = (postId) => {
-    console.log(postId);
     navigate(`/community/post/${postId}`);
   };
 
   return (
-      <div className="main-content">
-        <div className="feed-content">
-          <div className="header">
+      <div className={style["main-content"]}>
+        <Nav />
+        <div className={style["feed-content"]}>
+          <div className={style.header}>
             <h1>Community Feed</h1>
-            <button className="post-button"
-                    onClick={() => navigate('/community/write')}
+            <button
+                className={style["post-button"]}
+                onClick={() => navigate('/community/write')}
             >
               글쓰기
             </button>
           </div>
-          <div className="search-container">
+          <div className={style["search-container"]}>
             <input
                 type="text"
-                className="search-bar"
+                className={style["search-bar"]}
                 placeholder="검색할 내용을 입력해주세요"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="search-button" onClick={handleSearch}>검색</button>
+            <button className={style["search-button"]} onClick={handleSearch}>검색</button>
           </div>
-          <div className="category-filter">
+          <div className={style["category-filter"]}>
             <label htmlFor="category-select">카테고리 선택:</label>
-            <select id="category-select" value={selectedCategory}
-                    onChange={handleCategoryChange}>
+            <select
+                id="category-select"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+            >
               <option value="ALL">전체</option>
               {Object.entries(categoryMapping).map(([key, value]) => (
                   <option key={key} value={key}>{value}</option>
               ))}
             </select>
           </div>
-          <div className="post-list">
+          <div className={style["post-list"]}>
             {loading && <p>Loading...</p>}
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className={style["error-message"]}>{error}</p>}
             {!loading && !error && paginatedPosts.length === 0 && <p>게시글이 없습니다.</p>}
-            {paginatedPosts.map((post, index) => (
+            {paginatedPosts.map((post) => (
                 <div
-                    className="post"
-                    key={index}
-
-                    onClick={() =>{
-                      console.log('Post clicked:', post);
-                      handlePostClick(post.id)}}
+                    className={style.post}
+                    key={post.id}
+                    onClick={() => handlePostClick(post.id)}
                 >
                   <h3>{post.title}</h3>
-                  <p className="post-info">
+                  <p className={style["post-info"]}>
                     작성일: {formatDate(post.createdAt)} |
                     카테고리: {categoryMapping[post.category]}
                   </p>
                 </div>
             ))}
           </div>
-          <div className="pagination">
-            <button onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}>이전
+          <div className={style.pagination}>
+            <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+            >
+              이전
             </button>
             {[...Array(totalPages)].map((_, index) => (
                 <button
                     key={index}
-                    className={currentPage === index + 1 ? 'active' : ''}
+                    className={currentPage === index + 1 ? style.active : ''}
                     onClick={() => handlePageChange(index + 1)}
                 >
                   {index + 1}
                 </button>
             ))}
-            <button onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}>다음
+            <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+            >
+              다음
             </button>
           </div>
         </div>
-        <div className="sidebar">
-          <div className="ranking">
+        <div className={style.sidebar}>
+          <div className={style.ranking}>
             <h2>인기 검색어</h2>
             <ul>
               {popularKeywords.map((keyword, index) => (
-                  <h3 key={index} className="ranking-item">
-                    <span className="ranking-index">{index + 1}</span>
-                    <span className="ranking-keyword">{keyword.keyword}</span>
-                  </h3>
+                  <li key={index} className={style["ranking-item"]}>
+                    <span className={style["ranking-index"]}>{index + 1}</span>
+                    <span className={style["ranking-keyword"]}>{keyword.keyword}</span>
+                  </li>
               ))}
             </ul>
           </div>
