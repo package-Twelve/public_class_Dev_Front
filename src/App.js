@@ -15,6 +15,7 @@ import CodeReviewDetail from './CodeReview/CodeReviewDetail';
 import CodeReviewEdit from './CodeReview/CodeReviewEdit';
 import UpdateMypage from './Users/UpdateMyPage';
 import UpdatePassword from './Users/UpdatePassword';
+import TeamPage from './team/TeamPage';
 
 function App() {
   useEffect(() => {
@@ -68,6 +69,11 @@ function App() {
           <Route path="/codereviews/:id/edit" element={
             <PrivateRoute>
               <CodeReviewEdit />
+            </PrivateRoute>
+          } />
+          <Route path="/team" element={
+            <PrivateRoute>
+              <TeamPage />
             </PrivateRoute>
           } />
         </Routes>
