@@ -114,3 +114,9 @@ body {
   content: 'No Content';
   color: #aaa;
 }
+
+.comment button{
+  background-color: #cccccc;
+  color: black;
+  width: 100px;
+}

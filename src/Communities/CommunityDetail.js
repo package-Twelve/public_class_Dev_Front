@@ -12,12 +12,12 @@ const DetailComponent = () => {
   const [commentText, setCommentText] = useState('');
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentText, setEditingCommentText] = useState('');
 
-  // Function to fetch post data
   const fetchPostData = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/community/${id}`);
-      console.log(response);
       setPost(response.data.data);
       setComments(response.data.data.comments || []);
     } catch (err) {
@@ -40,15 +40,13 @@ const DetailComponent = () => {
 
     if (isSubmitting) return;
     setIsSubmitting(true);
-    console.log('Comment Text:', commentText);
     try {
-      const response = await axios.post(`http://localhost:8080/api/community/${id}/comments`, { contents: commentText }, {
+      await axios.post(`http://localhost:8080/api/community/${id}/comments`, { contents: commentText }, {
         headers: {
           Authorization: `${accessToken}`,
           'Content-Type': 'application/json'
         }
       });
-      console.log('Server Response:', response.data);
       setCommentText('');
       await fetchPostData();
       alert('Comment added successfully.');
@@ -81,6 +79,35 @@ const DetailComponent = () => {
         console.error('Error deleting post:', error);
         alert('Failed to delete post.');
       }
+    }
+  };
+
+  // Function to handle editing a comment
+  const handleEditComment = (commentId, currentText) => {
+    const newText = prompt('Edit your comment:', currentText);
+    if (newText !== null && newText.trim() !== '') {
+      setEditingCommentId(commentId);
+      setEditingCommentText(newText);
+      handleSaveComment(commentId, newText);
+    }
+  };
+
+  // Function to save the edited comment
+  const handleSaveComment = async (commentId, newText) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+      await axios.put(`http://localhost:8080/api/community/${id}/comments/${commentId}`, { contents: newText }, {
+        headers: {
+          Authorization: `${accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      alert('Comment updated successfully.');
+      await fetchPostData();
+    } catch (error) {
+      console.error('Error updating comment:', error);
+      alert('Failed to update comment.');
     }
   };
 
@@ -124,9 +151,10 @@ const DetailComponent = () => {
             </div>
             <div className="comments">
               {comments.length > 0 ? (
-                  comments.map((comment, index) => (
-                      <div className="comment" key={index}>
+                  comments.map((comment) => (
+                      <div className="comment" key={comment.commentId}>
                         <p className="comment-content">{comment.content || 'No Content'}</p>
+                        <button onClick={() => handleEditComment(comment.commentId, comment.content)}>댓글 수정</button>
                       </div>
                   ))
               ) : (
