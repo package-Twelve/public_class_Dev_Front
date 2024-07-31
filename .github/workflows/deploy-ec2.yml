@@ -1,0 +1,53 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - refactor/#18-CD
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React application
+        run: npm run build
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/publicclassdev-front:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/publicclassdev-front:latest
+
+      - name: AWS EC2 Connection
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_WEB_HOST }}
+          username: ${{ secrets.EC2_WEB_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: ${{ secrets.EC2_WEB_SSH_PORT }}
+          timeout: 60s
+          script: |
+            sudo docker stop publicclassdev-front || true
+            sudo docker rm publicclassdev-front || true
+            
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/publicclassdev-front:latest
+            sudo docker run -d -p 80:80 --name publicclassdev-front ${{ secrets.DOCKERHUB_USERNAME }}/publicclassdev-front:latest
+
+            docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" | grep -v "latest" | awk '{print $2}' | xargs -r docker rmi
