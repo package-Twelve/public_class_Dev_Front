@@ -74,48 +74,22 @@ function App() {
               <CodeReviewEdit />
             </PrivateRoute>
           } />
+          <Route path="/community" element={
+            <PrivateRoute>
+              <CommunityApp />
+            </PrivateRoute>
+          } />
+          <Route path="/community/post/:id" element={<PrivateRoute>
+            <DetailComponent />
+          </PrivateRoute>
+          }/>
+          <Route path="/community/write" element={
+            <PrivateRoute>
+              <CommunityPostApp />
+            </PrivateRoute>
+          } />
         </Routes>
       </BrowserRouter>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/signup' element={<Signup/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path="/community" element={
-          <PrivateRoute>
-            <CommunityApp />
-          </PrivateRoute>
-        } />
-        <Route path="/community/post/:id" element={<PrivateRoute>
-          <DetailComponent />
-        </PrivateRoute>
-        }/>
-        <Route path="/community/write" element={
-          <PrivateRoute>
-            <CommunityPostApp />
-          </PrivateRoute>
-        } />
-        <Route path="/" element={
-          <PrivateRoute>
-            <FirstPage />
-          </PrivateRoute>
-        } />
-        <Route path="/mypage" element={
-          <PrivateRoute>
-            <Mypage />
-          </PrivateRoute>
-        } />
-        <Route path="/mypage/update" element={
-          <PrivateRoute>
-            <UpdateMypage />
-          </PrivateRoute>
-        } />
-        <Route path="/mypage/update/password" element={
-          <PrivateRoute>
-            <UpdatePassword />
-          </PrivateRoute>
-        } />
-      </Routes>
-    </BrowserRouter>
   );
 }
 
