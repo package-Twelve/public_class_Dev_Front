@@ -8,6 +8,7 @@ import reissueToken from "../reissueToken";
 const Mypage = () => {
     let navigate = useNavigate();
     const [profile, setProfile] = useState(null);
+    const [postlist, setPostlist] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -15,7 +16,9 @@ const Mypage = () => {
         const fetchProfile = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/users/profiles');
+            console.log(response);
             setProfile(response.data.data);
+            setPostlist(response.data.data.recentCommunities);
             setLoading(false);
         } catch (err) {
             setError('Failed to fetch profile');
@@ -52,9 +55,13 @@ const Mypage = () => {
                 <div className={style.section}>
                     <h2>최근 나의 게시글</h2>
                     <ul className={style.list}>
-                        <li className={style["list-item"]}>React Hooks 사용 팁</li>
-                        <li className={style["list-item"]}>CSS Grid 레이아웃 예제</li>
-                        <li className={style["list-item"]}>JavaScript 비동기 프로그래밍 기초</li>
+                        {postlist.length > 0 ? (
+                            postlist.map((post) => (
+                                <li className={style["list-item"]}>{post.title}</li>
+                            ))
+                        ) : (
+                            <li className={style["list-item"]}>최근 올린 게시글이 없습니다</li>
+                        )}
                     </ul>
                 </div>
             </div>
