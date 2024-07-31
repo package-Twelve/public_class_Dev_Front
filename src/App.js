@@ -9,10 +9,10 @@ import Login from './Users/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
 import Mypage from './Users/Mypage';
-import CodeReview from "./CodeReview/CodeReview";
-import CodeReviewWrite from './CodeReview/CodeReviewWrite';
-import CodeReviewDetail from './CodeReview/CodeReviewDetail';
-import CodeReviewEdit from './CodeReview/CodeReviewEdit';
+import CodeReview from "./codereview/CodeReview";
+import CodeReviewWrite from './codereview/CodeReviewWrite';
+import CodeReviewDetail from './codereview/CodeReviewDetail';
+import CodeReviewEdit from './codereview/CodeReviewEdit';
 import UpdateMypage from './Users/UpdateMyPage';
 import UpdatePassword from './Users/UpdatePassword';
 
