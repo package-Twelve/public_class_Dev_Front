@@ -34,7 +34,9 @@ function Nav() {
             <Link to="/codereviews">
                 <button>Code Review</button>
             </Link>
-            <button onClick={() => alert('Group 기능은 준비 중입니다.')}>Group</button>
+            <Link to="/teams">
+                <button>Team</button>
+            </Link>
             {isAuthenticated ? (
                 <>
                     <Link to="/mypage">

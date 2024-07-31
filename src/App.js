@@ -71,7 +71,7 @@ function App() {
               <CodeReviewEdit />
             </PrivateRoute>
           } />
-          <Route path="/team" element={
+          <Route path="/teams" element={
             <PrivateRoute>
               <TeamPage />
             </PrivateRoute>

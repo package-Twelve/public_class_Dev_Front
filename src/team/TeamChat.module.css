@@ -1,0 +1,48 @@
+.teamChat {
+  margin-top: 20px;
+}
+
+.title {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.chatBox {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0 0 10px 10px;
+  background-color: #f9f9f9;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.inputBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.input {
+  width: calc(100% - 80px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button {
+  width: 60px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}

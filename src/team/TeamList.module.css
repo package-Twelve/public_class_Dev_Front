@@ -1,0 +1,28 @@
+.teamInfo {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.title {
+  margin-top: 0;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.listItem {
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.lastItem {
+  border-bottom: none;
+}
