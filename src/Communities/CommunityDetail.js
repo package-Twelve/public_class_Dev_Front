@@ -4,6 +4,8 @@ import axios from 'axios';
 import './CommunityDetail.css';
 import Nav from "../Nav";
 
+const PAGE_SIZE = 3; // Number of comments per page
+
 const DetailComponent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,16 +16,25 @@ const DetailComponent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalComments, setTotalComments] = useState(0);
 
   const fetchPostData = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/community/${id}`);
       setPost(response.data.data);
-      setComments(response.data.data.comments || []);
+      setTotalComments(response.data.data.comments?.length || 0);
+      fetchComments(response.data.data.comments, currentPage); // Fetch comments for the current page
     } catch (err) {
       setError('Failed to fetch post data.');
       console.error('Error fetching post data:', err);
     }
+  };
+
+  const fetchComments = async (allComments, page) => {
+    const offset = (page - 1) * PAGE_SIZE;
+    const commentsToDisplay = allComments.slice(offset, offset + PAGE_SIZE);
+    setComments(commentsToDisplay);
   };
 
   useEffect(() => {
@@ -82,7 +93,6 @@ const DetailComponent = () => {
     }
   };
 
-  // Function to handle editing a comment
   const handleEditComment = (commentId, currentText) => {
     const newText = prompt('Edit your comment:', currentText);
     if (newText !== null && newText.trim() !== '') {
@@ -92,7 +102,6 @@ const DetailComponent = () => {
     }
   };
 
-  // Function to save the edited comment
   const handleSaveComment = async (commentId, newText) => {
     const accessToken = localStorage.getItem('accessToken');
 
@@ -109,6 +118,32 @@ const DetailComponent = () => {
       console.error('Error updating comment:', error);
       alert('Failed to update comment.');
     }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    if (window.confirm('댓글을 삭제하시겠습니까?')) {
+      const accessToken = localStorage.getItem('accessToken');
+
+      try {
+        await axios.delete(`http://localhost:8080/api/community/${id}/comments/${commentId}`, {
+          headers: {
+            Authorization: `${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        alert('Comment deleted successfully.');
+        await fetchPostData(); // Refresh comments after deletion
+      } catch (error) {
+        console.error('Error deleting comment:', error);
+        alert('Failed to delete comment.');
+      }
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > Math.ceil(totalComments / PAGE_SIZE)) return;
+    setCurrentPage(newPage);
+    fetchComments(post.comments, newPage);
   };
 
   if (error) {
@@ -155,11 +190,17 @@ const DetailComponent = () => {
                       <div className="comment" key={comment.commentId}>
                         <p className="comment-content">{comment.content || 'No Content'}</p>
                         <button onClick={() => handleEditComment(comment.commentId, comment.content)}>댓글 수정</button>
+                        <button onClick={() => handleDeleteComment(comment.commentId)}>댓글 삭제</button>
                       </div>
                   ))
               ) : (
                   <p>댓글이 없습니다.</p>
               )}
+            </div>
+            <div className="pagination">
+              <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1}>이전</button>
+              <span>페이지 {currentPage} / {Math.ceil(totalComments / PAGE_SIZE)}</span>
+              <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= Math.ceil(totalComments / PAGE_SIZE)}>다음</button>
             </div>
           </div>
         </div>
