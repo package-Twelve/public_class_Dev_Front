@@ -4,17 +4,17 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
-import Signup from './Users/Signup';
-import Login from './Users/Login';
+import Signup from './user/Signup';
+import Login from './user/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
-import Mypage from './Users/Mypage';
+import Mypage from './user/Mypage';
 import CodeReview from "./codereview/CodeReview";
 import CodeReviewWrite from './codereview/CodeReviewWrite';
 import CodeReviewDetail from './codereview/CodeReviewDetail';
 import CodeReviewEdit from './codereview/CodeReviewEdit';
-import UpdateMypage from './Users/UpdateMyPage';
-import UpdatePassword from './Users/UpdatePassword';
+import UpdateMypage from './user/UpdateMyPage';
+import UpdatePassword from './user/UpdatePassword';
 
 function App() {
   useEffect(() => {
