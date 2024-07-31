@@ -11,12 +11,14 @@
 }
 
 .write-post-form {
-  width: 45%;
+  width: 800px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .write-post-form-group {
+  width: 500px;
   margin-bottom: 20px;
 }
 
@@ -28,9 +30,16 @@
 }
 
 .write-post-input,
-.write-post-select,
 .write-post-textarea {
   width: 100%;
+  padding: 10px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.write-post-select{
+  width: 200px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
