@@ -15,9 +15,9 @@ import CodeReviewDetail from './CodeReview/CodeReviewDetail';
 import CodeReviewEdit from './CodeReview/CodeReviewEdit';
 import UpdateMypage from './Users/UpdateMyPage';
 import UpdatePassword from './Users/UpdatePassword';
-import WritePost from "./Communities/WritePost";
-import DetailComponent from "./Communities/CommunityDetail";
-import CommunityFeed from "./Communities/CommunityFeed";
+import WritePost from "./communities/WritePost";
+import DetailComponent from "./communities/CommunityDetail";
+import CommunityFeed from "./communities/CommunityFeed";
 
 function App() {
   useEffect(() => {
