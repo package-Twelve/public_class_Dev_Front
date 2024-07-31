@@ -3,6 +3,7 @@ import Nav from "../Nav";
 import './Mypage.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import reissueToken from "../reissueToken";
     
 const UpdateMypage = () => {
     const navigate = useNavigate();
@@ -26,27 +27,8 @@ const UpdateMypage = () => {
             } catch (err) {
                 setError('Failed to fetch profile');
                 setLoading(false);
-                if(err.response.data.statusCode === 401) {
-                    const refreshToken = localStorage.getItem('refreshToken');
-                    delete axios.defaults.headers.common['Authorization'];
-                    delete axios.defaults.headers.common['Refresh'];
-                    try{
-                        const refreshResponse = await axios.post('http://localhost:8080/api/users/reissue-token', { refreshToken : refreshToken });
-                        console.log(refreshResponse);
-                        const accessToken = refreshResponse.data.data.accessToken;
-                        const newRefreshToken = refreshResponse.data.data.refreshToken;
-                        if(refreshResponse.data.statusCode === 200) {
-                            localStorage.setItem('accessToken', accessToken);
-                            localStorage.setItem('refreshToken', newRefreshToken); 
-                            window.location.reload();
-                        }
-                    } catch(err) {
-                        console.log(err);
-                        localStorage.removeItem('accessToken');
-                        localStorage.removeItem('refreshToken');
-                        navigate("/login");
-                    }
-                    
+                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
+                    reissueToken(err);
                 }
             }
         };
