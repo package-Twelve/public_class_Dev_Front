@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Community.css';
 
@@ -12,6 +13,7 @@ function CommunityFeed() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const navigate = useNavigate();
 
   const categoryMapping = {
     INFO: '정보',
@@ -23,17 +25,17 @@ function CommunityFeed() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/community', {
-          timeout: 10000
-        });
+        const response = await axios.get('http://localhost:8080/api/community', { timeout: 10000 });
+        console.log(response);
         if (response.data && response.data.data) {
           setAllPosts(response.data.data || []);
-          setPosts(response.data.data || []); // Initialize posts with all data
+          setPosts(response.data.data || []);
         } else {
           setError('Unexpected data format received.');
         }
-      } catch (error) {
+      } catch (err) {
         setError('게시글을 가져오는 데 실패했습니다.');
+        console.error('Error fetching posts:', err);
       } finally {
         setLoading(false);
       }
@@ -51,18 +53,15 @@ function CommunityFeed() {
         } else {
           console.error('Unexpected data format for popular keywords');
         }
-      } catch (error) {
-        console.error('인기 검색어를 가져오는 데 실패했습니다:', error.message);
+      } catch (err) {
+        console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
       }
     };
 
-    // Fetch popular keywords initially
     fetchPopularKeywords();
 
-    // Set interval to fetch popular keywords every 3 minutes
     const intervalId = setInterval(fetchPopularKeywords, 180000); // 3 minutes
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
@@ -79,13 +78,13 @@ function CommunityFeed() {
       });
       if (response.data && Array.isArray(response.data.data)) {
         setAllPosts(response.data.data || []);
-        setPosts(response.data.data || []); // Initialize posts with search results
-        setCurrentPage(1); // Reset to page 1 on search
+        setPosts(response.data.data || []);
+        setCurrentPage(1);
       } else {
         setError('Unexpected data format received.');
       }
-    } catch (error) {
-      console.error('Error fetching search results:', error);
+    } catch (err) {
+      console.error('Error fetching search results:', err);
       setError('검색 결과를 가져오는 데 실패했습니다.');
     } finally {
       setLoading(false);
@@ -94,7 +93,7 @@ function CommunityFeed() {
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
-    setCurrentPage(1); // Reset to page 1 when category changes
+    setCurrentPage(1);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -103,13 +102,11 @@ function CommunityFeed() {
     }
   };
 
-  // Filtered posts based on category and search term
   const filteredPosts = allPosts.filter(post =>
       (selectedCategory === 'ALL' || post.category === selectedCategory) &&
       (post.title.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  // Calculate total pages and slice posts for the current page
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const paginatedPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 
@@ -118,12 +115,19 @@ function CommunityFeed() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const handlePostClick = (postId) => {
+    console.log(postId);
+    navigate(`/community/post/${postId}`);
+  };
+
   return (
       <div className="main-content">
         <div className="feed-content">
           <div className="header">
             <h1>Community Feed</h1>
-            <button className="post-button" onClick={() => window.location.href = '/community/write'}>
+            <button className="post-button"
+                    onClick={() => navigate('/community/write')}
+            >
               글쓰기
             </button>
           </div>
@@ -139,7 +143,8 @@ function CommunityFeed() {
           </div>
           <div className="category-filter">
             <label htmlFor="category-select">카테고리 선택:</label>
-            <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
+            <select id="category-select" value={selectedCategory}
+                    onChange={handleCategoryChange}>
               <option value="ALL">전체</option>
               {Object.entries(categoryMapping).map(([key, value]) => (
                   <option key={key} value={key}>{value}</option>
@@ -151,16 +156,26 @@ function CommunityFeed() {
             {error && <p className="error-message">{error}</p>}
             {!loading && !error && paginatedPosts.length === 0 && <p>게시글이 없습니다.</p>}
             {paginatedPosts.map((post, index) => (
-                <div className="post" key={index} onClick={() => window.location.href = `/community/post/${encodeURIComponent(post.title)}`}>
+                <div
+                    className="post"
+                    key={index}
+
+                    onClick={() =>{
+                      console.log('Post clicked:', post);
+                      handlePostClick(post.id)}}
+                >
                   <h3>{post.title}</h3>
                   <p className="post-info">
-                    작성일: {formatDate(post.createdAt)} | 카테고리: {categoryMapping[post.category]}
+                    작성일: {formatDate(post.createdAt)} |
+                    카테고리: {categoryMapping[post.category]}
                   </p>
                 </div>
             ))}
           </div>
           <div className="pagination">
-            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>이전</button>
+            <button onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}>이전
+            </button>
             {[...Array(totalPages)].map((_, index) => (
                 <button
                     key={index}
@@ -170,7 +185,9 @@ function CommunityFeed() {
                   {index + 1}
                 </button>
             ))}
-            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>다음</button>
+            <button onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}>다음
+            </button>
           </div>
         </div>
         <div className="sidebar">

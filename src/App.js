@@ -14,6 +14,7 @@ import UpdatePassword from './Users/UpdatePassword';
 import CommunityApp from "./Communities/CommunityApp";
 import WritePost from "./Communities/WritePost";
 import CommunityPostApp from "./Communities/CommunityPostApp";
+import DetailComponent from "./Communities/CommunityDetail";
 
 function App() {
   useEffect(() => {
@@ -34,6 +35,10 @@ function App() {
             <CommunityApp />
           </PrivateRoute>
         } />
+        <Route path="/community/post/:id" element={<PrivateRoute>
+          <DetailComponent />
+        </PrivateRoute>
+        }/>
         <Route path="/community/write" element={
           <PrivateRoute>
             <CommunityPostApp />
