@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import style from './Signup.module.css';
 import axios from 'axios';
 import Nav from '../Nav';
 import { useNavigate } from 'react-router-dom';
@@ -71,13 +71,13 @@ const Signup = () => {
     <>
       <Nav/>
       <form onSubmit={handleSubmit}>
-          <div class="container">
+          <div className={style.container}>
               <h1>sign up</h1>
               <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="닉네임을 입력해주세요" required />
               <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="이메일을 입력해주세요" required />
               <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="비밀번호를 입력해주세요" required />
               <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="비밀번호를 다시 입력해주세요" required />
-              <div class="checkbox-container">
+              <div className={style["checkbox-container"]}>
                   <input type="checkbox" name="admin" onChange={handleChange}/>
                   <label for="terms">관리자 회원가입</label>
               </div>

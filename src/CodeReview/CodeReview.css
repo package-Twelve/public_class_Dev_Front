@@ -1,0 +1,221 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.code-review-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.white-box {
+  width: 80%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* 화면의 특정 위치에 고정 */
+  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
+  left: 50%; /* 화면 중앙 */
+  transform: translateX(-50%); /* 중앙 정렬 */
+  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
+  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  overflow-y: auto; /* 콘텐츠가 많아질 때 스크롤바가 생기도록 설정 */
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  background: transparent !important;
+}
+
+.header h2 {
+  font-size: 40px;
+  color: blue;
+  margin: 0;
+}
+
+.header h2 span {
+  font-size: 16px;
+  color: gray;
+}
+
+.write-review-btn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  width: 150px;
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.search-btn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-left: 10px;
+  width: 150px;
+  height: 40px !important;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-category {
+  width: 100%;
+  margin-bottom: 20px;
+  color: gray;
+}
+
+.code-reviews {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* .code-review-item: 각 코드 리뷰 아이템의 스타일 */
+.code-review-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  display: flex; /* Flexbox를 사용하여 레이아웃 조정 */
+  flex-direction: column; /* 세로 방향으로 아이템 배치 */
+}
+
+.code-review-item h3 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.code-review-item p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.contents {
+  color: gray;
+}
+
+.created-at {
+  text-align: right;
+  color: gray;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-number {
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.page-number.current {
+  font-weight: bold;
+}
+
+/* .total-items: 제목 옆에 총 아이템 수를 표시하는 스타일 */
+.total-items {
+  font-size: 16px;
+  color: gray;
+}
+
+/* .search-category: 검색 카테고리 텍스트 스타일 */
+.search-category strong {
+  font-size: 18px;
+  color: blue;
+}
+
+/* .item-header: 각 코드 리뷰 아이템의 제목과 생성일을 포함하는 상단 영역 */
+.item-header {
+  display: flex;
+  justify-content: space-between; /* 제목과 생성일을 양쪽 끝으로 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin-bottom: 10px;
+}
+
+/* .item-name: 코드 리뷰 아이템의 작성자 이름 스타일 */
+.item-name {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* .item-title: 코드 리뷰 아이템의 제목 스타일 */
+.item-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* .item-created-at: 코드 리뷰 아이템의 생성일 스타일 */
+.item-created-at {
+  font-size: 14px;
+  color: gray;
+}
+
+/* .item-category: 코드 리뷰 아이템의 카테고리 스타일 */
+.item-category {
+  font-size: 14px;
+  color: gray;
+  font-weight: bold;
+  margin-top: 10px;
+  align-self: flex-end;
+}
+/* .item-contents: 코드 리뷰 아이템의 내용 스타일 */
+
+.item-contents {
+  font-size: 12px;
+  color: gray;
+}
+
+
+/* .pagination: 페이지 네비게이션의 스타일 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* .page-number: 페이지 네비게이션 버튼 스타일 */
+.page-number {
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* .page-number.current: 현재 페이지 버튼 스타일 */
+.page-number.current {
+  font-weight: bold;
+  color: blue;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './Nav.css';
+import style from './Nav.module.css';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
@@ -28,36 +28,32 @@ function Nav() {
         setIsAuthenticated(false);
         window.location.reload();
     };
-
-    const handleAlert = (message) => {
-        alert(message);
-    };
-
     return (
-        <div className="top-menu">
-            <Link to="/community">
-                <button className="top-menu-button">커뮤니티</button>
+        <div className={style["top-menu"]}>
+            <button onClick={() => alert('커뮤니티 기능은 준비 중입니다.')}>커뮤니티</button>
+            <Link to="/codereviews">
+                <button>Code Review</button>
             </Link>
-            <button className="top-menu-button" onClick={() => handleAlert('Code Review 기능은 준비 중입니다.')}>Code Review</button>
-            <button className="top-menu-button" onClick={() => handleAlert('Group 기능은 준비 중입니다.')}>Group</button>
+            <button onClick={() => alert('Group 기능은 준비 중입니다.')}>Group</button>
             {isAuthenticated ? (
                 <>
                     <Link to="/mypage">
-                        <button className="top-menu-button">마이페이지</button>
+                        <button>마이페이지</button>
                     </Link>
-                    <button className="top-menu-button" onClick={handleLogout}>로그아웃</button>
+                    <button onClick={handleLogout}>로그아웃</button>
                 </>
             ) : (
                 <>
                     <Link to="/login">
-                        <button className="top-menu-button">로그인</button>
+                        <button>로그인</button>
                     </Link>
                     <Link to="/signup">
-                        <button className="top-menu-button">회원가입</button>
+                        <button>회원가입</button>
                     </Link>
                 </>
             )}
         </div>
+
     );
 }
 
