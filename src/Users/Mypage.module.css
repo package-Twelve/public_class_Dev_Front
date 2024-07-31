@@ -34,7 +34,7 @@
     }
     .button-container {
         display: flex;
-        align-items: center;
+        margin-left: 300px;
     }
     .profile-header {
         display: flex;
@@ -60,8 +60,22 @@
         margin: 5px 0;
         color: #606770;
     }
-    .badge {
-        background-color: #DAA520;
+    .badge-bronze {
+        background-color: #723300;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+    }
+    .badge-silver {
+        background-color: #b3b3b3;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+    }
+    .badge-gold {
+        background-color: #d6c100;
         color: white;
         padding: 2px 8px;
         border-radius: 12px;
@@ -97,7 +111,7 @@
     }
     .stats {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         background-color: #f7f8fa;
         padding: 15px;
         border-radius: 8px;

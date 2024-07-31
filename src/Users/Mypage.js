@@ -8,23 +8,45 @@ import reissueToken from "../reissueToken";
 const Mypage = () => {
     let navigate = useNavigate();
     const [profile, setProfile] = useState(null);
+    const [postlist, setPostlist] = useState();
+    const [point, setPoint] = useState({
+        point: '',
+        rank: ''
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchProfile = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/users/profiles');
-            setProfile(response.data.data);
-            setLoading(false);
-        } catch (err) {
-            setError('Failed to fetch profile');
-            console.log(err);
-            setLoading(false);
-            if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                reissueToken(err);
+            try {
+                const response = await axios.get('http://localhost:8080/api/users/profiles');
+                console.log(response);
+                setProfile(response.data.data);
+                setPostlist(response.data.data.recentCommunities);
+                setLoading(false);
+            } catch (err) {
+                setError('Failed to fetch profile');
+                console.log(err);
+                setLoading(false);
+                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
+                    reissueToken(err);
+                }
             }
-        }
+            try {
+                const pointResponse = await axios.get('http://localhost:8080/api/users/points');
+                setPoint({
+                    ...point,
+                    point: pointResponse.data.data.point,
+                    rank: pointResponse.data.data.rank
+                })
+            } catch (err) {
+                setError('Failed to fetch profile');
+                console.log(err);
+                setLoading(false);
+                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
+                    reissueToken(err);
+                }
+            }
         };
 
         fetchProfile();
@@ -40,7 +62,13 @@ const Mypage = () => {
             <div className= {style.container}>
                 <div className={style["profile-header"]}>
                     <div className={style["profile-info"]}>
-                            <h1>{profile.name} <span className={style.badge}>Bronze</span></h1>
+                            <h1>
+                                {profile.name} 
+                                {point.rank === 'BRONZE' ? (<span className={style["badge-bronze"]}>Bronze</span>) : 
+                                (point.rank === 'SILVER' ? (<span className={style["badge-silver"]}>Silver</span>) : 
+                                    (point.rank === 'GOLD' ? (<span className={style["badge-gold"]}>GOLD</span>) : (<p>Error</p>)))
+                                }
+                            </h1>
                             <p>{profile.email}</p>
                             <p>{profile.intro} </p>
                     </div>
@@ -49,12 +77,22 @@ const Mypage = () => {
                         <Link to="/mypage/update/password"><button className={style.button}>비밀번호 초기화</button></Link>
                     </div>
                 </div>
+                <div className={style.stats}>
+                    <div class={style["style-item"]}>
+                        <div class={style["stat-value"]}>{point.point}</div>
+                        <div class={style["stat-label"]}>포인트</div>
+                    </div>
+                </div>
                 <div className={style.section}>
                     <h2>최근 나의 게시글</h2>
                     <ul className={style.list}>
-                        <li className={style["list-item"]}>React Hooks 사용 팁</li>
-                        <li className={style["list-item"]}>CSS Grid 레이아웃 예제</li>
-                        <li className={style["list-item"]}>JavaScript 비동기 프로그래밍 기초</li>
+                        {postlist.length > 0 ? (
+                            postlist.map((post) => (
+                                <li className={style["list-item"]}>{post.title}</li>
+                            ))
+                        ) : (
+                            <li className={style["list-item"]}>최근 올린 게시글이 없습니다</li>
+                        )}
                     </ul>
                 </div>
             </div>
