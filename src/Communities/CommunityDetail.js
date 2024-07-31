@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CommunityDetail.css';
 import Nav from "../Nav";
 
 const DetailComponent = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
@@ -41,7 +42,7 @@ const DetailComponent = () => {
     setIsSubmitting(true);
     console.log('Comment Text:', commentText);
     try {
-      const response = await axios.post(`http://localhost:8080/api/community/${id}/comments`, { contents : commentText }, {
+      const response = await axios.post(`http://localhost:8080/api/community/${id}/comments`, { contents: commentText }, {
         headers: {
           Authorization: `${accessToken}`,
           'Content-Type': 'application/json'
@@ -56,6 +57,30 @@ const DetailComponent = () => {
       alert('Failed to add comment.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleEditPost = () => {
+    navigate(`/community/update/${id}`);
+  };
+
+  const handleDeletePost = async () => {
+    if (window.confirm('게시글을 삭제하시겠습니까?')) {
+      const accessToken = localStorage.getItem('accessToken');
+
+      try {
+        await axios.delete(`http://localhost:8080/api/community/${id}`, {
+          headers: {
+            Authorization: `${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        alert('Post deleted successfully.');
+        navigate('/community'); // Redirect to community list or home
+      } catch (error) {
+        console.error('Error deleting post:', error);
+        alert('Failed to delete post.');
+      }
     }
   };
 
@@ -80,6 +105,10 @@ const DetailComponent = () => {
 
           <div className="article-content">
             <p>{post.content || 'No Content Available'}</p>
+            <div className="post-actions">
+              <button onClick={handleEditPost}>게시글 수정</button>
+              <button onClick={handleDeletePost}>게시글 삭제</button>
+            </div>
           </div>
 
           <div className="comments-section">
