@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './WritePost.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import reissueToken from "../reissueToken";
 
 const WritePost = () => {
   const navigate = useNavigate();
@@ -38,49 +39,8 @@ const WritePost = () => {
           alert('게시글 등록에 실패했습니다.');
         }
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          const refreshToken = localStorage.getItem('refreshToken');
-          try {
-            const refreshResponse = await axios.post('http://localhost:8080/api/users/reissue-token', {
-              refreshToken: refreshToken
-            });
-            console.log(refreshResponse);
-            const newAccessToken = refreshResponse.data.data.accessToken;
-            const newRefreshToken = refreshResponse.data.data.refreshToken;
-
-            if (refreshResponse.data.statusCode === 200) {
-              localStorage.setItem('accessToken', newAccessToken);
-              localStorage.setItem('refreshToken', newRefreshToken);
-
-              // Retry the post submission with the new token
-              try {
-                console.log("new" + newAccessToken);
-                const retryResponse = await axios.post('http://localhost:8080/api/community', postData, {
-                  headers: {
-                    Authorization: `Bearer ${newAccessToken}`
-                  }
-                });
-
-                if (retryResponse.status === 200 || retryResponse.status === 201) {
-                  alert('게시글이 성공적으로 등록되었습니다.');
-                  window.location.href = '/community';
-                } else {
-                  alert('게시글 등록에 실패했습니다.');
-                }
-              } catch (retryError) {
-                console.error('Retry Error:', retryError);
-                alert('게시물 생성 중 오류가 발생하였습니다.');
-              }
-            }
-          } catch (err) {
-            console.error('Refresh Token Error:', err);
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            navigate("/login");
-          }
-        } else {
-          console.error('Error:', error);
-          alert('게시물 생성 중 오류가 발생하였습니다.');
+        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+          await reissueToken(error);
         }
       }
     } else {

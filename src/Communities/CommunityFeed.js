@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Community.css';
+import reissueToken from "../reissueToken";
 
 function CommunityFeed() {
   const [posts, setPosts] = useState([]);
@@ -34,7 +35,9 @@ function CommunityFeed() {
           setError('Unexpected data format received.');
         }
       } catch (err) {
-        setError('게시글을 가져오는 데 실패했습니다.');
+        if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+          await reissueToken(err);
+        }
         console.error('Error fetching posts:', err);
       } finally {
         setLoading(false);
@@ -55,6 +58,9 @@ function CommunityFeed() {
         }
       } catch (err) {
         console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
+        if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+          await reissueToken(err);
+        }
       }
     };
 
@@ -86,6 +92,9 @@ function CommunityFeed() {
     } catch (err) {
       console.error('Error fetching search results:', err);
       setError('검색 결과를 가져오는 데 실패했습니다.');
+      if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+        await reissueToken(err);
+      }
     } finally {
       setLoading(false);
     }

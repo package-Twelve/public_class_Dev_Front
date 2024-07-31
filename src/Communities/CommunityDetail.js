@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CommunityDetail.css';
 import Nav from "../Nav";
+import reissueToken from "../reissueToken";
 
 const PAGE_SIZE = 3; // Number of comments per page
 
@@ -28,6 +29,9 @@ const DetailComponent = () => {
     } catch (err) {
       setError('Failed to fetch post data.');
       console.error('Error fetching post data:', err);
+      if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다."){
+        await reissueToken(err);
+      }
     }
   };
 
@@ -64,6 +68,9 @@ const DetailComponent = () => {
     } catch (error) {
       console.error('Error adding comment:', error);
       alert('Failed to add comment.');
+      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+        await reissueToken(error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -84,7 +91,10 @@ const DetailComponent = () => {
         await fetchPostData();
       } catch (error) {
         console.error('Error updating post:', error);
-        alert('Failed to update post.');
+        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+          await reissueToken(error);
+        }
+        alert('게시물을 수정할 수 없습니다.');
       }
     }
   };
@@ -104,7 +114,10 @@ const DetailComponent = () => {
         navigate('/community'); // Redirect to community list or home
       } catch (error) {
         console.error('Error deleting post:', error);
-        alert('Failed to delete post.');
+        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+          await reissueToken(error);
+        }
+        alert('게시글을 삭제할 수 없습니다.');
       }
     }
   };
@@ -132,7 +145,10 @@ const DetailComponent = () => {
       await fetchPostData();
     } catch (error) {
       console.error('Error updating comment:', error);
-      alert('Failed to update comment.');
+      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+        await reissueToken(error);
+      }
+      alert('댓글을 수정할 수 없습니다.');
     }
   };
 
@@ -151,7 +167,10 @@ const DetailComponent = () => {
         await fetchPostData(); // Refresh comments after deletion
       } catch (error) {
         console.error('Error deleting comment:', error);
-        alert('Failed to delete comment.');
+        if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다."){
+          await reissueToken(error);
+        }
+        alert('댓글을 삭제할 수 없습니다.');
       }
     }
   };
