@@ -69,8 +69,24 @@ const DetailComponent = () => {
     }
   };
 
-  const handleEditPost = () => {
-    navigate(`/community/update/${id}`);
+  const handleEditPost = async () => {
+    const newContent = prompt('Edit the post content:', post.content);
+    if (newContent !== null && newContent.trim() !== '') {
+      const accessToken = localStorage.getItem('accessToken');
+      try {
+        await axios.put(`http://localhost:8080/api/community/${id}`, { content: newContent }, {
+          headers: {
+            Authorization: `${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        alert('Post updated successfully.');
+        await fetchPostData();
+      } catch (error) {
+        console.error('Error updating post:', error);
+        alert('Failed to update post.');
+      }
+    }
   };
 
   const handleDeletePost = async () => {
