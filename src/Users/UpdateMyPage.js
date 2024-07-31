@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "../Nav";
-import './Mypage.css';
+import style from './Mypage.module.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import reissueToken from "../reissueToken";
@@ -94,15 +94,15 @@ const UpdateMypage = () => {
     return(
         <>
             <Nav/>
-            <div className= "container">
+            <div className={style.container}>
                 <form onSubmit={handleSubmit}>
-                    <div className="profile-header">
-                        <div className="profile-info">
+                    <div className={style["profile-header"]}>
+                        <div className={style["profile-info"]}>
                             <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="이름을 입력해주세요" required />
                             <input type="text" name="intro" value={formData.intro} onChange={handleChange} placeholder="자기소개를 입력해주세요" required />
                         </div>
                     </div>
-                    <div className="section">
+                    <div className={style.section}>
                         <button type="submit">수정</button>
                     </div>
                 </form>

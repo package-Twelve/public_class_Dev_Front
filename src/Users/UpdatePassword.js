@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "../Nav";
-import './Mypage.css';
+import style from './Mypage.module.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import reissueToken from "../reissueToken";
@@ -51,15 +51,15 @@ const UpdatePassword = () => {
     return(
         <>
             <Nav/>
-            <div className= "container">
+            <div className={style.container}>
                 <form onSubmit={handleSubmit}>
-                    <div className="profile-header">
-                        <div className="profile-info">
+                    <div className={style["profile-header"]}>
+                        <div className={style["profile-info"]}>
                             <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="비밀번호를 입력해주세요" required />
                             <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="비밀번호를 다시 입력해주세요" required />
                         </div>
                     </div>
-                    <div className="section">
+                    <div className={style.section}>
                         <button type="submit">수정</button>
                     </div>
                 </form>
