@@ -44,10 +44,14 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   padding: 20px;
   margin:20px;
+  margin-top: 60px;
   display:flex;
 }
 
 .feed-content {
+  width: 900px;
+  height: 800px;
+  overflow: auto;
   flex: 2;
   margin-right: 20px;
 }
