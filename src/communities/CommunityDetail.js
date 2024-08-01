@@ -27,7 +27,7 @@ const DetailComponent = () => {
       setTotalComments(response.data.data.comments?.length || 0);
       fetchComments(response.data.data.comments, currentPage); // Fetch comments for the current page
     } catch (err) {
-      setError('Failed to fetch post data.');
+      setError('게시글을 가져올 수 없습니다.');
       console.error('Error fetching post data:', err);
       if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(err);
@@ -64,10 +64,10 @@ const DetailComponent = () => {
       });
       setCommentText('');
       await fetchPostData();
-      alert('Comment added successfully.');
+      alert('댓글이 작성되었습니다.');
     } catch (error) {
       console.error('Error adding comment:', error);
-      alert('Failed to add comment.');
+      alert('댓글이 작성되지 못하였습니다.');
       if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
@@ -87,14 +87,16 @@ const DetailComponent = () => {
             'Content-Type': 'application/json'
           }
         });
-        alert('Post updated successfully.');
+        alert('게시글이 수정되었습니다.');
         await fetchPostData();
       } catch (error) {
         console.error('Error updating post:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
-        alert('게시물을 수정할 수 없습니다.');
+        else if(error.response.data.message === "권한이 없습니다."){
+          alert('게시물을 수정할 수 없습니다.');
+        }
       }
     }
   };
@@ -117,7 +119,9 @@ const DetailComponent = () => {
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
-        alert('게시글을 삭제할 수 없습니다.');
+        else if(error.response.data.message === "권한이 없습니다."){
+          alert('게시물을 삭제할 수 없습니다.');
+        }
       }
     }
   };
@@ -141,14 +145,16 @@ const DetailComponent = () => {
           'Content-Type': 'application/json'
         }
       });
-      alert('Comment updated successfully.');
+      alert('댓글이 수정되었습니다.');
       await fetchPostData();
     } catch (error) {
       console.error('Error updating comment:', error);
       if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
-      alert('댓글을 수정할 수 없습니다.');
+      else if(error.response.data.message === "권한이 없습니다."){
+        alert('댓글을 수정할 수 없습니다.');
+      }
     }
   };
 
@@ -163,8 +169,8 @@ const DetailComponent = () => {
             'Content-Type': 'application/json'
           }
         });
-        alert('Comment deleted successfully.');
-        await fetchPostData(); // Refresh comments after deletion
+        alert('댓글이 삭제되었습니다.');
+        await fetchPostData();
       } catch (error) {
         console.error('Error deleting comment:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
