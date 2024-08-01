@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import style from './Community.module.css'; // CSS Module import
@@ -16,6 +16,7 @@ function CommunityFeed() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
   const navigate = useNavigate();
+  const searchInputRef = useRef(null);
 
   const categoryMapping = {
     INFO: '정보',
@@ -64,21 +65,20 @@ function CommunityFeed() {
       }
     };
 
-    fetchPopularKeywords(); // Fetch initially
+    fetchPopularKeywords();
 
-    // Set up interval to fetch popular keywords every 30 minutes
-    const intervalId = setInterval(fetchPopularKeywords, 1800000); // 30 minutes in milliseconds
+    const intervalId = setInterval(fetchPopularKeywords, 1800000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
   const handleSearch = async () => {
+    const searchTerm = searchInputRef.current.value;
     if (!searchTerm.trim()) {
       alert('검색어를 입력해 주세요.');
       return;
-    }
 
+    }
     try {
       setLoading(true);
       const response = await axios.get('http://localhost:8080/api/community/search', {
@@ -149,8 +149,7 @@ function CommunityFeed() {
                   type="text"
                   className={style["search-bar"]}
                   placeholder="검색할 내용을 입력해주세요"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)} // Update the searchTerm state only
+                  ref={searchInputRef}
               />
               <button className={style["search-button"]} onClick={handleSearch}>검색</button>
             </div>
