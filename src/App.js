@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,6 +14,8 @@ import CodeReviewDetail from './codereview/CodeReviewDetail';
 import CodeReviewEdit from './codereview/CodeReviewEdit';
 import UpdateMypage from './user/UpdateMyPage';
 import UpdatePassword from './user/UpdatePassword';
+import TeamMatch from "./team/TeamMatch";
+import MyTeamPage from "./team/MyTeamPage";
 
 function App() {
   useEffect(() => {
@@ -28,46 +29,56 @@ function App() {
   return (
       <BrowserRouter>
         <Routes>
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/login' element={<Login/>}/>
           <Route path="/" element={
             <PrivateRoute>
-              <FirstPage />
+              <FirstPage/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/mypage" element={
             <PrivateRoute>
-              <Mypage />
+              <Mypage/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/mypage/update" element={
             <PrivateRoute>
-              <UpdateMypage />
+              <UpdateMypage/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/mypage/update/password" element={
             <PrivateRoute>
-              <UpdatePassword />
+              <UpdatePassword/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/codereviews" element={
             <PrivateRoute>
-              <CodeReview />
+              <CodeReview/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/codereviews/write" element={
             <PrivateRoute>
-              <CodeReviewWrite />
+              <CodeReviewWrite/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/codereviews/:id" element={
             <PrivateRoute>
-              <CodeReviewDetail />
+              <CodeReviewDetail/>
             </PrivateRoute>
-          } />
+          }/>
           <Route path="/codereviews/:id/edit" element={
             <PrivateRoute>
-              <CodeReviewEdit />
+              <CodeReviewEdit/>
+            </PrivateRoute>
+          }/>
+          <Route path="/teams/match" element={
+            <PrivateRoute>
+              <TeamMatch />
+            </PrivateRoute>
+          } />
+          <Route path="/teams/myteam/*" element={
+            <PrivateRoute>
+              <MyTeamPage />
             </PrivateRoute>
           } />
         </Routes>
