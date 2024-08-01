@@ -187,6 +187,10 @@ const DetailComponent = () => {
     fetchComments(post.comments, newPage);
   };
 
+  const handleBack = () => {
+    navigate('/codereviews'); // 뒤로가기 버튼 클릭 시 코드 리뷰 목록으로 이동
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -200,18 +204,24 @@ const DetailComponent = () => {
         <Nav />
         <div className={style["article-container"]}>
           <div className={style["article-header"]}>
-            <h1 className={style["article-title"]}>{post.title || 'No Title'}</h1>
-            <p className={style["article-info"]}>
-              작성자: {post.name || 'Unknown'} | 작성일: {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Unknown'} | 카테고리: {post.category || 'Unknown'}
-            </p>
+            <div className={style["article-header-container"]}>
+              <h1 className={style["article-title"]}>{post.title
+                  || 'No Title'}</h1>
+              <p className={style["article-info"]}>
+                작성자: {post.name || 'Unknown'} | 작성일: {post.createdAt ? new Date(
+                  post.createdAt).toLocaleDateString() : 'Unknown'} |
+                카테고리: {post.category || 'Unknown'}
+              </p>
+            </div>
+            <div className={style["post-actions"]}>
+              <button onClick={handleEditPost}>수정</button>
+              <button onClick={handleDeletePost}>삭제</button>
+            </div>
           </div>
 
           <div className={style["article-content"]}>
             <p>{post.content || 'No Content Available'}</p>
-            <div className={style["post-actions"]}>
-              <button onClick={handleEditPost}>게시글 수정</button>
-              <button onClick={handleDeletePost}>게시글 삭제</button>
-            </div>
+
           </div>
 
           <div className={style["comments-section"]}>
@@ -223,15 +233,25 @@ const DetailComponent = () => {
                 placeholder="댓글을 입력하세요..."
                 rows="4"
             ></textarea>
-              <button onClick={handleAddComment} disabled={isSubmitting}>댓글 작성</button>
+              <button onClick={handleAddComment} disabled={isSubmitting}>댓글 작성
+              </button>
             </div>
             <div className={style.comments}>
               {comments.length > 0 ? (
                   comments.map((comment) => (
                       <div className={style["comment"]} key={comment.commentId}>
-                        <p className={style["comment-content"]}>{comment.content || 'No Content'}</p>
-                        <button onClick={() => handleEditComment(comment.commentId, comment.content)}>댓글 수정</button>
-                        <button onClick={() => handleDeleteComment(comment.commentId)}>댓글 삭제</button>
+                        <div className={style["comment-container"]}>
+                          <p className={style["comment-content"]}>{comment.content
+                              || 'No Content'}</p>
+                        </div>
+                        <div className={style["comment-button-container"]}>
+                          <button onClick={() => handleEditComment(
+                              comment.commentId, comment.content)}>수정
+                          </button>
+                          <button onClick={() => handleDeleteComment(
+                              comment.commentId)}>삭제
+                          </button>
+                        </div>
                       </div>
                   ))
               ) : (
@@ -239,10 +259,21 @@ const DetailComponent = () => {
               )}
             </div>
             <div className={style.pagination}>
-              <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1}>이전</button>
-              <span>페이지 {currentPage} / {Math.ceil(totalComments / PAGE_SIZE)}</span>
-              <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= Math.ceil(totalComments / PAGE_SIZE)}>다음</button>
+              <button onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage <= 1}>이전
+              </button>
+              <span>페이지 {currentPage} / {Math.ceil(
+                  totalComments / PAGE_SIZE)}</span>
+              <button onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage >= Math.ceil(
+                          totalComments / PAGE_SIZE)}>다음
+              </button>
             </div>
+          </div>
+          <div className="form-buttons">
+            <button type="button" className="back-btn"
+                    onClick={handleBack}>뒤로가기
+            </button>
           </div>
         </div>
       </div>
