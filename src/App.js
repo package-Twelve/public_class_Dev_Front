@@ -1,5 +1,6 @@
+import logo from './logo.svg';
 import './App.css';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,8 +15,10 @@ import CodeReviewDetail from './codereview/CodeReviewDetail';
 import CodeReviewEdit from './codereview/CodeReviewEdit';
 import UpdateMypage from './user/UpdateMyPage';
 import UpdatePassword from './user/UpdatePassword';
-import TeamMatch from "./team/TeamMatch";
-import MyTeamPage from "./team/MyTeamPage";
+import WritePost from "./communities/WritePost";
+import DetailComponent from "./communities/CommunityDetail";
+import CommunityFeed from "./communities/CommunityFeed";
+
 
 function App() {
   useEffect(() => {
@@ -29,56 +32,60 @@ function App() {
   return (
       <BrowserRouter>
         <Routes>
-          <Route path='/signup' element={<Signup/>}/>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
           <Route path="/" element={
             <PrivateRoute>
-              <FirstPage/>
-            </PrivateRoute>
-          }/>
-          <Route path="/mypage" element={
-            <PrivateRoute>
-              <Mypage/>
-            </PrivateRoute>
-          }/>
-          <Route path="/mypage/update" element={
-            <PrivateRoute>
-              <UpdateMypage/>
-            </PrivateRoute>
-          }/>
-          <Route path="/mypage/update/password" element={
-            <PrivateRoute>
-              <UpdatePassword/>
-            </PrivateRoute>
-          }/>
-          <Route path="/codereviews" element={
-            <PrivateRoute>
-              <CodeReview/>
-            </PrivateRoute>
-          }/>
-          <Route path="/codereviews/write" element={
-            <PrivateRoute>
-              <CodeReviewWrite/>
-            </PrivateRoute>
-          }/>
-          <Route path="/codereviews/:id" element={
-            <PrivateRoute>
-              <CodeReviewDetail/>
-            </PrivateRoute>
-          }/>
-          <Route path="/codereviews/:id/edit" element={
-            <PrivateRoute>
-              <CodeReviewEdit/>
-            </PrivateRoute>
-          }/>
-          <Route path="/teams/match" element={
-            <PrivateRoute>
-              <TeamMatch />
+              <FirstPage />
             </PrivateRoute>
           } />
-          <Route path="/teams/myteam/*" element={
+          <Route path="/mypage" element={
             <PrivateRoute>
-              <MyTeamPage />
+              <Mypage />
+            </PrivateRoute>
+          } />
+          <Route path="/mypage/update" element={
+            <PrivateRoute>
+              <UpdateMypage />
+            </PrivateRoute>
+          } />
+          <Route path="/mypage/update/password" element={
+            <PrivateRoute>
+              <UpdatePassword />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews" element={
+            <PrivateRoute>
+              <CodeReview />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews/write" element={
+            <PrivateRoute>
+              <CodeReviewWrite />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews/:id" element={
+            <PrivateRoute>
+              <CodeReviewDetail />
+            </PrivateRoute>
+          } />
+          <Route path="/codereviews/:id/edit" element={
+            <PrivateRoute>
+              <CodeReviewEdit />
+            </PrivateRoute>
+          } />
+          <Route path="/community" element={
+            <PrivateRoute>
+              <CommunityFeed/>
+            </PrivateRoute>
+          } />
+          <Route path="/community/post/:id" element={<PrivateRoute>
+            <DetailComponent />
+          </PrivateRoute>
+          }/>
+          <Route path="/community/write" element={
+            <PrivateRoute>
+              <WritePost/>
             </PrivateRoute>
           } />
         </Routes>
