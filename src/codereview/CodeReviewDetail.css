@@ -1,7 +1,7 @@
 /* CSS 추가 */
 .code-review-detail-container {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'LINESeedKR-Bd', sans-serif;
 }
 
 .white-box {
@@ -24,6 +24,7 @@
 
 .edit-button,
 .delete-button {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   margin-left: 10px;
   padding: 5px 10px;
   border: none;
@@ -178,6 +179,7 @@
 }
 
 .back-btn {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -195,6 +197,7 @@
 }
 
 .submit-comment-button {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   background-color: #28a745;
   color: #fff;
   border: none;
