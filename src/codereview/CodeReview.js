@@ -18,7 +18,7 @@ const CodeReview = () => {
   }, [currentPage, searchCategory]);
 
   const fetchCodeReviews = async (page, category = '') => {
-    let url = 'http://localhost:8080/api/codereviews';
+    let url = '/api/codereviews';
     if (category) {
       url += `/search?category=${category}&page=${page}`;
     } else {

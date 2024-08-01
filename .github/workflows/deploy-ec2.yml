@@ -51,3 +51,5 @@ jobs:
             sudo docker run -d -p 8081:80 --name publicclassdev-front ${{ secrets.DOCKERHUB_USERNAME }}/publicclassdev-front:latest
 
             docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" | grep -v "latest" | awk '{print $2}' | xargs -r docker rmi -f
+           
+            docker network connect app-network publicclassdev-front
