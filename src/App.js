@@ -8,16 +8,6 @@ import Signup from './user/Signup';
 import Login from './user/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
-import Mypage from './Users/Mypage';
-import CodeReview from "./CodeReview/CodeReview";
-import CodeReviewWrite from './CodeReview/CodeReviewWrite';
-import CodeReviewDetail from './CodeReview/CodeReviewDetail';
-import CodeReviewEdit from './CodeReview/CodeReviewEdit';
-import UpdateMypage from './Users/UpdateMyPage';
-import UpdatePassword from './Users/UpdatePassword';
-import WritePost from "./communities/WritePost";
-import DetailComponent from "./communities/CommunityDetail";
-import CommunityFeed from "./communities/CommunityFeed";
 import Mypage from './user/Mypage';
 import CodeReview from "./codereview/CodeReview";
 import CodeReviewWrite from './codereview/CodeReviewWrite';
@@ -25,6 +15,10 @@ import CodeReviewDetail from './codereview/CodeReviewDetail';
 import CodeReviewEdit from './codereview/CodeReviewEdit';
 import UpdateMypage from './user/UpdateMyPage';
 import UpdatePassword from './user/UpdatePassword';
+import WritePost from "./communities/WritePost";
+import DetailComponent from "./communities/CommunityDetail";
+import CommunityFeed from "./communities/CommunityFeed";
+
 
 function App() {
   useEffect(() => {
