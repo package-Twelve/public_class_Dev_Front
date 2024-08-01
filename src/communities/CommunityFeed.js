@@ -48,23 +48,23 @@ function CommunityFeed() {
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    const fetchPopularKeywords = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/community/searchRank');
-        if (response.data && Array.isArray(response.data.data)) {
-          setPopularKeywords(response.data.data);
-        } else {
-          console.error('Unexpected data format for popular keywords');
-        }
-      } catch (err) {
-        console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
-        if (err.response && err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-          await reissueToken(err);
-        }
+  const fetchPopularKeywords = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/community/searchRank');
+      if (response.data && Array.isArray(response.data.data)) {
+        setPopularKeywords(response.data.data);
+      } else {
+        console.error('Unexpected data format for popular keywords');
       }
-    };
+    } catch (err) {
+      console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
+      if (err.response && err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
+        await reissueToken(err);
+      }
+    }
+  };
 
+  useEffect(() => {
     fetchPopularKeywords();
 
     const intervalId = setInterval(fetchPopularKeywords, 1800000);
@@ -77,8 +77,8 @@ function CommunityFeed() {
     if (!searchTerm.trim()) {
       alert('검색어를 입력해 주세요.');
       return;
-
     }
+
     try {
       setLoading(true);
       const response = await axios.get('http://localhost:8080/api/community/search', {
@@ -100,6 +100,7 @@ function CommunityFeed() {
     } finally {
       setLoading(false);
     }
+    fetchPopularKeywords();
   };
 
   const handleCategoryChange = (event) => {
