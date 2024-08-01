@@ -78,9 +78,9 @@ const Mypage = () => {
                     </div>
                 </div>
                 <div className={style.stats}>
-                    <div class={style["style-item"]}>
-                        <div class={style["stat-value"]}>{point.point}</div>
+                    <div class={style["stat-item"]}>
                         <div class={style["stat-label"]}>포인트</div>
+                        <div class={style["stat-value"]}>{point.point}</div>
                     </div>
                 </div>
                 <div className={style.section}>
