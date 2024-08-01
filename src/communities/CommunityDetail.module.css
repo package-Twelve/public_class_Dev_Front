@@ -1,0 +1,122 @@
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5;
+}
+
+/* Main Content Styles */
+.article-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 150px auto; /* Center the container horizontally */
+  width: 700px;
+}
+
+.article-header {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.article-header h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.article-info {
+  font-size: 14px;
+  color: #65676b;
+}
+
+.article-content {
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* Post Actions (Edit/Delete) */
+.post-actions {
+  margin-top: 20px;
+}
+
+.post-actions button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #0056b3;
+  width: 150px;
+  color: black;
+}
+
+.post-actions .edit-button {
+  background-color: #007bff;
+}
+
+.post-actions .delete-button {
+  background-color: #dc3545;
+}
+
+.post-actions button:hover {
+  opacity: 0.9;
+}
+
+/* Comments Section Styles */
+.comments-section {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.comment-form button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #42b72a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.comment-form button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.comments {
+  margin-top: 20px;
+}
+
+.comment {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.comment-content {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.comment-content:empty::before {
+  content: 'No Content';
+  color: #aaa;
+}
+
+.comment button{
+  background-color: #cccccc;
+  color: black;
+  width: 100px;
+}

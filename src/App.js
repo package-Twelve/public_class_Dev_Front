@@ -15,6 +15,10 @@ import CodeReviewDetail from './codereview/CodeReviewDetail';
 import CodeReviewEdit from './codereview/CodeReviewEdit';
 import UpdateMypage from './user/UpdateMyPage';
 import UpdatePassword from './user/UpdatePassword';
+import WritePost from "./communities/WritePost";
+import DetailComponent from "./communities/CommunityDetail";
+import CommunityFeed from "./communities/CommunityFeed";
+
 
 function App() {
   useEffect(() => {
@@ -68,6 +72,20 @@ function App() {
           <Route path="/codereviews/:id/edit" element={
             <PrivateRoute>
               <CodeReviewEdit />
+            </PrivateRoute>
+          } />
+          <Route path="/community" element={
+            <PrivateRoute>
+              <CommunityFeed/>
+            </PrivateRoute>
+          } />
+          <Route path="/community/post/:id" element={<PrivateRoute>
+            <DetailComponent />
+          </PrivateRoute>
+          }/>
+          <Route path="/community/write" element={
+            <PrivateRoute>
+              <WritePost/>
             </PrivateRoute>
           } />
         </Routes>
