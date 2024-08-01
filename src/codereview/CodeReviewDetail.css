@@ -1,4 +1,6 @@
 /* CSS 추가 */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
 .code-review-detail-container {
   padding: 20px;
   font-family: 'LINESeedKR-Bd', sans-serif;
@@ -67,7 +69,7 @@
 .detail-code pre {
   background-color: black;
   color: white;
-  font-family: 'Source Code Pro', monospace; /* Google Fonts에서 가져온 폰트를 사용 */
+  font-family: 'Source Code Pro', monospace !important; /* Google Fonts에서 가져온 폰트를 사용 */
   padding:30px;
   border-radius: 5px;
   overflow-x: auto;
