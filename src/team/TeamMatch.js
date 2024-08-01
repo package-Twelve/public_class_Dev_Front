@@ -1,60 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Nav from '../Nav';
-import './TeamMatch.module.css';
+import reissueToken from '../reissueToken';
+import style from './TeamMatch.module.css'; // CSS Module import
 
 const TeamMatch = () => {
+  const [team, setTeam] = useState(null);
+  const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [isMatching, setIsMatching] = useState(false);
+
+  const checkUserTeamStatus = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    console.log('Access Token:', accessToken); // 토큰을 출력하여 확인
+
+    try {
+      const response = await axios.get('http://localhost:8080/api/teams/myteam', {
+        headers: {
+          Authorization: `${accessToken}`
+        }
+      });
+      console.log('Response:', response);
+      setTeam(response.data.data);
+    } catch (error) {
+      console.error('Error checking user team status:', error);
+      if (error.response && error.response.status === 403) {
+        // 권한이 없는 경우 토큰 재발급 시도
+        await reissueToken(error);
+      } else {
+        setError('팀 상태 확인에 실패했습니다. 다시 시도해 주세요.');
+      }
+    }
+  };
+
+  const handleCreateTeam = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      console.log('Creating team...');
+      const response = await axios.post('http://localhost:8080/api/teams/create', {}, {
+        headers: {
+          Authorization: `${accessToken}`
+        }
+      });
+      console.log('Response:', response);
+      setTeam(response.data.data);
+      alert('팀이 성공적으로 생성되었습니다.');
+    } catch (error) {
+      console.error('Error creating team:', error);
+      if (error.response && error.response.status === 403) {
+        // 권한이 없는 경우 토큰 재발급 시도
+        await reissueToken(error);
+      } else {
+        alert('팀 생성에 실패했습니다. 다시 시도해 주세요.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
-    const applyForMatch = async () => {
-      if (isMatching) {
-        return; // 이미 매칭 중인 경우, 추가 요청을 방지
-      }
+    checkUserTeamStatus();
+  }, []);
 
-      setIsMatching(true); // 매칭 시작
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
-      try {
-        const response = await axios.post(
-            'http://localhost:8080/api/teams/match',
-            null,
-            {
-              headers: {
-                Authorization: localStorage.getItem('accessToken')
-              }
-            }
-        );
-
-        if (response.data && response.data.statusCode === 200) {
-          alert(response.data.message);
-          navigate(`/teams/myteam`);
-        } else {
-          throw new Error('응답 데이터가 유효하지 않습니다.');
-        }
-      } catch (error) {
-        console.error('팀 매칭 신청 실패:', error);
-        alert('팀 매칭 신청에 실패했습니다. 나중에 다시 시도해 주세요.');
-      } finally {
-        setLoading(false);
-        setIsMatching(false); // 매칭 완료
-      }
-    };
-
-    applyForMatch();
-  }, [navigate, isMatching]);
+  if (!team) {
+    return (
+        <div className={style.container}>
+          <p>팀 매칭 중...</p>
+          <button onClick={handleCreateTeam} disabled={isSubmitting}>팀 생성하기</button>
+        </div>
+    );
+  }
 
   return (
-      <>
-        <Nav />
-        <div className="team-match-container">
-          <div className="white-box">
-            <h2>팀 매칭 중...</h2>
-          </div>
-        </div>
-      </>
+      <div className={style.container}>
+        <h1>팀 매칭 성공</h1>
+        <h2>팀 이름: {team.name}</h2>
+        <ul>
+          {team.members.map(member => (
+              <li key={member.id}>{member.name}</li>
+          ))}
+        </ul>
+      </div>
   );
 };
 

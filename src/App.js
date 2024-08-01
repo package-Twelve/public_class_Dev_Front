@@ -1,6 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,7 +16,8 @@ import UpdatePassword from './user/UpdatePassword';
 import WritePost from "./communities/WritePost";
 import DetailComponent from "./communities/CommunityDetail";
 import CommunityFeed from "./communities/CommunityFeed";
-
+import TeamMatch from './team/TeamMatch';
+import MyTeamPage from './team/MyTeamPage';
 
 function App() {
   useEffect(() => {
@@ -86,6 +85,16 @@ function App() {
           <Route path="/community/write" element={
             <PrivateRoute>
               <WritePost/>
+            </PrivateRoute>
+          } />
+          <Route path="/match" element={
+            <PrivateRoute>
+              <TeamMatch />
+            </PrivateRoute>
+          } />
+          <Route path="/myteam" element={
+            <PrivateRoute>
+              <MyTeamPage />
             </PrivateRoute>
           } />
         </Routes>
