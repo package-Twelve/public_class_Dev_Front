@@ -10,26 +10,32 @@ const CodeRunPage = () => {
   const [output, setOutput] = useState('');
   const [codeRuns, setCodeRuns] = useState([]);
 
+  useEffect(() => {
+    fetchCodeRuns();
+  }, [teamsId]);
+
   const fetchCodeRuns = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/coderuns/myteam/runs`);
+      const response = await axios.get(`http://localhost:8080/api/coderuns/${teamsId}/runs`, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`
+        }
+      });
       setCodeRuns(response.data.data);
     } catch (error) {
       console.error('Failed to fetch code runs:', error);
     }
   };
 
-  useEffect(() => {
-    if (teamsId) {
-      fetchCodeRuns();
-    }
-  }, [teamsId]);
-
   const handleRunCode = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/coderuns/myteam/1/runs`, {
+      const response = await axios.post(`http://localhost:8080/api/coderuns/${teamsId}/1/runs`, {
         code,
         language,
+      }, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`
+        }
       });
       setOutput(response.data.data.result);
       fetchCodeRuns();

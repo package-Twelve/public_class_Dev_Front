@@ -1,0 +1,100 @@
+/* CodeKatasPage.module.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 1.5em;
+  color: white;
+}
+
+.nav-items {
+  display: flex;
+}
+
+.nav-items button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.nav-items button:hover {
+  background-color: #003f7f;
+}
+
+.logout {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background-color: #cc0000;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.leftSection {
+  width: 65%;
+}
+
+.section {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.codeBox, .taskBox {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+pre {
+  margin: 0;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.navButtons button {
+  margin-right: 10px;
+}

@@ -18,9 +18,7 @@ import DetailComponent from "./communities/CommunityDetail";
 import CommunityFeed from "./communities/CommunityFeed";
 import TeamMatch from './team/TeamMatch';
 import MyTeamPage from './team/MyTeamPage';
-import TodayCodeKata from './codekata/TodayCodeKata';
-import CreateCodeKata from './codekata/CreateCodeKata';
-import ManageCodeKatas from './codekata/ManageCodeKatas';
+import CodeKatasPage from './codekata/CodeKatasPage';
 
 function App() {
   useEffect(() => {
@@ -31,6 +29,7 @@ function App() {
       axios.defaults.headers.common['Refresh'] = `${refreshToken}`;
     }
   }, []);
+
   return (
       <BrowserRouter>
         <Routes>
@@ -78,7 +77,7 @@ function App() {
           } />
           <Route path="/community" element={
             <PrivateRoute>
-              <CommunityFeed/>
+              <CommunityFeed />
             </PrivateRoute>
           } />
           <Route path="/community/post/:id" element={<PrivateRoute>
@@ -102,17 +101,7 @@ function App() {
           } />
           <Route path="/codekatas/today" element={
             <PrivateRoute>
-              <TodayCodeKata />
-            </PrivateRoute>
-          } />
-          <Route path="/codekatas/create" element={
-            <PrivateRoute>
-              <CreateCodeKata />
-            </PrivateRoute>
-          } />
-          <Route path="/codekatas/manage" element={
-            <PrivateRoute>
-              <ManageCodeKatas />
+              <CodeKatasPage />
             </PrivateRoute>
           } />
         </Routes>

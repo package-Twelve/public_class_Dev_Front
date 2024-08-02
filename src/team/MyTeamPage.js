@@ -37,6 +37,16 @@ const MyTeamPage = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      // If date is invalid, return today's date
+      const today = new Date();
+      return `${today.toLocaleDateString()} ${today.toLocaleTimeString()}`;
+    }
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  };
+
   return (
       <>
         <Nav />
@@ -52,7 +62,7 @@ const MyTeamPage = () => {
                           <li key={index}>
                             <span>{member.name}</span>
                             <span>{member.rank}</span>
-                            <span>{new Date(member.joinedAt).toLocaleDateString()} {new Date(member.joinedAt).toLocaleTimeString()}</span>
+                            <span>{formatDate(member.joinedAt)}</span>
                           </li>
                       ))}
                     </ul>

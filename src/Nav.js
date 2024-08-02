@@ -5,6 +5,7 @@ import axios from "axios";
 
 function Nav() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +31,19 @@ function Nav() {
     window.location.reload();
   };
 
+  const checkAdminRole = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/users/me', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+      setIsAdmin(response.data.data.roles.includes("ROLE_ADMIN"));
+    } catch (error) {
+      console.error('Failed to fetch user role:', error);
+    }
+  };
+
   const handleTeamMatch = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/teams/create');
@@ -49,8 +63,21 @@ function Nav() {
         <Link to="/codereviews">
           <button>Code Review</button>
         </Link>
+        <Link to="/codekatas/today">
+          <button>오늘의 코드카타</button>
+        </Link>
         {isAuthenticated ? (
             <>
+              {isAdmin && (
+                  <>
+                    <Link to="/codekatas/create">
+                      <button>코드카타 작성</button>
+                    </Link>
+                    <Link to="/codekatas/manage">
+                      <button>코드카타 관리</button>
+                    </Link>
+                  </>
+              )}
               <button onClick={handleTeamMatch}>팀 매칭</button>
               <Link to="/myteam">
                 <button>나의 팀</button>
