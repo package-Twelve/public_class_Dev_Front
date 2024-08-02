@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import style from './Community.module.css'; // CSS Module import
@@ -16,6 +16,7 @@ function CommunityFeed() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
   const navigate = useNavigate();
+  const searchInputRef = useRef(null);
 
   const categoryMapping = {
     INFO: '정보',
@@ -27,7 +28,7 @@ function CommunityFeed() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/community', { timeout: 10000 });
+        const response = await axios.get('/api/community', { timeout: 10000 });
         if (response.data && response.data.data) {
           setAllPosts(response.data.data || []);
           setPosts(response.data.data || []);
@@ -47,33 +48,32 @@ function CommunityFeed() {
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    const fetchPopularKeywords = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/community/searchRank');
-        if (response.data && Array.isArray(response.data.data)) {
-          setPopularKeywords(response.data.data);
-        } else {
-          console.error('Unexpected data format for popular keywords');
-        }
-      } catch (err) {
-        console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
-        if (err.response && err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-          await reissueToken(err);
-        }
+  const fetchPopularKeywords = async () => {
+    try {
+      const response = await axios.get('/api/community/searchRank');
+      if (response.data && Array.isArray(response.data.data)) {
+        setPopularKeywords(response.data.data);
+      } else {
+        console.error('Unexpected data format for popular keywords');
       }
-    };
+    } catch (err) {
+      console.error('인기 검색어를 가져오는 데 실패했습니다:', err.message);
+      if (err.response && err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
+        await reissueToken(err);
+      }
+    }
+  };
 
-    fetchPopularKeywords(); // Fetch initially
+  useEffect(() => {
+    fetchPopularKeywords();
 
-    // Set up interval to fetch popular keywords every 30 minutes
-    const intervalId = setInterval(fetchPopularKeywords, 1800000); // 30 minutes in milliseconds
+    const intervalId = setInterval(fetchPopularKeywords, 1800000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
   const handleSearch = async () => {
+    const searchTerm = searchInputRef.current.value;
     if (!searchTerm.trim()) {
       alert('검색어를 입력해 주세요.');
       return;
@@ -81,7 +81,7 @@ function CommunityFeed() {
 
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8080/api/community/search', {
+      const response = await axios.get('/api/community/search', {
         params: { keyword: searchTerm.trim() }
       });
       if (response.data && Array.isArray(response.data.data)) {
@@ -100,6 +100,7 @@ function CommunityFeed() {
     } finally {
       setLoading(false);
     }
+    fetchPopularKeywords();
   };
 
   const handleCategoryChange = (event) => {
@@ -149,8 +150,7 @@ function CommunityFeed() {
                   type="text"
                   className={style["search-bar"]}
                   placeholder="검색할 내용을 입력해주세요"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)} // Update the searchTerm state only
+                  ref={searchInputRef}
               />
               <button className={style["search-button"]} onClick={handleSearch}>검색</button>
             </div>
@@ -215,7 +215,7 @@ function CommunityFeed() {
               <ul>
                 {popularKeywords.map((keyword, index) => (
                     <li key={index} className={style["ranking-item"]}>
-                      <span className={style["ranking-index"]}>{index + 1}</span>
+                      <span className={style["ranking-index"]}>{index + 1}위</span>
                       <span className={style["ranking-keyword"]}>{keyword.keyword}</span>
                     </li>
                 ))}

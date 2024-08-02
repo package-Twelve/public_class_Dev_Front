@@ -25,7 +25,7 @@ const WritePost = () => {
       const backendCategory = categoryMapping[category];
       const postData = { title, content, category: backendCategory };
       try {
-        const response = await axios.post('http://localhost:8080/api/community', postData, {
+        const response = await axios.post('/api/community', postData, {
           headers: {
             Authorization: `${accessToken}`
           }
@@ -33,7 +33,7 @@ const WritePost = () => {
         console.log(response);
         if (response.status === 200 || response.status === 201) {
           alert('게시글이 성공적으로 등록되었습니다.');
-          navigate('/community'); // Use navigate for routing instead of window.location.href
+          navigate('/community');
         } else {
           alert('게시글 등록에 실패했습니다.');
         }
@@ -53,7 +53,7 @@ const WritePost = () => {
 
   const handleCancel = () => {
     if (window.confirm('작성 중인 내용이 저장되지 않습니다. 정말 취소하시겠습니까?')) {
-      navigate('/community'); // Use navigate for routing instead of window.location.href
+      navigate('/community');
     }
   };
 

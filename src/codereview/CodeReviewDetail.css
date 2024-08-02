@@ -1,7 +1,9 @@
 /* CSS 추가 */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
 .code-review-detail-container {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'LINESeedKR-Bd', sans-serif;
 }
 
 .white-box {
@@ -16,6 +18,24 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-container h2{
+  color: #1d2129;
+}
+
+.header-category{
+  color: #65676b;
+  margin: 5px 0; /* Space around the category element */
+}
+
+.category-highlight{
+  color: #0A8A8A;
+}
+
+.header-info{
+  color: #65676b;
 }
 
 .action-buttons {
@@ -24,6 +44,7 @@
 
 .edit-button,
 .delete-button {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   margin-left: 10px;
   padding: 5px 10px;
   border: none;
@@ -57,6 +78,7 @@
 
 .detail-contents {
   margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .contents-text {
@@ -66,15 +88,18 @@
 .detail-code pre {
   background-color: black;
   color: white;
-  font-family: 'Source Code Pro', monospace; /* Google Fonts에서 가져온 폰트를 사용 */
+  font-family: 'Source Code Pro', monospace !important; /* Google Fonts에서 가져온 폰트를 사용 */
   padding:30px;
   border-radius: 5px;
   overflow-x: auto;
 }
 
+.new-comment-section{
+  margin-bottom: 30px;
+}
 
 .comments-section {
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .comments-section h3 {
@@ -178,6 +203,7 @@
 }
 
 .back-btn {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -194,7 +220,21 @@
   margin-top: 20px;
 }
 
+.comment-item{
+  border-bottom: 1px solid #ddd;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.comment-name {
+  color: #0056b3;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
 .submit-comment-button {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   background-color: #28a745;
   color: #fff;
   border: none;
@@ -204,3 +244,4 @@
   width: 100px;
   height: 65px;
 }
+
