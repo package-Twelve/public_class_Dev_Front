@@ -23,6 +23,9 @@ import CodeKataDetail from './codekata/CodeKataDetail';
 import TodayCodeKata from './codekata/TodayCodeKata';
 import CodeKataCreate from './codekata/CodeKataCreate';
 import CodeKataForm from './codekata/CodeKataForm';
+import WinnersPage from './winner/WinnersPage';
+import WinnerDetailPage from './winner/WinnerDetailPage';
+import Nav from './Nav';
 
 function App() {
   useEffect(() => {
@@ -36,6 +39,7 @@ function App() {
 
   return (
       <BrowserRouter>
+        <Nav />
         <Routes>
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
@@ -126,6 +130,16 @@ function App() {
           <Route path="/codekatas/:id/edit" element={
             <PrivateRoute>
               <CodeKataForm />
+            </PrivateRoute>
+          } />
+          <Route path="/winner" element={
+            <PrivateRoute>
+              <WinnersPage />
+            </PrivateRoute>
+          } />
+          <Route path="/winners/:id" element={
+            <PrivateRoute>
+              <WinnerDetailPage />
             </PrivateRoute>
           } />
         </Routes>

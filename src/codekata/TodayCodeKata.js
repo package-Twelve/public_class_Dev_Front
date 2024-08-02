@@ -43,7 +43,7 @@ const TodayCodeKata = () => {
           <h2>오늘의 코드카타</h2>
           {todayCodeKata ? (
               <div className={style.todayCodeKata}>
-                <h3>오늘의 코드카타</h3>
+                <h3>{todayCodeKata.title}</h3>
                 <p>{todayCodeKata.contents}</p>
                 <button onClick={handleTeamMatch}>코드카타 참여하기</button>
               </div>

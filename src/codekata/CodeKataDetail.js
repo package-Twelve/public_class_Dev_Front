@@ -1,3 +1,4 @@
+// CodeKataDetail.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -27,7 +28,7 @@ const CodeKataDetail = () => {
   }, [id]);
 
   const handleEditCodeKata = () => {
-    navigate(`/codekatas/${id}/edit`, { state: { contents: codeKata.contents } });
+    navigate(`/codekatas/${id}/edit`, { state: { title: codeKata.title, contents: codeKata.contents } });
   };
 
   const handleDeleteCodeKata = async () => {
@@ -54,7 +55,7 @@ const CodeKataDetail = () => {
           <h2>코드카타 상세 페이지</h2>
           {codeKata ? (
               <div className={style.detailBox}>
-                <h3>코드카타</h3>
+                <h3>{codeKata.title}</h3> {/* 코드카타 제목 표시 */}
                 <p>{codeKata.contents}</p>
                 <div className={style.buttons}>
                   <button onClick={handleEditCodeKata}>수정</button>

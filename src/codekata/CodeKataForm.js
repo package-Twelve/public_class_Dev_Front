@@ -1,3 +1,4 @@
+// CodeKataForm.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -8,13 +9,37 @@ const CodeKataForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
+  const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
 
   useEffect(() => {
-    if (location.state && location.state.contents) {
-      setContents(location.state.contents);
+    if (location.state) {
+      if (location.state.title) {
+        setTitle(location.state.title);
+      }
+      if (location.state.contents) {
+        setContents(location.state.contents);
+      }
+    } else if (id) {
+      // Fetch existing data if editing
+      const fetchCodeKata = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/codekatas/${id}`, {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`
+            }
+          });
+          const data = response.data.data;
+          setTitle(data.title);
+          setContents(data.contents);
+        } catch (error) {
+          console.error('코드카타를 불러오는데 실패했습니다:', error);
+        }
+      };
+
+      fetchCodeKata();
     }
-  }, [location.state]);
+  }, [location.state, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +52,7 @@ const CodeKataForm = () => {
       await axios({
         method,
         url,
-        data: { contents },
+        data: { title, contents },
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`
         }
@@ -46,6 +71,14 @@ const CodeKataForm = () => {
         <div className={style.container}>
           <h2>{id ? '코드카타 수정하기' : '새 코드카타 작성하기'}</h2>
           <form className={style.form} onSubmit={handleSubmit}>
+            <label htmlFor="title">제목</label>
+            <input
+                id="title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+            />
             <label htmlFor="contents">내용</label>
             <textarea
                 id="contents"
