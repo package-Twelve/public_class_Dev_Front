@@ -17,7 +17,10 @@ COPY . .
 RUN npm run build
 
 # 2단계: 프로덕션 단계
-FROM nginx:alpine
+FROM nginx:latest
+
+# 필요한 디렉토리 생성 (이미지 내에서 존재해야 함)
+RUN mkdir -p /usr/share/nginx/html
 
 # 빌드 단계에서 생성된 파일을 Nginx로 복사
 COPY --from=build /app/build /usr/share/nginx/html
