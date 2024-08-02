@@ -23,3 +23,19 @@ button {
     color: #37474F;
     width: auto;
 }
+.post {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+  
+  .post h3 {
+    margin: 10px;
+    text-align: left;
+  }
+  
+  .post-info {
+    text-align: right;
+    margin: 10px;
+    color: #65676b;
+    font-size: 0.9em;
+  }
