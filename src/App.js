@@ -1,6 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,7 +16,16 @@ import UpdatePassword from './user/UpdatePassword';
 import WritePost from "./communities/WritePost";
 import DetailComponent from "./communities/CommunityDetail";
 import CommunityFeed from "./communities/CommunityFeed";
-
+import TeamMatch from './team/TeamMatch';
+import MyTeamPage from './team/MyTeamPage';
+import CodeKatasPage from './codekata/CodeKatasPage';
+import CodeKataDetail from './codekata/CodeKataDetail';
+import TodayCodeKata from './codekata/TodayCodeKata';
+import CodeKataCreate from './codekata/CodeKataCreate';
+import CodeKataForm from './codekata/CodeKataForm';
+import WinnersPage from './winner/WinnersPage';
+import WinnerDetailPage from './winner/WinnerDetailPage';
+import Nav from './Nav';
 
 function App() {
   useEffect(() => {
@@ -29,8 +36,10 @@ function App() {
       axios.defaults.headers.common['Refresh'] = `${refreshToken}`;
     }
   }, []);
+
   return (
       <BrowserRouter>
+        <Nav />
         <Routes>
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
@@ -76,7 +85,7 @@ function App() {
           } />
           <Route path="/community" element={
             <PrivateRoute>
-              <CommunityFeed/>
+              <CommunityFeed />
             </PrivateRoute>
           } />
           <Route path="/community/post/:id" element={<PrivateRoute>
@@ -86,6 +95,51 @@ function App() {
           <Route path="/community/write" element={
             <PrivateRoute>
               <WritePost/>
+            </PrivateRoute>
+          } />
+          <Route path="/match" element={
+            <PrivateRoute>
+              <TeamMatch />
+            </PrivateRoute>
+          } />
+          <Route path="/myteam/*" element={
+            <PrivateRoute>
+              <MyTeamPage />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/today" element={
+            <PrivateRoute>
+              <TodayCodeKata />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas" element={
+            <PrivateRoute>
+              <CodeKatasPage />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/:id" element={
+            <PrivateRoute>
+              <CodeKataDetail />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/create" element={
+            <PrivateRoute>
+              <CodeKataCreate />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/:id/edit" element={
+            <PrivateRoute>
+              <CodeKataForm />
+            </PrivateRoute>
+          } />
+          <Route path="/winner" element={
+            <PrivateRoute>
+              <WinnersPage />
+            </PrivateRoute>
+          } />
+          <Route path="/winners/:id" element={
+            <PrivateRoute>
+              <WinnerDetailPage />
             </PrivateRoute>
           } />
         </Routes>
