@@ -51,7 +51,7 @@ body {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  background-color: #0056b3;
+  background-color: #7FA1C3;
   width: 70px;
   height: 30px;
   color: black;
@@ -88,8 +88,8 @@ body {
   font-family: 'LINESeedKR-Bd', sans-serif;
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #42b72a;
-  color: white;
+  background-color: #E2DAD6;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -131,8 +131,6 @@ body {
   width: 70px;
 }
 
-
-
 .pagination {
   margin-top: 30px;
   display: flex;
@@ -156,4 +154,16 @@ body {
 
 .article-header h1{
   text-align: left;
+}
+
+.back-btn {
+  background-color: #fff; /* 배경색을 흰색으로 설정 */
+  color: #0F1035; /* 글자색을 파란색으로 설정 */
+  border: 2px solid #0F1035; /* 테두리 색상을 파란색으로 설정 */
+}
+
+.back-btn:hover {
+  background-color: gray; /* 배경색을 회색으로 설정 */
+  color: #fff; /* 글자색을 흰색으로 설정 */
+  border: 2px solid gray; /* 테두리 색상은 회색으로 설정 */
 }

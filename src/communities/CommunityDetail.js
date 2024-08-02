@@ -188,7 +188,7 @@ const DetailComponent = () => {
   };
 
   const handleBack = () => {
-    navigate('/codereviews'); // 뒤로가기 버튼 클릭 시 코드 리뷰 목록으로 이동
+    navigate('/community'); // 뒤로가기 버튼 클릭 시 코드 리뷰 목록으로 이동
   };
 
   if (error) {
@@ -270,8 +270,8 @@ const DetailComponent = () => {
               </button>
             </div>
           </div>
-          <div className="form-buttons">
-            <button type="button" className="back-btn"
+          <div className={style[["form-buttons"]]}>
+            <button type="button" className={style["back-btn"]}
                     onClick={handleBack}>뒤로가기
             </button>
           </div>
