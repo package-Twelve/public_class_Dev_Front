@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Nav from '../Nav';
 import './CodeReview.css';
+import reissueToken from "../reissueToken";
 
 const CodeReview = () => {
   const [codeReviews, setCodeReviews] = useState([]);
@@ -44,6 +45,9 @@ const CodeReview = () => {
       }
     } catch (error) {
       console.error('Error fetching code reviews:', error);
+      if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
+        await reissueToken(error);
+      }
     }
   };
 
