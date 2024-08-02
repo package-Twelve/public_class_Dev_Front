@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { useParams } from 'react-router-dom';
-import './ChatRoomPage.module.css';
+import style from './ChatRoomPage.module.css';
 
 const ChatRoomPage = () => {
   const { teamsId } = useParams();
@@ -57,8 +57,8 @@ const ChatRoomPage = () => {
   };
 
   return (
-      <div className="chat-room-page-container">
-        <div className="section">
+      <div className={style["chat-room-page-container"]}>
+        <div className={style.section}>
           <h3>라이브 채팅</h3>
           <ul>
             {chatMessages.map((message, index) => (

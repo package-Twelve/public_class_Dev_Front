@@ -55,7 +55,7 @@ const MyTeamPage = () => {
             {team ? (
                 <>
                   <h2 className={style["team-name"]}>{team.name}</h2>
-                  <div className={style["section"]}>
+                  <div className={style.section}>
                     <h3>참여 유저</h3>
                     <ul>
                       {team.teamMembers.map((member, index) => (
@@ -67,7 +67,7 @@ const MyTeamPage = () => {
                       ))}
                     </ul>
                   </div>
-                  <div className={style["tabs"]}>
+                  <div className={style.tabs}>
                     <button onClick={() => handleTabClick('team')}>팀 정보</button>
                     <button onClick={() => handleTabClick('coderuns')}>코드 실행</button>
                     <button onClick={() => handleTabClick('chatrooms')}>채팅방</button>
