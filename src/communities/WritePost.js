@@ -25,7 +25,7 @@ const WritePost = () => {
       const backendCategory = categoryMapping[category];
       const postData = { title, content, category: backendCategory };
       try {
-        const response = await axios.post('/api/community', postData, {
+        const response = await axios.post('http://localhost:8080/api/community', postData, {
           headers: {
             Authorization: `${accessToken}`
           }

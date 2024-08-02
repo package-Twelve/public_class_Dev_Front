@@ -5,7 +5,7 @@ import Nav from '../Nav'; // Nav 컴포넌트를 가져옵니다.
 import './CodeReviewEdit.css'; // CSS 파일을 따로 생성해서 스타일을 추가합니다.
 
 const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:8080/api',
   headers: {
     Authorization: `${localStorage.getItem('accessToken')}`
   }
