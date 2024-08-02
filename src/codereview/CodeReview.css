@@ -123,6 +123,8 @@ body {
   font-size: 16px;
 }
 
+
+
 .contents {
   color: gray;
 }
@@ -189,7 +191,7 @@ body {
 /* .item-category: 코드 리뷰 아이템의 카테고리 스타일 */
 .item-category {
   font-size: 14px;
-  color: gray;
+  color: #0C359E;
   font-weight: bold;
   margin-top: 10px;
   align-self: flex-end;

@@ -204,7 +204,7 @@ const CodeReviewDetail = () => {
               <p className="header-info">
                 작성자 : {name} | 작성일 : {new Date(createdAt).toLocaleString()}
               </p>
-              <p className="header-category">카테고리 : <span className="category-highlight">{category}</span></p>
+              <p className="header-category"><span className="category-highlight">{category}</span></p>
             </div>
 
             <div className="action-buttons">
