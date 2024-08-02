@@ -19,6 +19,10 @@ import CommunityFeed from "./communities/CommunityFeed";
 import TeamMatch from './team/TeamMatch';
 import MyTeamPage from './team/MyTeamPage';
 import CodeKatasPage from './codekata/CodeKatasPage';
+import CodeKataDetail from './codekata/CodeKataDetail';
+import TodayCodeKata from './codekata/TodayCodeKata';
+import CodeKataCreate from './codekata/CodeKataCreate';
+import CodeKataForm from './codekata/CodeKataForm';
 
 function App() {
   useEffect(() => {
@@ -101,7 +105,27 @@ function App() {
           } />
           <Route path="/codekatas/today" element={
             <PrivateRoute>
+              <TodayCodeKata />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas" element={
+            <PrivateRoute>
               <CodeKatasPage />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/:id" element={
+            <PrivateRoute>
+              <CodeKataDetail />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/create" element={
+            <PrivateRoute>
+              <CodeKataCreate />
+            </PrivateRoute>
+          } />
+          <Route path="/codekatas/:id/edit" element={
+            <PrivateRoute>
+              <CodeKataForm />
             </PrivateRoute>
           } />
         </Routes>

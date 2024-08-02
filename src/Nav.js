@@ -73,8 +73,8 @@ function Nav() {
                     <Link to="/codekatas/create">
                       <button>코드카타 작성</button>
                     </Link>
-                    <Link to="/codekatas/manage">
-                      <button>코드카타 관리</button>
+                    <Link to="/codekatas/all">
+                      <button>코드카타 조회</button>
                     </Link>
                   </>
               )}
