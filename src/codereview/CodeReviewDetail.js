@@ -6,7 +6,7 @@ import './CodeReviewDetail.css';
 import reissueToken from "../reissueToken";
 
 const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:8080/api',
   headers: {
     Authorization: `${localStorage.getItem('accessToken')}`
   }
@@ -27,7 +27,7 @@ const CodeReviewDetail = () => {
     const fetchReview = async () => {
       try {
         const response = await axios.get(
-            `/api/codereviews/${id}`);
+            `http://localhost:8080/api/codereviews/${id}`);
         setReview(response.data.data);
       } catch (error) {
         console.error('Error fetching the code review:', error);
@@ -48,7 +48,7 @@ const CodeReviewDetail = () => {
 
     try {
       const response = await axios.delete(
-          `/api/codereviews/${id}`);
+          `http://localhost:8080/api/codereviews/${id}`);
       if (response.status === 200) {
         alert(response.data.message);
         navigate('/codereviews');
@@ -70,7 +70,7 @@ const CodeReviewDetail = () => {
     try {
       // 서버에 LIKE 요청 보내기
       const response = await axios.post(
-          `/api/codereviews/${id}/comments/${commentId}/like`);
+          `http://localhost:8080/api/codereviews/${id}/comments/${commentId}/like`);
       if (response.status === 200) {
         await fetchReview(); // 댓글 상태 최신화
       } else {
@@ -89,7 +89,7 @@ const CodeReviewDetail = () => {
   const handleSaveClick = async (commentId) => {
     try {
       const response = await axios.put(
-          `/api/codereviews/${id}/comments/${commentId}`, {
+          `http://localhost:8080/api/codereviews/${id}/comments/${commentId}`, {
             contents: editedCommentContent,
           });
       if (response.status === 200) {
@@ -118,7 +118,7 @@ const CodeReviewDetail = () => {
     try {
       // 댓글 작성 요청
       const response = await axios.post(
-          `/api/codereviews/${id}/comments`, {
+          `http://localhost:8080/api/codereviews/${id}/comments`, {
             contents: newComment
           });
 
@@ -147,7 +147,7 @@ const CodeReviewDetail = () => {
 
     try {
       const response = await axios.delete(
-          `/api/codereviews/${id}/comments/${commentId}`);
+          `http://localhost:8080/api/codereviews/${id}/comments/${commentId}`);
       if (response.status === 200) {
         await fetchReview(); // 댓글 상태 최신화
         alert(response.data.message); // JSON 응답의 메시지를 알럿으로 표시
@@ -164,7 +164,7 @@ const CodeReviewDetail = () => {
   const fetchReview = async () => {
     try {
       const response = await axios.get(
-          `/api/codereviews/${id}`);
+          `http://localhost:8080/api/codereviews/${id}`);
       setReview(response.data.data);
     } catch (error) {
       console.error('Error fetching the code review:', error);
