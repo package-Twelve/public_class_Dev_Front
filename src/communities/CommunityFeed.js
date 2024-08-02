@@ -215,7 +215,7 @@ function CommunityFeed() {
               <ul>
                 {popularKeywords.map((keyword, index) => (
                     <li key={index} className={style["ranking-item"]}>
-                      <span className={style["ranking-index"]}>{index + 1}</span>
+                      <span className={style["ranking-index"]}>{index + 1}위</span>
                       <span className={style["ranking-keyword"]}>{keyword.keyword}</span>
                     </li>
                 ))}
