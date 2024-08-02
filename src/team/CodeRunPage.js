@@ -26,7 +26,7 @@ const CodeRunPage = () => {
   const fetchCodeRuns = async () => {
     try {
       const response = await axios.get(
-          `http://localhost:8080/api/coderuns/myteam/${teamsId}/runs`,
+          `/api/coderuns/myteam/${teamsId}/runs`,
           {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`,
@@ -43,7 +43,7 @@ const CodeRunPage = () => {
   const fetchTodayCodeKata = async () => {
     try {
       const response = await axios.get(
-          `http://localhost:8080/api/codekatas/today`,
+          `/api/codekatas/today`,
           {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`,
@@ -66,7 +66,7 @@ const CodeRunPage = () => {
 
     try {
       const response = await axios.post(
-          `http://localhost:8080/api/coderuns/myteam/${teamsId}/${todayCodeKata.id}/runs`,
+          `/api/coderuns/myteam/${teamsId}/${todayCodeKata.id}/runs`,
           {
             code,
             language,

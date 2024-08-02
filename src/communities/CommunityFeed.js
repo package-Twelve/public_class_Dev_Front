@@ -28,7 +28,7 @@ function CommunityFeed() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/community', { timeout: 10000 });
+        const response = await axios.get('/api/community', { timeout: 10000 });
         if (response.data && response.data.data) {
           setAllPosts(response.data.data || []);
           setPosts(response.data.data || []);
@@ -50,7 +50,7 @@ function CommunityFeed() {
 
   const fetchPopularKeywords = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/community/searchRank');
+      const response = await axios.get('/api/community/searchRank');
       if (response.data && Array.isArray(response.data.data)) {
         setPopularKeywords(response.data.data);
       } else {
@@ -81,7 +81,7 @@ function CommunityFeed() {
 
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8080/api/community/search', {
+      const response = await axios.get('/api/community/search', {
         params: { keyword: searchTerm.trim() }
       });
       if (response.data && Array.isArray(response.data.data)) {

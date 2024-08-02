@@ -12,7 +12,7 @@ const CodeKataCreate = () => {
 
   const handleCreate = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/codekatas/createcodekata', {
+      const response = await axios.post('/api/codekatas/createcodekata', {
         title,
         contents,
       }, {

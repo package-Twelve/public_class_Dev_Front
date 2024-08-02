@@ -11,7 +11,7 @@ const TodayCodeKata = () => {
   useEffect(() => {
     const fetchTodayCodeKata = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/codekatas/today');
+        const response = await axios.get('/api/codekatas/today');
         setTodayCodeKata(response.data.data);
       } catch (error) {
         console.error('오늘의 코드카타를 불러오는데 실패했습니다:', error);
@@ -23,7 +23,7 @@ const TodayCodeKata = () => {
 
   const handleTeamMatch = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/teams/create', {}, {
+      const response = await axios.post('/api/teams/create', {}, {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`
         }

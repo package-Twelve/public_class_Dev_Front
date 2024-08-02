@@ -13,7 +13,7 @@ const CodeKataDetail = () => {
   useEffect(() => {
     const fetchCodeKata = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/codekatas/${id}`, {
+        const response = await axios.get(`/api/codekatas/${id}`, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`
           }
@@ -34,7 +34,7 @@ const CodeKataDetail = () => {
   const handleDeleteCodeKata = async () => {
     if (window.confirm('코드카타를 삭제하시겠습니까?')) {
       try {
-        await axios.delete(`http://localhost:8080/api/codekatas/${id}`, {
+        await axios.delete(`/api/codekatas/${id}`, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`
           }

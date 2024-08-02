@@ -24,7 +24,7 @@ const CodeKataForm = () => {
       // Fetch existing data if editing
       const fetchCodeKata = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/codekatas/${id}`, {
+          const response = await axios.get(`/api/codekatas/${id}`, {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`
             }
@@ -44,8 +44,8 @@ const CodeKataForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = id
-        ? `http://localhost:8080/api/codekatas/${id}`
-        : 'http://localhost:8080/api/codekatas/createcodekata';
+        ? `/api/codekatas/${id}`
+        : '/api/codekatas/createcodekata';
     const method = id ? 'put' : 'post';
 
     try {

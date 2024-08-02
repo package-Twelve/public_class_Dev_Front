@@ -17,7 +17,7 @@ const UpdateMypage = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/users/profiles');
+                const response = await axios.get('/api/users/profiles');
                 setFormData({
                     ...formData,
                     "name" : response.data.data.name,
@@ -48,7 +48,7 @@ const UpdateMypage = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.patch('http://localhost:8080/users/profiles', {
+            const response = await axios.patch('/users/profiles', {
             name: formData.name,
             intro: formData.intro
             });
@@ -67,7 +67,7 @@ const UpdateMypage = () => {
                 delete axios.defaults.headers.common['Authorization'];
                 delete axios.defaults.headers.common['Refresh'];
                 try{
-                    const refreshResponse = await axios.post('http://localhost:8080/api/users/reissue-token', { refreshToken : refreshToken });
+                    const refreshResponse = await axios.post('/api/users/reissue-token', { refreshToken : refreshToken });
                     console.log(refreshResponse);
                     const accessToken = refreshResponse.data.data.accessToken;
                     const newRefreshToken = refreshResponse.data.data.refreshToken;

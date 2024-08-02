@@ -12,7 +12,7 @@ const ChatRoomPage = () => {
 
   useEffect(() => {
     const connect = () => {
-      const socket = new SockJS(`http://localhost:8080/api/teams/ws`);
+      const socket = new SockJS(`/api/teams/ws`);
       stompClient.current = Stomp.over(socket);
       stompClient.current.connect({}, onConnected, onError);
     };

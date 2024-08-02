@@ -13,7 +13,7 @@ const WinnerDetailPage = () => {
     const fetchWinner = async () => {
       try {
         const response = await axios.get(
-            `http://localhost:8080/api/winners/${id}`);
+            `/api/winners/${id}`);
         setWinner(response.data.data);
       } catch (error) {
         console.error('우승자 정보를 불러오는데 실패했습니다:', error);

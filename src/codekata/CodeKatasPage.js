@@ -14,7 +14,7 @@ const CodeKatasPage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/users/profiles', {
+        const response = await axios.get('/api/users/profiles', {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`
           }
@@ -31,7 +31,7 @@ const CodeKatasPage = () => {
 
     const fetchCodeKatas = async (page) => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/codekatas/all?page=${page}&size=6`, {
+        const response = await axios.get(`/api/codekatas/all?page=${page}&size=6`, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`
           }

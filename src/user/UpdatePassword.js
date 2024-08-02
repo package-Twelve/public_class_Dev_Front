@@ -30,7 +30,7 @@ const UpdatePassword = () => {
           }
 
         try {
-            const response = await axios.patch('http://localhost:8080/api/users/profiles/passwords', { password: formData.password });
+            const response = await axios.patch('/api/users/profiles/passwords', { password: formData.password });
             
             alert("code: " + response.data.statusCode + "\n" +
             "message: " + response.data.message + "\n"

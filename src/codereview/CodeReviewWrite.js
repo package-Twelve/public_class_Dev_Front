@@ -24,7 +24,7 @@ const CodeReviewWrite = () => {
 
     const accessToken = localStorage.getItem('accessToken');
     try {
-      const response = await axios.post('http://localhost:8080/api/codereviews', newReview, {
+      const response = await axios.post('/api/codereviews', newReview, {
         headers: {
           Authorization: `${accessToken}`
         }
@@ -36,7 +36,7 @@ const CodeReviewWrite = () => {
       // 알림 창에 message 표시
       alert(message);
       // 포인트 10 증가
-      const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+      const pointResponse = await axios.patch('/api/users/points', 
         {
           point : '10', 
           type : 'ADD'

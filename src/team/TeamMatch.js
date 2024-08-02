@@ -15,7 +15,7 @@ const TeamMatch = () => {
     console.log('Access Token:', accessToken);
 
     try {
-      const response = await axios.get('http://localhost:8080/api/teams/myteam',
+      const response = await axios.get('/api/teams/myteam',
           {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`
@@ -43,7 +43,7 @@ const TeamMatch = () => {
     try {
       console.log('Creating team...');
       const response = await axios.post(
-          'http://localhost:8080/api/teams/create', {}, {
+          '/api/teams/create', {}, {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`
             }
