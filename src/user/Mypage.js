@@ -16,6 +16,12 @@ const Mypage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const categoryMapping = {
+        INFO: '정보',
+        GOSSIP: '잡담',
+        RECRUIT: '취업',
+      };
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -52,6 +58,15 @@ const Mypage = () => {
         fetchProfile();
     }, []);
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+      };
+
+    const handlePostClick = (postId) => {
+        navigate(`/community/post/${postId}`);
+      };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
@@ -78,9 +93,9 @@ const Mypage = () => {
                     </div>
                 </div>
                 <div className={style.stats}>
-                    <div class={style["style-item"]}>
-                        <div class={style["stat-value"]}>{point.point}</div>
+                    <div class={style["stat-item"]}>
                         <div class={style["stat-label"]}>포인트</div>
+                        <div class={style["stat-value"]}>{point.point}</div>
                     </div>
                 </div>
                 <div className={style.section}>
@@ -88,7 +103,18 @@ const Mypage = () => {
                     <ul className={style.list}>
                         {postlist.length > 0 ? (
                             postlist.map((post) => (
-                                <li className={style["list-item"]}>{post.title}</li>
+                                <li className={style["list-item"]} onClick={() => handlePostClick(post.id)}>
+                                    <div
+                                        className={style.post}
+                                        key={post.id}
+                                    >
+                                        <h3>{post.title}</h3>
+                                        <p className={style["post-info"]}>
+                                        작성일: {formatDate(post.createdAt)} |
+                                        카테고리: {categoryMapping[post.category]}
+                                        </p>
+                                    </div>
+                                </li>
                             ))
                         ) : (
                             <li className={style["list-item"]}>최근 올린 게시글이 없습니다</li>

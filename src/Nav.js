@@ -30,9 +30,12 @@ function Nav() {
     };
     return (
         <div className={style["top-menu"]}>
-            <button onClick={() => alert('커뮤니티 기능은 준비 중입니다.')}>커뮤니티</button>
+            <Link to="/"><button>홈</button></Link>
+            <Link to="/community">
+                <button>커뮤니티</button>
+            </Link>
             <Link to="/codereviews">
-                <button>Code Review</button>
+                <button>코드리뷰</button>
             </Link>
             <button onClick={() => alert('Group 기능은 준비 중입니다.')}>Group</button>
             {isAuthenticated ? (
