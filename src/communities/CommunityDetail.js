@@ -22,7 +22,7 @@ const DetailComponent = () => {
 
   const fetchPostData = async () => {
     try {
-      const response = await axios.get(`/api/community/${id}`);
+      const response = await axios.get(`http://localhost:8080/api/community/${id}`);
       setPost(response.data.data);
       setTotalComments(response.data.data.comments?.length || 0);
       fetchComments(response.data.data.comments, currentPage); // Fetch comments for the current page
@@ -56,7 +56,7 @@ const DetailComponent = () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      await axios.post(`/api/community/${id}/comments`, { contents: commentText }, {
+      await axios.post(`http://localhost:8080/api/community/${id}/comments`, { contents: commentText }, {
         headers: {
           Authorization: `${accessToken}`,
           'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ const DetailComponent = () => {
     if (newContent !== null && newContent.trim() !== '') {
       const accessToken = localStorage.getItem('accessToken');
       try {
-        await axios.put(`/api/community/${id}`, { content: newContent }, {
+        await axios.put(`http://localhost:8080/api/community/${id}`, { content: newContent }, {
           headers: {
             Authorization: `${accessToken}`,
             'Content-Type': 'application/json'
@@ -106,7 +106,7 @@ const DetailComponent = () => {
       const accessToken = localStorage.getItem('accessToken');
 
       try {
-        await axios.delete(`/api/community/${id}`, {
+        await axios.delete(`http://localhost:8080/api/community/${id}`, {
           headers: {
             Authorization: `${accessToken}`,
             'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ const DetailComponent = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     try {
-      await axios.put(`/api/community/${id}/comments/${commentId}`, { contents: newText }, {
+      await axios.put(`http://localhost:8080/api/community/${id}/comments/${commentId}`, { contents: newText }, {
         headers: {
           Authorization: `${accessToken}`,
           'Content-Type': 'application/json'
@@ -163,7 +163,7 @@ const DetailComponent = () => {
       const accessToken = localStorage.getItem('accessToken');
 
       try {
-        await axios.delete(`/api/community/${id}/comments/${commentId}`, {
+        await axios.delete(`http://localhost:8080/api/community/${id}/comments/${commentId}`, {
           headers: {
             Authorization: `${accessToken}`,
             'Content-Type': 'application/json'

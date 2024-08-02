@@ -14,7 +14,7 @@ function Nav() {
         }
     }, []);
     const handleLogout = () => {
-        axios.post('/api/users/logout')
+        axios.post('http://localhost:8080/api/users/logout')
         .then((response) => {
             alert(response.data.message)
         })

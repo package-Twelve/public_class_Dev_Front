@@ -5,7 +5,7 @@ async function reissueToken(err) {
     delete axios.defaults.headers.common['Authorization'];
     delete axios.defaults.headers.common['Refresh'];
     try{
-        const refreshResponse = await axios.post('/api/users/reissue-token', { refreshToken : refreshToken });
+        const refreshResponse = await axios.post('http://localhost:8080/api/users/reissue-token', { refreshToken : refreshToken });
         console.log(refreshResponse);
         const accessToken = refreshResponse.data.data.accessToken;
         const newRefreshToken = refreshResponse.data.data.refreshToken;
