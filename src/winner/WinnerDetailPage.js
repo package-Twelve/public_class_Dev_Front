@@ -1,18 +1,19 @@
-// WinnerDetailPage.js
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import style from './WinnerDetailPage.module.css';
+import Nav from '../Nav';
 
 const WinnerDetailPage = () => {
-  const { id } = useParams();
+  const {id} = useParams();
   const [winner, setWinner] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWinner = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/winners/${id}`);
+        const response = await axios.get(
+            `http://localhost:8080/api/winners/${id}`);
         setWinner(response.data.data);
       } catch (error) {
         console.error('우승자 정보를 불러오는데 실패했습니다:', error);
@@ -24,6 +25,7 @@ const WinnerDetailPage = () => {
 
   return (
       <div className={style.container}>
+        <Nav/>
         <h2>우승자 상세 페이지</h2>
         {winner ? (
             <div className={style.detail}>

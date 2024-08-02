@@ -1,8 +1,8 @@
-// WinnersPage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './WinnersPage.module.css';
+import Nav from '../Nav';
 
 const WinnersPage = () => {
   const [winners, setWinners] = useState([]);
@@ -25,17 +25,20 @@ const WinnersPage = () => {
   }, []);
 
   return (
-      <div className={styles.container}>
-        <h2>명예의 전당</h2>
-        <ul>
-          {winners.map(winner => (
-              <li key={winner.id}>
-                <Link to={`/winners/${winner.id}`}>
-                  {winner.teamName} - {winner.result} (코드카타: {winner.codeKataTitle})
-                </Link>
-              </li>
-          ))}
-        </ul>
+      <div>
+        <Nav />
+        <div className={styles.container}>
+          <h2>명예의 전당</h2>
+          <ul>
+            {winners.map(winner => (
+                <li key={winner.id}>
+                  <Link to={`/winners/${winner.id}`}>
+                    {winner.teamName} - {winner.result} (코드카타: {winner.codeKataTitle})
+                  </Link>
+                </li>
+            ))}
+          </ul>
+        </div>
       </div>
   );
 };

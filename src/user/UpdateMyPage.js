@@ -48,7 +48,7 @@ const UpdateMypage = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.patch('http://localhost:8080/api/users/profiles', {
+            const response = await axios.patch('http://localhost:8080/users/profiles', {
             name: formData.name,
             intro: formData.intro
             });
