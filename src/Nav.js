@@ -81,14 +81,16 @@ function Nav() {
                     </Link>
                   </>
               )}
-              <button onClick={handleTeamMatch}>팀 매칭</button>
+              <a>
+                <button onClick={handleTeamMatch}>팀 매칭</button>
+              </a>
               <Link to="/myteam">
-                <button>나의 팀</button>
+              <button>나의 팀</button>
               </Link>
               <Link to="/mypage">
                 <button>마이페이지</button>
               </Link>
-              <button onClick={handleLogout}>로그아웃</button>
+              <a><button onClick={handleLogout}>로그아웃</button></a>
             </>
         ) : (
             <>
