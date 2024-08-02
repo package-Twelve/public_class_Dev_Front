@@ -23,7 +23,7 @@ const CodeReviewWrite = () => {
 
     const accessToken = localStorage.getItem('accessToken');
     try {
-      const response = await axios.post('http://localhost:8080/api/codereviews', newReview, {
+      const response = await axios.post('/api/codereviews', newReview, {
         headers: {
           Authorization: `${accessToken}`
         }
