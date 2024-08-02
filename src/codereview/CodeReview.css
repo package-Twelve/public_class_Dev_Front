@@ -50,6 +50,7 @@ body {
 }
 
 .write-review-btn {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   background-color: blue;
   color: white;
   border: none;
@@ -67,6 +68,7 @@ body {
 }
 
 .search-btn {
+  font-family: 'LINESeedKR-Bd', sans-serif;
   background-color: blue;
   color: white;
   border: none;

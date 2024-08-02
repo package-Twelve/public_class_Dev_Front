@@ -27,7 +27,7 @@ const DetailComponent = () => {
       setTotalComments(response.data.data.comments?.length || 0);
       fetchComments(response.data.data.comments, currentPage); // Fetch comments for the current page
     } catch (err) {
-      setError('Failed to fetch post data.');
+      setError('게시글을 가져올 수 없습니다.');
       console.error('Error fetching post data:', err);
       if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(err);
@@ -64,10 +64,10 @@ const DetailComponent = () => {
       });
       setCommentText('');
       await fetchPostData();
-      alert('Comment added successfully.');
+      alert('댓글이 작성되었습니다.');
     } catch (error) {
       console.error('Error adding comment:', error);
-      alert('Failed to add comment.');
+      alert('댓글이 작성되지 못하였습니다.');
       if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
@@ -87,14 +87,16 @@ const DetailComponent = () => {
             'Content-Type': 'application/json'
           }
         });
-        alert('Post updated successfully.');
+        alert('게시글이 수정되었습니다.');
         await fetchPostData();
       } catch (error) {
         console.error('Error updating post:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
-        alert('게시물을 수정할 수 없습니다.');
+        else if(error.response.data.message === "권한이 없습니다."){
+          alert('게시물을 수정할 수 없습니다.');
+        }
       }
     }
   };
@@ -117,7 +119,9 @@ const DetailComponent = () => {
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
-        alert('게시글을 삭제할 수 없습니다.');
+        else if(error.response.data.message === "권한이 없습니다."){
+          alert('게시물을 삭제할 수 없습니다.');
+        }
       }
     }
   };
@@ -141,14 +145,16 @@ const DetailComponent = () => {
           'Content-Type': 'application/json'
         }
       });
-      alert('Comment updated successfully.');
+      alert('댓글이 수정되었습니다.');
       await fetchPostData();
     } catch (error) {
       console.error('Error updating comment:', error);
       if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
-      alert('댓글을 수정할 수 없습니다.');
+      else if(error.response.data.message === "권한이 없습니다."){
+        alert('댓글을 수정할 수 없습니다.');
+      }
     }
   };
 
@@ -163,8 +169,8 @@ const DetailComponent = () => {
             'Content-Type': 'application/json'
           }
         });
-        alert('Comment deleted successfully.');
-        await fetchPostData(); // Refresh comments after deletion
+        alert('댓글이 삭제되었습니다.');
+        await fetchPostData();
       } catch (error) {
         console.error('Error deleting comment:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
@@ -181,6 +187,10 @@ const DetailComponent = () => {
     fetchComments(post.comments, newPage);
   };
 
+  const handleBack = () => {
+    navigate('/community'); // 뒤로가기 버튼 클릭 시 코드 리뷰 목록으로 이동
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -194,18 +204,24 @@ const DetailComponent = () => {
         <Nav />
         <div className={style["article-container"]}>
           <div className={style["article-header"]}>
-            <h1 className={style["article-title"]}>{post.title || 'No Title'}</h1>
-            <p className={style["article-info"]}>
-              작성자: {post.name || 'Unknown'} | 작성일: {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Unknown'} | 카테고리: {post.category || 'Unknown'}
-            </p>
+            <div className={style["article-header-container"]}>
+              <h1 className={style["article-title"]}>{post.title
+                  || 'No Title'}</h1>
+              <p className={style["article-info"]}>
+                작성자: {post.name || 'Unknown'} | 작성일: {post.createdAt ? new Date(
+                  post.createdAt).toLocaleDateString() : 'Unknown'} |
+                카테고리: {post.category || 'Unknown'}
+              </p>
+            </div>
+            <div className={style["post-actions"]}>
+              <button onClick={handleEditPost}>수정</button>
+              <button onClick={handleDeletePost}>삭제</button>
+            </div>
           </div>
 
           <div className={style["article-content"]}>
             <p>{post.content || 'No Content Available'}</p>
-            <div className={style["post-actions"]}>
-              <button onClick={handleEditPost}>게시글 수정</button>
-              <button onClick={handleDeletePost}>게시글 삭제</button>
-            </div>
+
           </div>
 
           <div className={style["comments-section"]}>
@@ -217,15 +233,25 @@ const DetailComponent = () => {
                 placeholder="댓글을 입력하세요..."
                 rows="4"
             ></textarea>
-              <button onClick={handleAddComment} disabled={isSubmitting}>댓글 작성</button>
+              <button onClick={handleAddComment} disabled={isSubmitting}>댓글 작성
+              </button>
             </div>
             <div className={style.comments}>
               {comments.length > 0 ? (
                   comments.map((comment) => (
                       <div className={style["comment"]} key={comment.commentId}>
-                        <p className={style["comment-content"]}>{comment.content || 'No Content'}</p>
-                        <button onClick={() => handleEditComment(comment.commentId, comment.content)}>댓글 수정</button>
-                        <button onClick={() => handleDeleteComment(comment.commentId)}>댓글 삭제</button>
+                        <div className={style["comment-container"]}>
+                          <p className={style["comment-content"]}>{comment.content
+                              || 'No Content'}</p>
+                        </div>
+                        <div className={style["comment-button-container"]}>
+                          <button onClick={() => handleEditComment(
+                              comment.commentId, comment.content)}>수정
+                          </button>
+                          <button onClick={() => handleDeleteComment(
+                              comment.commentId)}>삭제
+                          </button>
+                        </div>
                       </div>
                   ))
               ) : (
@@ -233,10 +259,21 @@ const DetailComponent = () => {
               )}
             </div>
             <div className={style.pagination}>
-              <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1}>이전</button>
-              <span>페이지 {currentPage} / {Math.ceil(totalComments / PAGE_SIZE)}</span>
-              <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= Math.ceil(totalComments / PAGE_SIZE)}>다음</button>
+              <button onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage <= 1}>이전
+              </button>
+              <span>페이지 {currentPage} / {Math.ceil(
+                  totalComments / PAGE_SIZE)}</span>
+              <button onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage >= Math.ceil(
+                          totalComments / PAGE_SIZE)}>다음
+              </button>
             </div>
+          </div>
+          <div className={style[["form-buttons"]]}>
+            <button type="button" className={style["back-btn"]}
+                    onClick={handleBack}>뒤로가기
+            </button>
           </div>
         </div>
       </div>
