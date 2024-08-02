@@ -66,6 +66,9 @@ function Nav() {
         <Link to="/codekatas/today">
           <button>오늘의 코드카타</button>
         </Link>
+        <Link to="/winner">
+          <button>명예의 전당</button>
+        </Link>
         {isAuthenticated ? (
             <>
               {isAdmin && (
