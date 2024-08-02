@@ -13,6 +13,11 @@ const MyTeamPage = () => {
 
   const fetchTeam = async () => {
     try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        throw new Error('토큰이 없습니다.');
+      }
+
       const response = await axios.get('http://localhost:8080/api/teams/myteam', {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`
@@ -30,8 +35,8 @@ const MyTeamPage = () => {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    if (tab !== 'team') {
-      navigate(`/teams/myteam/${tab}`);
+    if (tab !== 'team' && team) {
+      navigate(`/myteam/${tab}/${team.id}`);
     } else {
       navigate('/myteam');
     }
@@ -40,7 +45,6 @@ const MyTeamPage = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) {
-      // If date is invalid, return today's date
       const today = new Date();
       return `${today.toLocaleDateString()} ${today.toLocaleTimeString()}`;
     }
@@ -74,8 +78,8 @@ const MyTeamPage = () => {
                   </div>
                   <Routes>
                     <Route path="/" element={<div>팀 정보를 선택하세요.</div>} />
-                    <Route path="coderuns" element={<CodeRunPage />} />
-                    <Route path="chatrooms" element={<ChatRoomPage />} />
+                    <Route path="coderuns/:teamsId" element={<CodeRunPage />} />
+                    <Route path="chatrooms/:teamsId" element={<ChatRoomPage />} />
                   </Routes>
                 </>
             ) : (
