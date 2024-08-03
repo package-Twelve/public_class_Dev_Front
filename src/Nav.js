@@ -17,7 +17,7 @@ function Nav() {
   }, []);
 
   const handleLogout = () => {
-    axios.post('http://localhost:8080/api/users/logout')
+    axios.post('/api/users/logout')
     .then((response) => {
       alert(response.data.message);
     })
@@ -33,7 +33,7 @@ function Nav() {
 
   const checkAdminRole = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/users/me', {
+      const response = await axios.get('/api/users/me', {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`
         }

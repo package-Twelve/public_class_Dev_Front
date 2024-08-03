@@ -16,7 +16,7 @@ const ChatRoomPage = () => {
   const fetchUserProfile = useCallback(async () => {
     try {
       const response = await axios.get(
-          'http://localhost:8080/api/users/profiles', {
+          '/api/users/profiles', {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`
             }
@@ -34,7 +34,7 @@ const ChatRoomPage = () => {
   const fetchChatMessages = useCallback(async () => {
     try {
       const response = await axios.get(
-          `http://localhost:8080/api/chatrooms/${teamsId}/messages`, {
+          `/api/chatrooms/${teamsId}/messages`, {
             headers: {
               Authorization: `${localStorage.getItem('accessToken')}`
             }
