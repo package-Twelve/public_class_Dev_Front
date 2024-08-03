@@ -1,48 +1,42 @@
 .chat-room-page-container {
   padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .section {
-  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .section h3 {
-  margin-bottom: 10px;
-  color: #333;
+  margin-top: 0;
 }
 
 .section ul {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
 }
 
-.section ul li {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #fff;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.section li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 .section input {
-  width: calc(100% - 60px);
+  width: calc(100% - 70px);
   padding: 10px;
+  margin-right: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-right: 10px;
 }
 
 .section button {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
   background-color: #007bff;
   color: white;
+  border-radius: 5px;
   cursor: pointer;
 }
 
