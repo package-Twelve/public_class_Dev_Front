@@ -51,7 +51,6 @@ jobs:
             sudo docker run -d -p 8081:80 --name publicclassdev-front ${{ secrets.DOCKERHUB_USERNAME }}/publicclassdev-front:latest
             docker network connect app-network publicclassdev-front
            
-            # Copy html to Nginx Container
             docker cp publicclassdev-front:/usr/share/nginx/html /tmp/html
             docker cp /tmp/html nginx-container:/usr/share/nginx/
             rm -rf /tmp/html
