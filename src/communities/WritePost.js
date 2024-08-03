@@ -33,6 +33,16 @@ const WritePost = () => {
         console.log(response);
         if (response.status === 200 || response.status === 201) {
           alert('게시글이 성공적으로 등록되었습니다.');
+          const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+            {
+              point : '10', 
+              type : 'ADD'
+            }, 
+            {
+            headers: {
+              Authorization: `${accessToken}`
+            }
+          });
           navigate('/community');
         } else {
           alert('게시글 등록에 실패했습니다.');

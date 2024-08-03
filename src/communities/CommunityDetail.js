@@ -65,6 +65,16 @@ const DetailComponent = () => {
       setCommentText('');
       await fetchPostData();
       alert('댓글이 작성되었습니다.');
+      const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+        {
+          point : '10', 
+          type : 'ADD'
+        }, 
+        {
+        headers: {
+          Authorization: `${accessToken}`
+        }
+      });
     } catch (error) {
       console.error('Error adding comment:', error);
       alert('댓글이 작성되지 못하였습니다.');
@@ -113,6 +123,16 @@ const DetailComponent = () => {
           }
         });
         alert('Post deleted successfully.');
+        const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+          {
+            point : '10', 
+            type : 'SUBTRACT'
+          }, 
+          {
+          headers: {
+            Authorization: `${accessToken}`
+          }
+        });
         navigate('/community'); // Redirect to community list or home
       } catch (error) {
         console.error('Error deleting post:', error);
@@ -171,6 +191,16 @@ const DetailComponent = () => {
         });
         alert('댓글이 삭제되었습니다.');
         await fetchPostData();
+        const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+          {
+            point : '10', 
+            type : 'SUBTRACT'
+          }, 
+          {
+          headers: {
+            Authorization: `${accessToken}`
+          }
+        });
       } catch (error) {
         console.error('Error deleting comment:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
