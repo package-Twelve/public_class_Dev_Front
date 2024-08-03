@@ -17,7 +17,7 @@ function Nav() {
   }, []);
 
   const handleLogout = () => {
-    axios.post('/api/users/logout')
+    axios.post('http://localhost:8080/api/users/logout')
     .then((response) => {
       alert(response.data.message);
     })
@@ -33,25 +33,14 @@ function Nav() {
 
   const checkAdminRole = async () => {
     try {
-      const response = await axios.get('/api/users/me', {
+      const response = await axios.get('http://localhost:8080/api/users/me', {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          Authorization: `${localStorage.getItem('accessToken')}`
         }
       });
       setIsAdmin(response.data.data.roles.includes("ROLE_ADMIN"));
     } catch (error) {
       console.error('Failed to fetch user role:', error);
-    }
-  };
-
-  const handleTeamMatch = async () => {
-    try {
-      const response = await axios.post('/api/teams/create');
-      console.log('Team created:', response.data);
-      navigate('/myteam');
-    } catch (error) {
-      console.error('Error creating team:', error);
-      alert('팀 생성에 실패했습니다. 다시 시도해 주세요.');
     }
   };
 
@@ -81,7 +70,6 @@ function Nav() {
                     </Link>
                   </>
               )}
-              <button onClick={handleTeamMatch}>팀 매칭</button>
               <Link to="/myteam">
                 <button>나의 팀</button>
               </Link>

@@ -1,4 +1,3 @@
-// CodeKataForm.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -21,7 +20,6 @@ const CodeKataForm = () => {
         setContents(location.state.contents);
       }
     } else if (id) {
-      // Fetch existing data if editing
       const fetchCodeKata = async () => {
         try {
           const response = await axios.get(`/api/codekatas/${id}`, {

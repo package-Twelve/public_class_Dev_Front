@@ -72,15 +72,13 @@ const MyTeamPage = () => {
                     </ul>
                   </div>
                   <div className={style["tabs"]}>
-                    <button onClick={() => handleTabClick('team')}>팀 정보</button>
                     <button onClick={() => handleTabClick('coderuns')}>코드 실행</button>
                     <button onClick={() => handleTabClick('chatrooms')}>채팅방</button>
                   </div>
-                  <Routes>
-                    <Route path="/" element={<div>팀 정보를 선택하세요.</div>} />
-                    <Route path="coderuns/:teamsId" element={<CodeRunPage />} />
-                    <Route path="chatrooms/:teamsId" element={<ChatRoomPage />} />
-                  </Routes>
+                  <div className={style["tab-content"]}>
+                    {activeTab === 'coderuns' && <CodeRunPage/>}
+                    {activeTab === 'chatrooms' && <ChatRoomPage/>}
+                  </div>
                 </>
             ) : (
                 <p>팀 정보를 불러오는 중...</p>

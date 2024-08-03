@@ -1,4 +1,3 @@
-// CodeKataDetail.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -55,7 +54,7 @@ const CodeKataDetail = () => {
           <h2>코드카타 상세 페이지</h2>
           {codeKata ? (
               <div className={style.detailBox}>
-                <h3>{codeKata.title}</h3> {/* 코드카타 제목 표시 */}
+                <h3>{codeKata.title}</h3>
                 <p>{codeKata.contents}</p>
                 <div className={style.buttons}>
                   <button onClick={handleEditCodeKata}>수정</button>
@@ -65,7 +64,7 @@ const CodeKataDetail = () => {
           ) : (
               <p>코드카타를 불러오는 중...</p>
           )}
-          <button className={style.backButton} onClick={() => navigate('/today')}>뒤로가기</button>
+          <button className={style.backButton} onClick={() => navigate('/codekatas')}>뒤로가기</button>
         </div>
       </>
   );
