@@ -52,3 +52,8 @@ jobs:
             docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" | grep -v "latest" | awk '{print $2}' | xargs -r docker rmi -f
            
             docker network connect app-network publicclassdev-front
+            
+            # Copy html to Nginx Container
+            docker cp publicclassdev-front:/usr/share/nginx/html /tmp/html
+            docker cp /tmp/html nginx-container:/usr/share/nginx/
+            rm -rf /tmp/html
