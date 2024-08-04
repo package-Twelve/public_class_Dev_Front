@@ -23,7 +23,7 @@
   min-width: 5em; /* 텍스트의 최소 너비를 설정하여 길이를 일정하게 유지 */
   text-align: center; /* 가운데 정렬 */
   opacity: 0; /* 초기 상태에서 숨김 */
-  animation: fadeInOut 2.5s ease-in-out infinite; /* 애니메이션 적용 */
+  animation: fadeInOut 3s ease-in-out infinite; /* 애니메이션 적용 */
 }
 
 /* 페이드 인 및 페이드 아웃 애니메이션 정의 */

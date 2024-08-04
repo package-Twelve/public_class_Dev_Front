@@ -24,8 +24,8 @@ function FirstPage() {
           return texts[nextIndex];
         });
         setFadeClass('fade-in'); // 새 텍스트를 페이드 인
-      }, 525); // 애니메이션이 끝난 후 텍스트 변경
-    }, 2500); // 3초마다 텍스트 변경
+      }, 1200); // 애니메이션이 끝난 후 텍스트 변경
+    }, 3000); // 3초마다 텍스트 변경
 
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
   }, []);
