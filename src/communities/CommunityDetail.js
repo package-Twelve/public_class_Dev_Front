@@ -245,10 +245,10 @@ const DetailComponent = () => {
                               || 'No Content'}</p>
                         </div>
                         <div className={style["comment-button-container"]}>
-                          <button onClick={() => handleEditComment(
+                          <button className={style["edit-button"]} onClick={() => handleEditComment(
                               comment.commentId, comment.content)}>수정
                           </button>
-                          <button onClick={() => handleDeleteComment(
+                          <button className={style["delete-button"]} onClick={() => handleDeleteComment(
                               comment.commentId)}>삭제
                           </button>
                         </div>

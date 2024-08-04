@@ -7,12 +7,18 @@ body {
 
 /* Main Content Styles */
 .article-container {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 40%;
   padding: 20px;
-  margin: 150px auto; /* Center the container horizontally */
-  width: 700px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* 화면의 특정 위치에 고정 */
+  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
+  left: 50%; /* 화면 중앙 */
+  transform: translateX(-50%); /* 중앙 정렬 */
+  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
+  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  overflow-y: auto;
 }
 
 .article-header {
@@ -44,9 +50,14 @@ body {
 }
 
 /* Post Actions (Edit/Delete) */
+.post-actions{
+  display: flex;
+  justify-content: flex-start;
+}
+
 .post-actions button {
   font-family: 'LINESeedKR-Bd', sans-serif;
-  margin-right: 10px;
+  margin-right: 0.5em;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -57,17 +68,10 @@ body {
   color: black;
 }
 
-.post-actions .edit-button {
-  background-color: #007bff;
-}
-
-.post-actions .delete-button {
-  background-color: #dc3545;
-}
-
 .post-actions button:hover {
   opacity: 0.9;
 }
+
 
 /* Comments Section Styles */
 .comments-section {
@@ -109,9 +113,20 @@ body {
   border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
+  height: 40px;
   align-items: center;
   padding: 10px 0;
 }
+
+.comment-button-container {
+  display: flex; /* 수평 정렬을 위한 flexbox 설정 */
+  justify-content: flex-start; /* 버튼의 정렬 방식 조정 (필요에 따라 'center' 또는 'space-between'으로 변경 가능) */
+}
+
+.comment-button-container button {
+  margin-right: 0.5em; /* 버튼 간의 간격을 주기 위해 margin 추가 */
+}
+
 
 .comment-content {
   margin: 0;
