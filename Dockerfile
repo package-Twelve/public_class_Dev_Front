@@ -19,8 +19,8 @@ RUN npm run build
 # Stage 2: Production Image
 FROM nginx:latest
 
-# 필요한 디렉토리 생성 (이미지 내에서 존재해야 함)
-RUN mkdir -p /usr/share/nginx/htmlz
+# Nginx 설정 파일을 Docker 이미지에 포함
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # 빌드 단계에서 생성된 파일을 Nginx로 복사
 COPY --from=build /app/build /usr/share/nginx/html
