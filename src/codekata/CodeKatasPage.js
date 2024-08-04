@@ -55,16 +55,17 @@ const CodeKatasPage = () => {
       <>
         <Nav />
         <div className={style.container}>
+          <div className={style["container-header"]}>
           <h2>코드카타 목록</h2>
           {isAdmin && (
-              <button className={style.createButton} onClick={() => navigate('/codekatas/create')}>새 코드카타 작성하기</button>
+              <button className={style.createButton} onClick={() => navigate('/codekatas/create')}>코드카타 작성</button>
           )}
+          </div>
           <div className={style.codeKatasList}>
             {codeKatas.length > 0 ? (
                 codeKatas.map((kata) => (
                     <div key={kata.id} className={style.codeKataItem}>
                       <h3>{kata.title}</h3> {/* 코드카타 제목 표시 */}
-                      <p>{kata.contents}</p>
                       <button className={style.button} onClick={() => navigate(`/codekatas/${kata.id}`)}>상세보기</button>
                     </div>
                 ))

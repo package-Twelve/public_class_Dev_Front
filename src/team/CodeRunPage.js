@@ -90,11 +90,11 @@ const CodeRunPage = () => {
         <Nav />
         <div className={style["code-run-page-container"]}>
           <div className={style.section}>
-            <h3>오늘의 코드카타</h3>
+            <h1>오늘의 코드카타</h1>
             <h4>{todayCodeKata.title}</h4>
             <p>{todayCodeKata.contents}</p>
           </div>
-          <div className={style.section}>
+          <div className={style.section2}>
             <h3>코드 실행</h3>
             <textarea
                 value={code}

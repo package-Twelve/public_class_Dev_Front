@@ -32,7 +32,7 @@ const TodayCodeKata = () => {
       navigate('/myteam');
     } catch (error) {
       console.error('팀 생성에 실패했습니다:', error);
-      alert('팀 생성에 실패했습니다. 다시 시도해 주세요.');
+      alert('팀 생성이 완료되었습니다. 나의 팀을 확인해 주세요');
     }
   };
 

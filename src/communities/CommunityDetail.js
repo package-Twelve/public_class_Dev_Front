@@ -244,8 +244,8 @@ const DetailComponent = () => {
               </p>
             </div>
             <div className={style["post-actions"]}>
-              <button onClick={handleEditPost}>수정</button>
-              <button onClick={handleDeletePost}>삭제</button>
+              <button className={style.editButton} onClick={handleEditPost}>수정하기</button>
+              <button className={style.deleteButton} onClick={handleDeletePost}>삭제하기</button>
             </div>
           </div>
 

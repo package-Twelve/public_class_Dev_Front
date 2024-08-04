@@ -1,12 +1,25 @@
 .code-run-page-container {
+  width: 80%;
   padding: 20px;
-  background-color: #f4f4f4;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* 화면의 특정 위치에 고정 */
+  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
+  left: 50%; /* 화면 중앙 */
+  transform: translateX(-50%); /* 중앙 정렬 */
+  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
+  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  overflow-y: auto;
 }
 
 .section {
+  margin-top:30px;
   margin-bottom: 20px;
+}
+
+.section p{
+  margin-bottom: 30px;
 }
 
 .section h3 {
@@ -14,8 +27,8 @@
   color: #333;
 }
 
-.section textarea {
-  width: 100%;
+.section2 textarea {
+  width: 80%;
   height: 200px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -23,24 +36,25 @@
   margin-bottom: 10px;
 }
 
-.section select {
+.section2 select {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-right: 10px;
 }
 
-.section button {
+.section2 button {
   padding: 10px 20px;
   border: none;
+  margin-bottom: 40px;
   border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: #93BFCF;
+  color: #27374D;
   cursor: pointer;
 }
 
-.section button:hover {
-  background-color: #0056b3;
+.section2 button:hover {
+  background-color: #9DB2BF;
 }
 
 .section pre {

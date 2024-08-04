@@ -64,6 +64,7 @@ body {
 }
 
 .header h1 {
+  font-size: 40px;
   color : black;
   margin: 20px;
 }
@@ -204,6 +205,7 @@ body {
 }
 
 .ranking h2 {
+  font-size: 33px;
   text-align: center;
   margin-top: 30px;
   color: #F7FBFC;
