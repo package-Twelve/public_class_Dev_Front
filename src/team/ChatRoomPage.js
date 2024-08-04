@@ -3,7 +3,7 @@ import axios from 'axios';
 import SockJS from 'sockjs-client';
 import {Client} from '@stomp/stompjs';
 import {useParams} from 'react-router-dom';
-import './ChatRoomPage.module.css';
+import style from './ChatRoomPage.module.css';
 import Nav from '../Nav';
 
 const ChatRoomPage = () => {
@@ -119,29 +119,37 @@ const ChatRoomPage = () => {
     setChatMessage('');
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
   return (
-      <div className="chat-room-page-container">
-        <div className="section">
-          <Nav/>
-          <h3>채팅</h3>
-          <ul>
+      <div className={style.chatRoomPageContainer}>
+        <Nav />
+        <div className={style.section}>
+          <h3 className={style.sectionHeader}>채팅</h3>
+          <ul className={style.messageList}>
             {chatMessages.map((message, index) => (
-                <li key={index}>
-                  <span>{message.sender}</span>
-                  <span>{message.content}</span>
-                  <span>{new Date(
-                      message.timestamp).toLocaleDateString()} {new Date(
-                      message.timestamp).toLocaleTimeString()}</span>
+                <li key={index} className={style.messageItem}>
+                  <span className={style.messageSender}>{message.sender}</span>
+                  <span className={style.messageContent}>{message.content}</span>
+                  <span className={style.messageTimestamp}>{new Date(message.timestamp).toLocaleDateString()} {new Date(message.timestamp).toLocaleTimeString()}</span>
                 </li>
             ))}
           </ul>
-          <input
-              type="text"
-              placeholder="내용을 입력해주세요"
-              value={chatMessage}
-              onChange={(e) => setChatMessage(e.target.value)}
-          />
-          <button onClick={handleSendMessage}>전송</button>
+          <div className={style.inputContainer}>
+            <input
+                type="text"
+                placeholder="내용을 입력해주세요"
+                value={chatMessage}
+                onChange={(e) => setChatMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className={style.inputField}
+            />
+            <button onClick={handleSendMessage} className={style.sendButton}>전송</button>
+          </div>
         </div>
       </div>
   );

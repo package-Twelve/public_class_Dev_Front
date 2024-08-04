@@ -1,45 +1,89 @@
-.chat-room-page-container {
+.chatRoomPageContainer {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 
 .section {
   background-color: white;
   border-radius: 5px;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 600px;
 }
 
-.section h3 {
+.sectionHeader {
   margin-top: 0;
+  text-align: left;
+  padding-left: 10px;
+  font-size: 1.2em;
 }
 
-.section ul {
+.messageList {
   list-style-type: none;
   padding: 0;
-}
-
-.section li {
-  padding: 5px 0;
+  overflow-y: auto;
+  flex-grow: 1;
+  margin-bottom: 10px;
   border-bottom: 1px solid #ddd;
+  padding: 10px;
 }
 
-.section input {
-  width: calc(100% - 70px);
+.messageItem {
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.messageSender {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.messageContent {
+  flex-grow: 1;
+}
+
+.messageTimestamp {
+  text-align: left;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
   padding: 10px;
-  margin-right: 10px;
+}
+
+.inputField {
+  width: calc(200% - 60px);
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  height: 20px;
 }
 
-.section button {
-  padding: 10px 20px;
+.sendButton {
+  padding: 1px;
   border: none;
-  background-color: #007bff;
+  background-color: #265073;
   color: white;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.section button:hover {
+.sendButton:hover {
   background-color: #0056b3;
 }

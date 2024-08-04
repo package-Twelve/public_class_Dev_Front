@@ -26,6 +26,7 @@ const WinnerDetailPage = () => {
   return (
       <div className={style.container}>
         <Nav/>
+        <div className={style.detailPage}>
         <h2>우승자 상세 페이지</h2>
         {winner ? (
             <div className={style.detail}>
@@ -40,7 +41,8 @@ const WinnerDetailPage = () => {
         ) : (
             <p>우승자 정보를 불러오는 중...</p>
         )}
-        <button onClick={() => navigate('/winner')}>뒤로가기</button>
+        <button className={style.backButton} onClick={() => navigate('/winner')}>뒤로가기</button>
+        </div>
       </div>
   );
 };

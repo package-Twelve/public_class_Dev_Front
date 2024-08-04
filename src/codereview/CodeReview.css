@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'LINESeedKR-Bd', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,7 +40,7 @@ body {
 
 .header h2 {
   font-size: 40px;
-  color: blue;
+  color: black;
   margin: 0;
 }
 
@@ -51,14 +51,15 @@ body {
 
 .write-review-btn {
   font-family: 'LINESeedKR-Bd', sans-serif;
-  background-color: blue;
-  color: white;
+  background-color: #93BFCF;
+  margin-right: 15px;
+  color: #27374D;
   border: none;
+  width: 150px;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 15px;
-  width: 150px;
+  font-weight: bold;
 }
 
 .search-bar {
@@ -69,8 +70,8 @@ body {
 
 .search-btn {
   font-family: 'LINESeedKR-Bd', sans-serif;
-  background-color: blue;
-  color: white;
+  background-color: #93BFCF;
+  color: black;
   border: none;
   padding: 10px;
   border-radius: 5px;
@@ -122,6 +123,8 @@ body {
   margin: 5px 0;
   font-size: 16px;
 }
+
+
 
 .contents {
   color: gray;
@@ -189,7 +192,7 @@ body {
 /* .item-category: 코드 리뷰 아이템의 카테고리 스타일 */
 .item-category {
   font-size: 14px;
-  color: gray;
+  color: #0C359E;
   font-weight: bold;
   margin-top: 10px;
   align-self: flex-end;

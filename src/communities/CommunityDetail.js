@@ -244,8 +244,8 @@ const DetailComponent = () => {
               </p>
             </div>
             <div className={style["post-actions"]}>
-              <button onClick={handleEditPost}>수정</button>
-              <button onClick={handleDeletePost}>삭제</button>
+              <button className={style.editButton} onClick={handleEditPost}>수정하기</button>
+              <button className={style.deleteButton} onClick={handleDeletePost}>삭제하기</button>
             </div>
           </div>
 
@@ -275,10 +275,10 @@ const DetailComponent = () => {
                               || 'No Content'}</p>
                         </div>
                         <div className={style["comment-button-container"]}>
-                          <button onClick={() => handleEditComment(
+                          <button className={style["edit-button"]} onClick={() => handleEditComment(
                               comment.commentId, comment.content)}>수정
                           </button>
-                          <button onClick={() => handleDeleteComment(
+                          <button className={style["delete-button"]} onClick={() => handleDeleteComment(
                               comment.commentId)}>삭제
                           </button>
                         </div>

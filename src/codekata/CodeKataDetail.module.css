@@ -1,8 +1,21 @@
 .container {
+  width: 80%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* 화면의 특정 위치에 고정 */
+  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
+  left: 50%; /* 화면 중앙 */
+  transform: translateX(-50%); /* 중앙 정렬 */
+  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
+  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
+  text-align: center;
 }
 
 h2 {
@@ -14,7 +27,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: auto;
+  width: 100%;
   max-width: 500px;
   border: 1px solid #ccc;
   padding: 20px;
@@ -38,17 +51,28 @@ p {
   width: 100%;
 }
 
-button {
+.buttons button{
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
-  color: white;
+  background-color: #93BFCF;
+  color: black;
   cursor: pointer;
+  margin-right: 20px;
 }
 
-button[type="button"] {
-  background-color: #6c757d;
+.buttons button:last-child {
+  margin-right: 0;
+}
+
+.backButton{
+  background-color: #B4B4B8;
+  color:black;
+  width: 50%;
+}
+
+.backButton:hover{
+  background-color: #C7C8CC;
 }
 
 button:hover {

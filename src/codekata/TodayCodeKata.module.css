@@ -1,21 +1,31 @@
 /* TodayCodeKata.module.css */
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  width: 80%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* 화면의 특정 위치에 고정 */
+  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
+  left: 50%; /* 화면 중앙 */
+  transform: translateX(-50%); /* 중앙 정렬 */
+  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
+  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  overflow-y: auto;
+}
+
+p{
+  margin-top: 30px;
 }
 
 h2 {
-  font-size: 2rem;
-  color: #0070f3;
+  color: black;
   margin-bottom: 1.5rem;
 }
 
 .todayCodeKata {
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   padding: 2rem;
   border-radius: 8px;
   background-color: #f9f9f9;
@@ -35,7 +45,7 @@ h2 {
 
 .todayCodeKata button {
   padding: 0.5rem 1rem;
-  background-color: #0070f3;
+  background-color: #074173;
   color: white;
   border: none;
   border-radius: 4px;
@@ -43,7 +53,7 @@ h2 {
 }
 
 .todayCodeKata button:hover {
-  background-color: #005bb5;
+  background-color: #1679AB;
 }
 
 .navButtons {
@@ -53,8 +63,8 @@ h2 {
 
 .navButton {
   padding: 0.75rem 1.5rem;
-  background-color: #0070f3;
-  color: white;
+  background-color: #93BFCF;
+  color: #27374D;
   border: none;
   border-radius: 4px;
   cursor: pointer;

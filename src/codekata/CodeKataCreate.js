@@ -32,23 +32,25 @@ const CodeKataCreate = () => {
       <>
         <Nav />
         <div className={style.container}>
+          <div className={style["container-form"]}>
           <h2>새 코드카타 작성하기</h2>
-          <label>제목:</label>
+            <label>제목</label>
           <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="제목을 입력하세요"
           />
-          <label>내용:</label>
+          <label>내용</label>
           <textarea
               value={contents}
               onChange={(e) => setContents(e.target.value)}
               placeholder="내용을 입력하세요"
           ></textarea>
+        </div>
           <div className={style.buttonContainer}>
-            <button onClick={handleCreate}>등록</button>
-            <button onClick={() => navigate('/codekatas')}>취소</button>
+            <button className={style.createButton} onClick={handleCreate}>등록</button>
+            <button className={style.cancelButton} onClick={() => navigate('/codekatas')}>취소</button>
           </div>
         </div>
       </>

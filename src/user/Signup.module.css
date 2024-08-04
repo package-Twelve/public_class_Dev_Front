@@ -13,6 +13,11 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 h1 {
     text-align: center;
@@ -26,8 +31,9 @@ input, select {
     border-radius: 4px;
 }
 .button-container {
+    width: 300px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 button {
     width: 100%;
@@ -40,6 +46,7 @@ button {
 button:hover {
     opacity: 0.9;
 }
+
 .checkbox-container {
     display: flex;
     align-items: center;
@@ -50,10 +57,16 @@ button:hover {
     margin-right: 0.5em;
 }
 .login {
-    background-color: #007bff;
+    width: 150px;
+    height: 40px;
+    margin-right: 5px;
+    background-color: #002379;
     color: white;
 }
 .register {
-    background-color: #28a745;
-    color: white;
+    width: 150px;
+    height: 40px;
+    margin-left:5px;
+    background-color: #EEF7FF;
+    color: black;
 }
