@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import style from './CodeRunPage.module.css';
 import Nav from '../Nav';
 
 const CodeRunPage = () => {
-  const { teamsId } = useParams();
+  const {teamsId} = useParams();
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('javascript');
   const [output, setOutput] = useState('');
@@ -15,6 +15,19 @@ const CodeRunPage = () => {
     title: '',
     contents: '',
   });
+
+  const exampleCode = {
+    javascript: `// Hello World 출력
+console.log('Hello, World!');`,
+    python: `# Hello World 출력
+print('Hello, World!')`,
+    java: `// Hello World 출력
+public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("Hello, World!");
+  }
+}`
+  };
 
   useEffect(() => {
     if (teamsId) {
@@ -51,7 +64,8 @@ const CodeRunPage = () => {
           }
       );
       console.log('TodayCodeKata response:', response.data);
-      setTodayCodeKata(response.data.data || { id: null, title: '', contents: '' });
+      setTodayCodeKata(
+          response.data.data || {id: null, title: '', contents: ''});
     } catch (error) {
       console.error('오늘의 코드카타를 가져오는 데 실패했습니다:', error);
     }
@@ -85,9 +99,15 @@ const CodeRunPage = () => {
     }
   };
 
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    setLanguage(selectedLanguage);
+    setCode(exampleCode[selectedLanguage]);
+  };
+
   return (
       <div>
-        <Nav />
+        <Nav/>
         <div className={style["code-run-page-container"]}>
           <div className={style.section}>
             <h1>오늘의 코드카타</h1>
@@ -101,7 +121,7 @@ const CodeRunPage = () => {
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="코드를 입력하세요"
             />
-            <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <select value={language} onChange={handleLanguageChange}>
               <option value="javascript">JavaScript</option>
               <option value="python">Python</option>
               <option value="java">Java</option>
