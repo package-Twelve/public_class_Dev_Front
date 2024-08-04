@@ -18,6 +18,8 @@ import DetailComponent from "./communities/CommunityDetail";
 import CommunityFeed from "./communities/CommunityFeed";
 import TeamMatch from './team/TeamMatch';
 import MyTeamPage from './team/MyTeamPage';
+import CodeRunPage from './team/CodeRunPage';
+import ChatRoomPage from './team/ChatRoomPage';
 import CodeKatasPage from './codekata/CodeKatasPage';
 import CodeKataDetail from './codekata/CodeKataDetail';
 import TodayCodeKata from './codekata/TodayCodeKata';
@@ -86,9 +88,10 @@ function App() {
               <CommunityFeed />
             </PrivateRoute>
           } />
-          <Route path="/community/post/:id" element={<PrivateRoute>
-            <DetailComponent />
-          </PrivateRoute>
+          <Route path="/community/post/:id" element={
+            <PrivateRoute>
+              <DetailComponent />
+            </PrivateRoute>
           }/>
           <Route path="/community/write" element={
             <PrivateRoute>
@@ -103,6 +106,16 @@ function App() {
           <Route path="/myteam/*" element={
             <PrivateRoute>
               <MyTeamPage />
+            </PrivateRoute>
+          } />
+          <Route path="/myteam/coderuns/:teamsId" element={
+            <PrivateRoute>
+              <CodeRunPage />
+            </PrivateRoute>
+          } />
+          <Route path="/myteam/chatrooms/:teamsId" element={
+            <PrivateRoute>
+              <ChatRoomPage />
             </PrivateRoute>
           } />
           <Route path="/codekatas/today" element={

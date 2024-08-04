@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import style from './CodeRunPage.module.css';
@@ -10,21 +10,31 @@ const CodeRunPage = () => {
   const [language, setLanguage] = useState('javascript');
   const [output, setOutput] = useState('');
   const [codeRuns, setCodeRuns] = useState([]);
-  const [todayCodeKata, setTodayCodeKata] = useState({ id: null, title: '', contents: '' });
+  const [todayCodeKata, setTodayCodeKata] = useState({
+    id: null,
+    title: '',
+    contents: '',
+  });
 
   useEffect(() => {
-    fetchCodeRuns();
-    fetchTodayCodeKata();
+    if (teamsId) {
+      fetchCodeRuns();
+      fetchTodayCodeKata();
+    }
   }, [teamsId]);
 
   const fetchCodeRuns = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/coderuns/${teamsId}/runs`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      });
-      setCodeRuns(response.data.data);
+      const response = await axios.get(
+          `http://localhost:8080/api/coderuns/myteam/${teamsId}/runs`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`,
+            },
+          }
+      );
+      console.log('CodeRuns response:', response.data);
+      setCodeRuns(response.data || []);
     } catch (error) {
       console.error('코드 실행 기록을 가져오는 데 실패했습니다:', error);
     }
@@ -32,12 +42,16 @@ const CodeRunPage = () => {
 
   const fetchTodayCodeKata = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/codekatas/today`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      });
-      setTodayCodeKata(response.data.data);
+      const response = await axios.get(
+          `http://localhost:8080/api/codekatas/today`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`,
+            },
+          }
+      );
+      console.log('TodayCodeKata response:', response.data);
+      setTodayCodeKata(response.data.data || { id: null, title: '', contents: '' });
     } catch (error) {
       console.error('오늘의 코드카타를 가져오는 데 실패했습니다:', error);
     }
@@ -48,17 +62,23 @@ const CodeRunPage = () => {
       console.error('오늘의 코드카타 ID를 가져오지 못했습니다.');
       return;
     }
+    console.log('오늘의 코드카타 ID:', todayCodeKata.id);  // 추가된 로그
 
     try {
-      const response = await axios.post(`http://localhost:8080/api/coderuns/${teamsId}/${todayCodeKata.id}/runs`, {
-        code,
-        language,
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      });
-      setOutput(response.data.data.result);
+      const response = await axios.post(
+          `http://localhost:8080/api/coderuns/myteam/${teamsId}/${todayCodeKata.id}/runs`,
+          {
+            code,
+            language,
+          },
+          {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`,
+            },
+          }
+      );
+      console.log('RunCode response:', response.data);
+      setOutput(response.data.result);
       fetchCodeRuns();
     } catch (error) {
       console.error('코드 실행에 실패했습니다:', error);
@@ -93,13 +113,17 @@ const CodeRunPage = () => {
           <div className={style.section}>
             <h3>코드 실행 기록</h3>
             <ul>
-              {codeRuns.map((run, index) => (
-                  <li key={index}>
-                    <span>{run.language}</span>
-                    <span>{run.responseTime} ms</span>
-                    <pre>{run.result}</pre>
-                  </li>
-              ))}
+              {codeRuns.length > 0 ? (
+                  codeRuns.map((run, index) => (
+                      <li key={index}>
+                        <span>{run.language}</span>
+                        <span>{run.responseTime} ms</span>
+                        <pre>{run.result}</pre>
+                      </li>
+                  ))
+              ) : (
+                  <li>코드 실행 기록이 없습니다.</li>
+              )}
             </ul>
           </div>
         </div>

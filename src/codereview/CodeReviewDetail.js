@@ -51,11 +51,19 @@ const CodeReviewDetail = () => {
           `http://localhost:8080/api/codereviews/${id}`);
       if (response.status === 200) {
         alert(response.data.message);
+        const pointResponse = await axios.patch('http://localhost:8080/api/users/points', // 포인트 10 감소
+          {
+            point : '10', 
+            type : 'SUBTRACT'
+          });
         navigate('/codereviews');
       } else {
         alert(response.data.message || '알 수 없는 오류가 발생했습니다.');
       }
     } catch (error) {
+      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
+        reissueToken(error);
+      }
       const errorMessage = error.response?.data?.message
           || '알 수 없는 오류가 발생했습니다.';
       alert(errorMessage);
@@ -77,6 +85,9 @@ const CodeReviewDetail = () => {
         alert('좋아요 처리 중 오류가 발생했습니다.');
       }
     } catch (error) {
+      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
+        reissueToken(error);
+      }
       alert('좋아요 처리 중 오류가 발생했습니다.');
     }
   };
@@ -99,6 +110,9 @@ const CodeReviewDetail = () => {
         alert(response.data.message || '댓글 수정 중 오류가 발생했습니다.');
       }
     } catch (error) {
+      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
+        reissueToken(error);
+      }
       const errorMessage = error.response?.data?.message
           || '댓글 수정 중 오류가 발생했습니다.';
       alert(errorMessage);
@@ -129,6 +143,11 @@ const CodeReviewDetail = () => {
 
       // 성공 알림
       alert('댓글이 작성되었습니다.');
+      const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+        {
+          point : '10', 
+          type : 'ADD'
+        });
     } catch (error) {
       console.error('댓글 작성 중 오류가 발생했습니다:', error);
       if (error.response && error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
@@ -151,10 +170,18 @@ const CodeReviewDetail = () => {
       if (response.status === 200) {
         await fetchReview(); // 댓글 상태 최신화
         alert(response.data.message); // JSON 응답의 메시지를 알럿으로 표시
+        const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
+          {
+            point : '10', 
+            type : 'SUBTRACT'
+          });
       } else {
         alert('댓글 삭제 중 오류가 발생했습니다.');
       }
     } catch (error) {
+      if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
+        reissueToken(error);
+      }
       const errorMessage = error.response?.data?.message
           || '댓글 삭제 중 오류가 발생했습니다.';
       alert(errorMessage);

@@ -13,6 +13,11 @@ const MyTeamPage = () => {
 
   const fetchTeam = async () => {
     try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        throw new Error('토큰이 없습니다.');
+      }
+
       const response = await axios.get('http://localhost:8080/api/teams/myteam', {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`
@@ -30,8 +35,8 @@ const MyTeamPage = () => {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    if (tab !== 'team') {
-      navigate(`/teams/myteam/${tab}`);
+    if (tab !== 'team' && team) {
+      navigate(`/myteam/${tab}/${team.id}`);
     } else {
       navigate('/myteam');
     }
@@ -40,7 +45,6 @@ const MyTeamPage = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) {
-      // If date is invalid, return today's date
       const today = new Date();
       return `${today.toLocaleDateString()} ${today.toLocaleTimeString()}`;
     }
@@ -55,7 +59,7 @@ const MyTeamPage = () => {
             {team ? (
                 <>
                   <h2 className={style["team-name"]}>{team.name}</h2>
-                  <div className={style.section}>
+                  <div className={style["section"]}>
                     <h3>참여 유저</h3>
                     <ul>
                       {team.teamMembers.map((member, index) => (
@@ -67,16 +71,14 @@ const MyTeamPage = () => {
                       ))}
                     </ul>
                   </div>
-                  <div className={style.tabs}>
-                    <button onClick={() => handleTabClick('team')}>팀 정보</button>
+                  <div className={style["tabs"]}>
                     <button onClick={() => handleTabClick('coderuns')}>코드 실행</button>
                     <button onClick={() => handleTabClick('chatrooms')}>채팅방</button>
                   </div>
-                  <Routes>
-                    <Route path="/" element={<div>팀 정보를 선택하세요.</div>} />
-                    <Route path="coderuns" element={<CodeRunPage />} />
-                    <Route path="chatrooms" element={<ChatRoomPage />} />
-                  </Routes>
+                  <div className={style["tab-content"]}>
+                    {activeTab === 'coderuns' && <CodeRunPage/>}
+                    {activeTab === 'chatrooms' && <ChatRoomPage/>}
+                  </div>
                 </>
             ) : (
                 <p>팀 정보를 불러오는 중...</p>
