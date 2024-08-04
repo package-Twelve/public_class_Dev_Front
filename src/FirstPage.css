@@ -1,0 +1,53 @@
+/* FirstPage.css */
+.text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* 자식 요소의 위치를 기준으로 설정 */
+  font-family: 'Source Code Pro', monospace;
+}
+
+.static-text {
+  font-size: 3rem;
+  font-weight: bold;
+  position: relative; /* 텍스트를 기준으로 위치 조정 */
+  display: inline-block;
+  text-align: center; /* 가운데 정렬 */
+}
+
+.dynamic-text {
+  font-family: 'LINESeedKR-Bd', sans-serif;
+  color: teal;
+  font-weight: normal; /* 동적 텍스트의 두께 설정 */
+  display: inline-block;
+  min-width: 5em; /* 텍스트의 최소 너비를 설정하여 길이를 일정하게 유지 */
+  text-align: center; /* 가운데 정렬 */
+  opacity: 0; /* 초기 상태에서 숨김 */
+  animation: fadeInOut 3s ease-in-out infinite; /* 애니메이션 적용 */
+}
+
+/* 페이드 인 및 페이드 아웃 애니메이션 정의 */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.additional-info {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: normal;
+  color: gray;
+}
