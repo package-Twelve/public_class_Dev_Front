@@ -11,6 +11,13 @@
   align-items: center;
 }
 
+.top-menu img.logo {
+  height: 60px;
+  margin-right: 60px;
+  cursor: pointer;
+}
+
+
 button {
   font-family: 'LINESeedKR-Bd', sans-serif;
   width: 100%;
