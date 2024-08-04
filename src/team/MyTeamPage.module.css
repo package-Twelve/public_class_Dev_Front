@@ -53,6 +53,7 @@
 
 .section ul li span {
   flex: 1;
+  font-size: 20px;
   text-align: center;
 }
 
@@ -80,4 +81,10 @@ pre {
   padding: 20px;
   border-radius: 5px;
   overflow-x: auto;
+}
+
+.tabs{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }

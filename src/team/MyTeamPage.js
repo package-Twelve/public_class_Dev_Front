@@ -71,7 +71,7 @@ const MyTeamPage = () => {
                       ))}
                     </ul>
                   </div>
-                  <div className={style["tabs"]}>
+                  <div className={style.tabs}>
                     <button onClick={() => handleTabClick('coderuns')}>코드 실행</button>
                     <button onClick={() => handleTabClick('chatrooms')}>채팅방</button>
                   </div>
