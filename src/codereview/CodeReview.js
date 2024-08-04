@@ -113,7 +113,6 @@ const CodeReview = () => {
                           <p className="item-category">{review.category}</p>
                         </div>
                         <p className="item-name">{review.name}</p>
-                        <p className="item-contents">{review.contents}</p>
                       </div>
                   ))
               ) : (

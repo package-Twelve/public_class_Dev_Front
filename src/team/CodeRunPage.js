@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import './CodeRunPage.module.css';
+import style from './CodeRunPage.module.css';
 import Nav from '../Nav';
 
 const CodeRunPage = () => {
@@ -88,13 +88,13 @@ const CodeRunPage = () => {
   return (
       <div>
         <Nav />
-        <div className="code-run-page-container">
-          <div className="section">
-            <h3>오늘의 코드카타</h3>
+        <div className={style["code-run-page-container"]}>
+          <div className={style.section}>
+            <h1>오늘의 코드카타</h1>
             <h4>{todayCodeKata.title}</h4>
             <p>{todayCodeKata.contents}</p>
           </div>
-          <div className="section">
+          <div className={style.section2}>
             <h3>코드 실행</h3>
             <textarea
                 value={code}
@@ -110,7 +110,7 @@ const CodeRunPage = () => {
             <h4>실행 결과:</h4>
             <pre>{output}</pre>
           </div>
-          <div className="section">
+          <div className={style.section}>
             <h3>코드 실행 기록</h3>
             <ul>
               {codeRuns.length > 0 ? (

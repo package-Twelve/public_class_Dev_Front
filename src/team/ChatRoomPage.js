@@ -121,8 +121,8 @@ const ChatRoomPage = () => {
 
   return (
       <div className="chat-room-page-container">
+        <Nav/>
         <div className="section">
-          <Nav/>
           <h3>채팅</h3>
           <ul>
             {chatMessages.map((message, index) => (
