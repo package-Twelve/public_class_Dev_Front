@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from './Nav.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import logo from './assets/logo.png';
 
 function Nav() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +47,9 @@ function Nav() {
 
   return (
       <div className={style["top-menu"]}>
+        <Link to="/">
+          <img src={logo} alt="홈" className={style.logo} />
+        </Link>
         <Link to="/community">
           <button>커뮤니티</button>
         </Link>
