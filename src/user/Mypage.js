@@ -93,9 +93,9 @@ const Mypage = () => {
                     </div>
                 </div>
                 <div className={style.stats}>
-                    <div class={style["stat-item"]}>
-                        <div class={style["stat-label"]}>포인트</div>
-                        <div class={style["stat-value"]}>{point.point}</div>
+                    <div className={style["stat-item"]}>
+                        <div className={style["stat-label"]}>포인트</div>
+                        <div className={style["stat-value"]}>{point.point}</div>
                     </div>
                 </div>
                 <div className={style.section}>
