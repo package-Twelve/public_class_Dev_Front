@@ -48,7 +48,7 @@ const ChatRoomPage = () => {
   }, [teamsId]);
 
   const connectWebSocket = useCallback(() => {
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS('/ws');
     stompClient.current = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
