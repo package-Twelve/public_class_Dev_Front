@@ -19,6 +19,8 @@ const CodeReviewEdit = () => {
   const [contents, setContents] = useState('');
   const [code, setCode] = useState(''); // 코드 필드 상태 추가
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+  const [error, setError] = useState(null); // 에러 상태 추가
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -29,10 +31,16 @@ const CodeReviewEdit = () => {
         setCategory(review.category);
         setContents(review.contents);
         setCode(review.code);
+        setLoading(false); // 데이터 로딩 완료
       } catch (error) {
         console.error('Error fetching the code review:', error);
         const errorMessage = error.response?.data?.message || 'Failed to fetch code review details.';
-        alert(errorMessage);
+        setError(errorMessage);
+        setLoading(false); // 데이터 로딩 완료 (실패 상태)
+        // 페이지 새로 고침
+        setTimeout(() => {
+          window.location.reload();
+        }, 100); // 0.1초 후에 페이지 새로 고침
       }
     };
     fetchReview();
@@ -68,6 +76,8 @@ const CodeReviewEdit = () => {
   const handleBack = () => {
     navigate(`/codereviews/${id}`); // 리뷰 상세 페이지로 이동
   };
+
+  if (loading) return <div>Loading...</div>; // 로딩 상태 표시
 
   return (
       <div className="code-review-edit-container">
