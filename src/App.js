@@ -2,20 +2,22 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
+import reissueToken from './reissueToken'; // reissueToken 임포트
+
 import Signup from './user/Signup';
 import Login from './user/Login';
 import FirstPage from './FirstPage';
 import PrivateRoute from './PrivateRoute';
 import Mypage from './user/Mypage';
-import CodeReview from "./codereview/CodeReview";
+import CodeReview from './codereview/CodeReview';
 import CodeReviewWrite from './codereview/CodeReviewWrite';
 import CodeReviewDetail from './codereview/CodeReviewDetail';
 import CodeReviewEdit from './codereview/CodeReviewEdit';
 import UpdateMypage from './user/UpdateMyPage';
 import UpdatePassword from './user/UpdatePassword';
-import WritePost from "./communities/WritePost";
-import DetailComponent from "./communities/CommunityDetail";
-import CommunityFeed from "./communities/CommunityFeed";
+import WritePost from './communities/WritePost';
+import DetailComponent from './communities/CommunityDetail';
+import CommunityFeed from './communities/CommunityFeed';
 import TeamMatch from './team/TeamMatch';
 import MyTeamPage from './team/MyTeamPage';
 import CodeRunPage from './team/CodeRunPage';
@@ -36,6 +38,20 @@ function App() {
       axios.defaults.headers.common['Authorization'] = `${accessToken}`;
       axios.defaults.headers.common['Refresh'] = `${refreshToken}`;
     }
+
+    const intercept = axios.interceptors.response.use(
+        response => response,
+        async (error) => {
+          if (error.response && error.response.status === 401) {
+            await reissueToken(error);
+          }
+          return Promise.reject(error);
+        }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(intercept);
+    };
   }, []);
 
   return (
