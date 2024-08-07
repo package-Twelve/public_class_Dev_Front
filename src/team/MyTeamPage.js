@@ -6,7 +6,7 @@ import CodeRunPage from './CodeRunPage';
 import ChatRoomPage from './ChatRoomPage';
 import style from './MyTeamPage.module.css';
 
-const MyTeamPage = () => {
+const MyTeamPage = ({ userName, userRank }) => {
   const [team, setTeam] = useState(null);
   const [activeTab, setActiveTab] = useState('team');
   const navigate = useNavigate();
@@ -64,9 +64,8 @@ const MyTeamPage = () => {
                     <ul>
                       {team.teamMembers.map((member, index) => (
                           <li key={index}>
-                            <span>{member.name}</span>
-                            <span>{member.rank}</span>
-                            <span>{formatDate(member.joinedAt)}</span>
+                            <span>{member}</span>
+                            {member === userName && <span> ({userRank})</span>}
                           </li>
                       ))}
                     </ul>
@@ -76,8 +75,8 @@ const MyTeamPage = () => {
                     <button onClick={() => handleTabClick('chatrooms')}>채팅방</button>
                   </div>
                   <div className={style["tab-content"]}>
-                    {activeTab === 'coderuns' && <CodeRunPage/>}
-                    {activeTab === 'chatrooms' && <ChatRoomPage/>}
+                    {activeTab === 'coderuns' && <CodeRunPage />}
+                    {activeTab === 'chatrooms' && <ChatRoomPage />}
                   </div>
                 </>
             ) : (

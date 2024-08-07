@@ -65,7 +65,7 @@ function App() {
               <FirstPage />
             </PrivateRoute>
           } />
-          <Route path="/mypage" element={
+          <Route path="/mypage/*" element={
             <PrivateRoute>
               <Mypage />
             </PrivateRoute>
