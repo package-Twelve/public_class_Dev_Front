@@ -65,7 +65,7 @@ const CodeKatasPage = () => {
             {codeKatas.length > 0 ? (
                 codeKatas.map((kata) => (
                     <div key={kata.id} className={style.codeKataItem}>
-                      <h3>{kata.title}</h3> {/* 코드카타 제목 표시 */}
+                      <h3>{kata.title}</h3>
                       <button className={style.button} onClick={() => navigate(`/codekatas/${kata.id}`)}>상세보기</button>
                     </div>
                 ))

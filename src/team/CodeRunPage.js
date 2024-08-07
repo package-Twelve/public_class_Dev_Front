@@ -76,7 +76,7 @@ public class HelloWorld {
       console.error('오늘의 코드카타 ID를 가져오지 못했습니다.');
       return;
     }
-    console.log('오늘의 코드카타 ID:', todayCodeKata.id);  // 추가된 로그
+    console.log('오늘의 코드카타 ID:', todayCodeKata.id);
 
     try {
       const response = await axios.post(
