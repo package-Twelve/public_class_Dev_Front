@@ -20,6 +20,7 @@ import DetailComponent from './communities/CommunityDetail';
 import CommunityFeed from './communities/CommunityFeed';
 import TeamMatch from './team/TeamMatch';
 import MyTeamPage from './team/MyTeamPage';
+import ManageTeamsPage from './team/ManageTeamsPage';
 import CodeRunPage from './team/CodeRunPage';
 import ChatRoomPage from './team/ChatRoomPage';
 import CodeKatasPage from './codekata/CodeKatasPage';
@@ -64,7 +65,7 @@ function App() {
               <FirstPage />
             </PrivateRoute>
           } />
-          <Route path="/mypage" element={
+          <Route path="/mypage/*" element={
             <PrivateRoute>
               <Mypage />
             </PrivateRoute>
@@ -167,6 +168,11 @@ function App() {
           <Route path="/winners/:id" element={
             <PrivateRoute>
               <WinnerDetailPage />
+            </PrivateRoute>
+          } />
+          <Route path="/manage/teams/all" element={
+            <PrivateRoute>
+              <ManageTeamsPage />
             </PrivateRoute>
           } />
         </Routes>
