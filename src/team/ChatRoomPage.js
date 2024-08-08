@@ -1,17 +1,18 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 import SockJS from 'sockjs-client';
-import {Client} from '@stomp/stompjs';
-import {useParams} from 'react-router-dom';
+import { Client } from '@stomp/stompjs';
+import { useParams } from 'react-router-dom';
 import style from './ChatRoomPage.module.css';
 import Nav from '../Nav';
 
 const ChatRoomPage = () => {
-  const {teamsId} = useParams();
+  const { teamsId } = useParams();
   const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const stompClient = useRef(null);
   const [userName, setUserName] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
 
   const fetchUserProfile = useCallback(async () => {
     try {
@@ -25,9 +26,7 @@ const ChatRoomPage = () => {
       localStorage.setItem('userName', name);
       setUserName(name);
     } catch (err) {
-      if (err.response.status === 403 || err.response.status === 401) {
-        alert('프로필 정보를 가져오는데 실패했습니다. 다시 로그인 해주세요.', err);
-      }
+      alert('프로필 정보를 가져오는데 실패했습니다.', err);
     }
   }, []);
 
@@ -41,9 +40,7 @@ const ChatRoomPage = () => {
           });
       setChatMessages(response.data);
     } catch (err) {
-      if (err.response.status === 403 || err.response.status === 401) {
-        alert('채팅 메시지를 가져오는데 실패했습니다. 다시 로그인 해주세요.', err);
-      }
+      alert('채팅 메시지를 가져오는데 실패했습니다.', err);
     }
   }, [teamsId]);
 
@@ -57,41 +54,50 @@ const ChatRoomPage = () => {
         stompClient.current.subscribe(`/topic/chatrooms/${teamsId}`, onMessageReceived);
         stompClient.current.publish({
           destination: '/app/chat.addUser',
-          body: JSON.stringify({sender: userName, type: 'JOIN', teamsId: teamsId}),
+          body: JSON.stringify({ sender: userName, type: 'JOIN', teamsId: teamsId }),
           headers: {
-            Authorization: `${localStorage.getItem('accessToken')}`
-          }
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
         });
       },
       onStompError: (error) => {
-        console.error('웹소켓 오류:', error);
+        alert('웹소켓 오류:', error);
       },
       onWebSocketClose: (closeEvent) => {
-        console.log('WebSocket 연결이 종료되었습니다. 재연결 시도 중...', closeEvent);
         setTimeout(connectWebSocket, 5000);
       },
       debug: (str) => {
-        console.log(str);
       },
     });
 
     stompClient.current.activate();
   }, [teamsId, userName, fetchChatMessages]);
 
+
+
   useEffect(() => {
     fetchUserProfile();
-    connectWebSocket();
+  }, [fetchUserProfile]);
 
+  useEffect(() => {
+    if (userName) {
+      connectWebSocket();
+    }
     return () => {
       if (stompClient.current) {
         stompClient.current.deactivate();
       }
     };
-  }, [teamsId, userName, fetchUserProfile, connectWebSocket]);
+  }, [teamsId, userName, connectWebSocket]);
 
   const onMessageReceived = (message) => {
     const newMessage = JSON.parse(message.body);
-    setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+    setChatMessages((prevMessages) => {
+      if (!prevMessages.some(msg => msg.id === newMessage.id)) {
+        return [...prevMessages, newMessage];
+      }
+      return prevMessages;
+    });
   };
 
   const handleSendMessage = () => {
@@ -107,15 +113,16 @@ const ChatRoomPage = () => {
       timestamp: new Date().toISOString()
     };
 
-    stompClient.current.publish({
-      destination: '/app/chat.sendMessage',
-      body: JSON.stringify(message),
-      headers: {
-        Authorization: `${localStorage.getItem('accessToken')}`
-      }
-    });
+    if (stompClient.current) {
+      stompClient.current.publish({
+        destination: '/app/chat.sendMessage',
+        body: JSON.stringify(message),
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`
+        }
+      });
+    }
 
-    setChatMessages((prevMessages) => [...prevMessages, message]);
     setChatMessage('');
   };
 

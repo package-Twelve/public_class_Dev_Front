@@ -52,7 +52,7 @@
 .section ul li span {
   flex: 1;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .section textarea {
