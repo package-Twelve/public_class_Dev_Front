@@ -25,7 +25,7 @@ const Mypage = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/users/profiles');
+                const response = await axios.get('/api/users/profiles');
                 setProfile(response.data.data);
                 setPostlist(response.data.data.recentCommunities);
                 setLoading(false);
@@ -34,7 +34,7 @@ const Mypage = () => {
                 setLoading(false);
             }
             try {
-                const pointResponse = await axios.get('http://localhost:8080/api/users/points');
+                const pointResponse = await axios.get('/api/users/points');
                 setPoint({
                     ...point,
                     point: pointResponse.data.data.point,

@@ -24,7 +24,7 @@ const CodeReviewWrite = () => {
 
     const accessToken = localStorage.getItem('accessToken');
     try {
-      const response = await axios.post('http://localhost:8080/api/codereviews', newReview, {
+      const response = await axios.post('/api/codereviews', newReview, {
         headers: {
           Authorization: `${accessToken}`
         }
@@ -33,7 +33,7 @@ const CodeReviewWrite = () => {
       const { message } = response.data;
 
       alert(message);
-      const pointResponse = await axios.patch('http://localhost:8080/api/users/points',
+      const pointResponse = await axios.patch('/api/users/points',
         {
           point : '10', 
           type : 'ADD'

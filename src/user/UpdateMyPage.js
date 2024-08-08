@@ -17,7 +17,7 @@ const UpdateMypage = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/users/profiles');
+                const response = await axios.get('/api/users/profiles');
                 setFormData({
                     ...formData,
                     "name" : response.data.data.name,
@@ -45,7 +45,7 @@ const UpdateMypage = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.patch('http://localhost:8080/api/users/profiles', {
+            const response = await axios.patch('/api/users/profiles', {
             name: formData.name,
             intro: formData.intro
             });
