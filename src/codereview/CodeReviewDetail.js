@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import Nav from '../Nav'; // Nav 컴포넌트를 가져옵니다.
+import Nav from '../Nav';
 import './CodeReviewDetail.css';
 import reissueToken from "../reissueToken";
 
@@ -30,7 +30,6 @@ const CodeReviewDetail = () => {
             `http://localhost:8080/api/codereviews/${id}`);
         setReview(response.data.data);
       } catch (error) {
-        console.error('Error fetching the code review:', error);
       }
     };
     fetchReview();
@@ -51,7 +50,7 @@ const CodeReviewDetail = () => {
           `http://localhost:8080/api/codereviews/${id}`);
       if (response.status === 200) {
         alert(response.data.message);
-        const pointResponse = await axios.patch('http://localhost:8080/api/users/points', // 포인트 10 감소
+        const pointResponse = await axios.patch('http://localhost:8080/api/users/points',
           {
             point : '10', 
             type : 'SUBTRACT'
@@ -71,16 +70,15 @@ const CodeReviewDetail = () => {
   };
 
   const handleEdit = () => {
-    navigate(`/codereviews/${id}/edit`); // 리뷰 수정 페이지로 이동
+    navigate(`/codereviews/${id}/edit`);
   };
 
   const handleLikeClick = async (commentId) => {
     try {
-      // 서버에 LIKE 요청 보내기
       const response = await axios.post(
           `http://localhost:8080/api/codereviews/${id}/comments/${commentId}/like`);
       if (response.status === 200) {
-        await fetchReview(); // 댓글 상태 최신화
+        await fetchReview();
       } else {
         alert('좋아요 처리 중 오류가 발생했습니다.');
       }
@@ -104,7 +102,7 @@ const CodeReviewDetail = () => {
             contents: editedCommentContent,
           });
       if (response.status === 200) {
-        await fetchReview(); // 댓글 상태 최신화
+        await fetchReview();
         setEditingCommentId(null);
       } else {
         alert(response.data.message || '댓글 수정 중 오류가 발생했습니다.');
@@ -126,22 +124,19 @@ const CodeReviewDetail = () => {
   const handleAddComment = async () => {
     if (isSubmitting) {
       return;
-    } // 이미 제출 중이면 아무 작업도 하지 않음
+    }
     setIsSubmitting(true);
 
     try {
-      // 댓글 작성 요청
       const response = await axios.post(
           `http://localhost:8080/api/codereviews/${id}/comments`, {
             contents: newComment
           });
 
-      // 댓글 작성 성공 후 데이터 최신화
-      await fetchReview(); // 최신 데이터 가져오기
+      await fetchReview();
 
-      setNewComment(''); // 댓글 작성 후 입력 필드 초기화
+      setNewComment('');
 
-      // 성공 알림
       alert('댓글이 작성되었습니다.');
       const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
         {
@@ -149,12 +144,11 @@ const CodeReviewDetail = () => {
           type : 'ADD'
         });
     } catch (error) {
-      console.error('댓글 작성 중 오류가 발생했습니다:', error);
       if (error.response && error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
     } finally {
-      setIsSubmitting(false); // 제출 상태를 false로 변경
+      setIsSubmitting(false);
     }
   };
 
@@ -168,8 +162,8 @@ const CodeReviewDetail = () => {
       const response = await axios.delete(
           `http://localhost:8080/api/codereviews/${id}/comments/${commentId}`);
       if (response.status === 200) {
-        await fetchReview(); // 댓글 상태 최신화
-        alert(response.data.message); // JSON 응답의 메시지를 알럿으로 표시
+        await fetchReview();
+        alert(response.data.message);
         const pointResponse = await axios.patch('http://localhost:8080/api/users/points', 
           {
             point : '10', 
@@ -194,7 +188,6 @@ const CodeReviewDetail = () => {
           `http://localhost:8080/api/codereviews/${id}`);
       setReview(response.data.data);
     } catch (error) {
-      console.error('Error fetching the code review:', error);
     }
   };
 
@@ -218,12 +211,12 @@ const CodeReviewDetail = () => {
   );
 
   const handleBack = () => {
-    navigate('/codereviews'); // 뒤로가기 버튼 클릭 시 코드 리뷰 목록으로 이동
+    navigate('/codereviews');
   };
 
   return (
       <div className="code-review-detail-container">
-        <Nav/> {/* 여기에 Nav 컴포넌트를 추가합니다. */}
+        <Nav/>
         <div className="white-box">
           <div className="header-section">
             <div className="header-container">

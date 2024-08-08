@@ -16,7 +16,6 @@ const WinnerDetailPage = () => {
             `http://localhost:8080/api/winners/${id}`);
         setWinner(response.data.data);
       } catch (error) {
-        console.error('우승자 정보를 불러오는데 실패했습니다:', error);
       }
     };
 

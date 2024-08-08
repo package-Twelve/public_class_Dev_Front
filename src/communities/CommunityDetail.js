@@ -28,7 +28,6 @@ const DetailComponent = () => {
       fetchComments(response.data.data.comments, currentPage); // Fetch comments for the current page
     } catch (err) {
       setError('게시글을 가져올 수 없습니다.');
-      console.error('Error fetching post data:', err);
       if (err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(err);
       }
@@ -76,7 +75,6 @@ const DetailComponent = () => {
         }
       });
     } catch (error) {
-      console.error('Error adding comment:', error);
       alert('댓글이 작성되지 못하였습니다.');
       if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
@@ -100,7 +98,6 @@ const DetailComponent = () => {
         alert('게시글이 수정되었습니다.');
         await fetchPostData();
       } catch (error) {
-        console.error('Error updating post:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
@@ -135,7 +132,7 @@ const DetailComponent = () => {
         });
         navigate('/community'); // Redirect to community list or home
       } catch (error) {
-        console.error('Error deleting post:', error);
+
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
@@ -168,7 +165,6 @@ const DetailComponent = () => {
       alert('댓글이 수정되었습니다.');
       await fetchPostData();
     } catch (error) {
-      console.error('Error updating comment:', error);
       if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         await reissueToken(error);
       }
@@ -202,7 +198,6 @@ const DetailComponent = () => {
           }
         });
       } catch (error) {
-        console.error('Error deleting comment:', error);
         if (error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
           await reissueToken(error);
         }
