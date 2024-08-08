@@ -23,8 +23,10 @@ const CodeKataCreate = () => {
       alert('코드카타가 성공적으로 생성되었습니다.');
       navigate('/codekatas');
     } catch (error) {
-      console.error('코드카타 생성에 실패했습니다:', error);
-      alert('코드카타 생성에 실패했습니다.');
+      alert(error.response.data.message);
+      if(error.response.data.message === "권한이 없습니다.") {
+        navigate('/codekatas/today');
+      }
     }
   };
 

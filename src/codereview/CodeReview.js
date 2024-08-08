@@ -47,7 +47,6 @@ const CodeReview = () => {
       if(error.response.data.statusCode === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
         reissueToken(error);
       }
-      console.error('Error fetching code reviews:', error);
     }
   };
 

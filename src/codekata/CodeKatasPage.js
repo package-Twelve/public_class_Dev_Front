@@ -20,12 +20,11 @@ const CodeKatasPage = () => {
           }
         });
         const profile = response.data.data;
-        console.log(profile);
         if (profile && profile.role && profile.role === 'ADMIN') {
           setIsAdmin(true);
         }
       } catch (error) {
-        console.error('사용자 프로필을 불러오는데 실패했습니다:', error);
+        alert('사용자 프로필을 불러오는데 실패했습니다');
       }
     };
 
@@ -39,7 +38,10 @@ const CodeKatasPage = () => {
         setCodeKatas(response.data.data.content);
         setTotalPages(response.data.data.totalPages);
       } catch (error) {
-        console.error('전체 코드카타를 불러오는데 실패했습니다:', error);
+        alert(error.response.data.message);
+        if(error.response.data.message == "권한이 없습니다."){
+          navigate('/codekatas/today');
+        }
       }
     };
 

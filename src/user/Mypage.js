@@ -26,17 +26,12 @@ const Mypage = () => {
         const fetchProfile = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/users/profiles');
-                console.log(response);
                 setProfile(response.data.data);
                 setPostlist(response.data.data.recentCommunities);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to fetch profile');
-                console.log(err);
                 setLoading(false);
-                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                    reissueToken(err);
-                }
             }
             try {
                 const pointResponse = await axios.get('http://localhost:8080/api/users/points');
@@ -47,11 +42,7 @@ const Mypage = () => {
                 })
             } catch (err) {
                 setError('Failed to fetch profile');
-                console.log(err);
                 setLoading(false);
-                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                    reissueToken(err);
-                }
             }
         };
 

@@ -7,6 +7,7 @@ import logo from './assets/logo.png';
 function Nav() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +15,9 @@ function Nav() {
     if (accessToken) {
       axios.defaults.headers.common['Authorization'] = `${accessToken}`;
       setIsAuthenticated(true);
+      fetchProfile();
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -32,18 +36,27 @@ function Nav() {
     window.location.reload();
   };
 
-  const checkAdminRole = async () => {
+  const fetchProfile = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/users/me', {
+      const response = await axios.get('http://localhost:8080/api/users/profiles', {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`
         }
       });
-      setIsAdmin(response.data.data.roles.includes("ROLE_ADMIN"));
+      const profile = response.data.data;
+      if (profile && profile.role && profile.role === 'ADMIN') {
+        setIsAdmin(true);
+      }
     } catch (error) {
-      console.error('Failed to fetch user role:', error);
+      alert('사용자 프로필을 불러오는데 실패했습니다');
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
       <div className={style["top-menu"]}>
@@ -66,11 +79,8 @@ function Nav() {
             <>
               {isAdmin && (
                   <>
-                    <Link to="/codekatas/create">
-                      <button>코드카타 작성</button>
-                    </Link>
-                    <Link to="/codekatas/all">
-                      <button>코드카타 조회</button>
+                    <Link to="/manage/teams/all">
+                      <button>팀 관리</button>
                     </Link>
                   </>
               )}

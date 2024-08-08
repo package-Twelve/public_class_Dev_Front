@@ -27,9 +27,6 @@ const UpdateMypage = () => {
             } catch (err) {
                 setError('Failed to fetch profile');
                 setLoading(false);
-                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                    reissueToken(err);
-                }
             }
         };
 
@@ -61,36 +58,13 @@ const UpdateMypage = () => {
                 navigate("/mypage");
             }
         } catch (error) {
-            console.error(error.response.data.message);
-            if(error.response.data.statusCode === 401) {
-                const refreshToken = localStorage.getItem('refreshToken');
-                delete axios.defaults.headers.common['Authorization'];
-                delete axios.defaults.headers.common['Refresh'];
-                try{
-                    const refreshResponse = await axios.post('http://localhost:8080/api/users/reissue-token', { refreshToken : refreshToken });
-                    console.log(refreshResponse);
-                    const accessToken = refreshResponse.data.data.accessToken;
-                    const newRefreshToken = refreshResponse.data.data.refreshToken;
-                    if(refreshResponse.data.statusCode === 200) {
-                        localStorage.setItem('accessToken', accessToken);
-                        localStorage.setItem('refreshToken', newRefreshToken); 
-                        window.location.reload();
-                    }
-                } catch(err) {
-                    console.log(err);
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('refreshToken');
-                    navigate("/login");
-                }
-                
-            }
+            alert(error.response.data.message);
         }
     };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
-    //console.log(profile);
     return(
         <>
             <Nav/>

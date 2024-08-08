@@ -46,10 +46,9 @@ public class HelloWorld {
             },
           }
       );
-      console.log('CodeRuns response:', response.data);
       setCodeRuns(response.data || []);
     } catch (error) {
-      console.error('코드 실행 기록을 가져오는 데 실패했습니다:', error);
+      alert('코드 실행 기록을 가져오는 데 실패했습니다:');
     }
   };
 
@@ -63,20 +62,18 @@ public class HelloWorld {
             },
           }
       );
-      console.log('TodayCodeKata response:', response.data);
       setTodayCodeKata(
           response.data.data || {id: null, title: '', contents: ''});
     } catch (error) {
-      console.error('오늘의 코드카타를 가져오는 데 실패했습니다:', error);
+      alert('오늘의 코드카타를 가져오는 데 실패했습니다:');
     }
   };
 
   const handleRunCode = async () => {
     if (!todayCodeKata.id) {
-      console.error('오늘의 코드카타 ID를 가져오지 못했습니다.');
+      alert('오늘의 코드카타 ID를 가져오지 못했습니다.');
       return;
     }
-    console.log('오늘의 코드카타 ID:', todayCodeKata.id);  // 추가된 로그
 
     try {
       const response = await axios.post(
@@ -91,11 +88,10 @@ public class HelloWorld {
             },
           }
       );
-      console.log('RunCode response:', response.data);
       setOutput(response.data.result);
       fetchCodeRuns();
     } catch (error) {
-      console.error('코드 실행에 실패했습니다:', error);
+      alert('코드 실행에 실패했습니다:');
     }
   };
 

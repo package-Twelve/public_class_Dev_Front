@@ -4,12 +4,12 @@
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: fixed; /* 화면의 특정 위치에 고정 */
-  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
-  left: 50%; /* 화면 중앙 */
-  transform: translateX(-50%); /* 중앙 정렬 */
-  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
-  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 40px);
+  max-height: calc(100vh - 120px);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -33,6 +33,10 @@ h2 {
   padding: 20px;
   border-radius: 4px;
   background-color: #f9f9f9;
+}
+
+.detailBox p {
+  white-space: pre-line;
 }
 
 h3 {

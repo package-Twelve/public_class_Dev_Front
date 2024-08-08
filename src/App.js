@@ -29,6 +29,7 @@ import CodeKataCreate from './codekata/CodeKataCreate';
 import CodeKataForm from './codekata/CodeKataForm';
 import WinnersPage from './winner/WinnersPage';
 import WinnerDetailPage from './winner/WinnerDetailPage';
+import ManageTeamsPage from './team/ManageTeamsPage';
 
 function App() {
   useEffect(() => {
@@ -42,7 +43,7 @@ function App() {
     const intercept = axios.interceptors.response.use(
         response => response,
         async (error) => {
-          if (error.response && error.response.status === 401) {
+          if (error.response && error.response.status === 401 && error.response.data.message === "토큰이 만료되었습니다.") {
             await reissueToken(error);
           }
           return Promise.reject(error);
@@ -167,6 +168,11 @@ function App() {
           <Route path="/winners/:id" element={
             <PrivateRoute>
               <WinnerDetailPage />
+            </PrivateRoute>
+          } />
+          <Route path="/manage/teams/all" element={
+            <PrivateRoute>
+              <ManageTeamsPage />
             </PrivateRoute>
           } />
         </Routes>

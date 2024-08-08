@@ -1,5 +1,3 @@
-/* MyTeamPage.module.css */
-
 .my-team-page-container {
   width: 100vw;
   height: 100vh;
@@ -54,7 +52,7 @@
 .section ul li span {
   flex: 1;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .section textarea {
