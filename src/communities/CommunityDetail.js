@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import style from './CommunityDetail.module.css'; // CSS Module import
+import style from './CommunityDetail.module.css';
 import Nav from "../Nav";
 import reissueToken from "../reissueToken";
 
-const PAGE_SIZE = 3; // Number of comments per page
+const PAGE_SIZE = 3;
 
 const DetailComponent = () => {
   const { id } = useParams();
