@@ -31,7 +31,7 @@ const CodeKataForm = () => {
           setTitle(data.title);
           setContents(data.contents);
         } catch (error) {
-          console.error('코드카타를 불러오는데 실패했습니다:', error);
+          alert('코드카타를 불러오는데 실패했습니다');
         }
       };
 
@@ -58,8 +58,10 @@ const CodeKataForm = () => {
       alert(`코드카타가 성공적으로 ${id ? '수정' : '생성'}되었습니다.`);
       navigate('/codekatas');
     } catch (error) {
-      console.error(`코드카타 ${id ? '수정' : '생성'}에 실패했습니다:`, error);
       alert(`코드카타 ${id ? '수정' : '생성'}에 실패했습니다.`);
+      if(error.response.data.message === "권한이 없습니다.") {
+        navigate('/codekatas/today');
+      }
     }
   };
 

@@ -44,12 +44,11 @@ function Nav() {
         }
       });
       const profile = response.data.data;
-      console.log(profile);
       if (profile && profile.role && profile.role === 'ADMIN') {
         setIsAdmin(true);
       }
     } catch (error) {
-      console.error('사용자 프로필을 불러오는데 실패했습니다:', error);
+      alert('사용자 프로필을 불러오는데 실패했습니다');
     } finally {
       setLoading(false);
     }
