@@ -14,7 +14,7 @@ const TodayCodeKata = () => {
         const response = await axios.get('http://localhost:8080/api/codekatas/today');
         setTodayCodeKata(response.data.data);
       } catch (error) {
-        console.error('오늘의 코드카타를 불러오는데 실패했습니다:', error);
+        alert('오늘의 코드카타를 불러오는데 실패했습니다:', error);
       }
     };
 
@@ -28,11 +28,10 @@ const TodayCodeKata = () => {
           Authorization: `${localStorage.getItem('accessToken')}`
         }
       });
-      console.log('팀 생성됨:', response.data);
+      alert('팀 생성됨:', response.data);
       navigate('/myteam');
     } catch (error) {
-      console.error('팀 생성에 실패했습니다:', error);
-      alert('팀 생성이 완료되었습니다. 나의 팀을 확인해 주세요');
+      alert(error.response.data.message);
     }
   };
 

@@ -19,7 +19,7 @@ const CodeKataDetail = () => {
         });
         setCodeKata(response.data.data);
       } catch (error) {
-        console.error('코드카타를 불러오는데 실패했습니다:', error);
+        alert('코드카타를 불러오는데 실패했습니다:');
       }
     };
 
@@ -41,7 +41,6 @@ const CodeKataDetail = () => {
         alert('코드카타가 성공적으로 삭제되었습니다.');
         navigate('/codekatas');
       } catch (error) {
-        console.error('코드카타 삭제에 실패했습니다:', error);
         alert('코드카타 삭제에 실패했습니다.');
       }
     }
