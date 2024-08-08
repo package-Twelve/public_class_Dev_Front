@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Nav from "../Nav";
 import style from './Mypage.module.css';
 import axios from "axios";
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import reissueToken from "../reissueToken";
-import MyTeamPage from '../team/MyTeamPage';
-
+    
 const Mypage = () => {
     let navigate = useNavigate();
     const [profile, setProfile] = useState(null);
@@ -21,26 +20,21 @@ const Mypage = () => {
         INFO: '정보',
         GOSSIP: '잡담',
         RECRUIT: '취업',
-    };
+      };
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('/api/users/profiles');
-                console.log(response);
+                const response = await axios.get('http://localhost:8080/api/users/profiles');
                 setProfile(response.data.data);
                 setPostlist(response.data.data.recentCommunities);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to fetch profile');
-                console.log(err);
                 setLoading(false);
-                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                    reissueToken(err);
-                }
             }
             try {
-                const pointResponse = await axios.get('/api/users/points');
+                const pointResponse = await axios.get('http://localhost:8080/api/users/points');
                 setPoint({
                     ...point,
                     point: pointResponse.data.data.point,
@@ -48,11 +42,7 @@ const Mypage = () => {
                 })
             } catch (err) {
                 setError('Failed to fetch profile');
-                console.log(err);
                 setLoading(false);
-                if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                    reissueToken(err);
-                }
             }
         };
 
@@ -62,11 +52,11 @@ const Mypage = () => {
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
-    };
+      };
 
     const handlePostClick = (postId) => {
         navigate(`/community/post/${postId}`);
-    };
+      };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
@@ -78,15 +68,15 @@ const Mypage = () => {
             <div className= {style.container}>
                 <div className={style["profile-header"]}>
                     <div className={style["profile-info"]}>
-                        <h1>
-                            {profile.name}
-                            {point.rank === 'BRONZE' ? (<span className={style["badge-bronze"]}>Bronze</span>) :
-                                (point.rank === 'SILVER' ? (<span className={style["badge-silver"]}>Silver</span>) :
+                            <h1>
+                                {profile.name} 
+                                {point.rank === 'BRONZE' ? (<span className={style["badge-bronze"]}>Bronze</span>) : 
+                                (point.rank === 'SILVER' ? (<span className={style["badge-silver"]}>Silver</span>) : 
                                     (point.rank === 'GOLD' ? (<span className={style["badge-gold"]}>GOLD</span>) : (<p>Error</p>)))
-                            }
-                        </h1>
-                        <p>{profile.email}</p>
-                        <p>{profile.intro} </p>
+                                }
+                            </h1>
+                            <p>{profile.email}</p>
+                            <p>{profile.intro} </p>
                     </div>
                     <div className={style["button-container"]}>
                         <Link to="/mypage/update"><button className={style.button}>프로필</button></Link>
@@ -111,8 +101,8 @@ const Mypage = () => {
                                     >
                                         <h3>{post.title}</h3>
                                         <p className={style["post-info"]}>
-                                            작성일: {formatDate(post.createdAt)} |
-                                            카테고리: {categoryMapping[post.category]}
+                                        작성일: {formatDate(post.createdAt)} |
+                                        카테고리: {categoryMapping[post.category]}
                                         </p>
                                     </div>
                                 </li>
@@ -123,9 +113,6 @@ const Mypage = () => {
                     </ul>
                 </div>
             </div>
-            <Routes>
-                <Route path="/team" element={<MyTeamPage userName={profile.name} userRank={point.rank} />} />
-            </Routes>
         </>
     );
 };

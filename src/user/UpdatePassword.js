@@ -32,22 +32,16 @@ const UpdatePassword = () => {
         try {
             const response = await axios.patch('/api/users/profiles/passwords', { password: formData.password });
             
-            alert("code: " + response.data.statusCode + "\n" +
-            "message: " + response.data.message + "\n"
-            );
+            alert(response.data.message);
 
             if(response.data.statusCode === 200) {
                 navigate("/mypage");
             }
         } catch (err) {
             alert(err.response.data.message);
-            if(err.response.data.statusCode === 401 && err.response.data.message === "토큰이 만료되었습니다.") {
-                reissueToken(err);
-            }
         }
     };
 
-    //console.log(profile);
     return(
         <>
             <Nav/>

@@ -31,13 +31,6 @@ const Login = () => {
 
             const accessToken = response.data.data.accessToken;
             const refreshToken = response.data.data.refreshToken;
-            console.log(accessToken);
-            console.log(refreshToken);
-            
-            alert("code: " + response.data.statusCode + "\n" +
-            "message: " + response.data.message + "\n" + 
-            "data: " + response.data.data
-            );
 
             if(response.data.statusCode === 200) {
                 localStorage.setItem('accessToken', accessToken);

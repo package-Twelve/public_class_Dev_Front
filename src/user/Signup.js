@@ -48,14 +48,15 @@ const Signup = () => {
         adminToken: formData.adminToken
       });
       
-      alert("code: " + response.data.statusCode + "\n" +
-        "message: " + response.data.message + "\n" + 
-        "data: " + response.data.data
+      alert(response.data.message + "\n" + 
+        "이메일: " + response.data.data.email + "\n" + 
+        "이름: " + response.data.data.name + "\n" + 
+        "역할: " + response.data.data.role
       );
       navigate(`/login`);
     } catch (error) {
       setMessage('Signup failed!');
-      console.error(error.response.data.message);
+      alert(error.response.data.message);
     }
   };
   document.querySelectorAll('input, select').forEach(input => {

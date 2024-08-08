@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import Nav from '../Nav'; // Nav 컴포넌트를 가져옵니다.
-import './CodeReviewEdit.css'; // CSS 파일을 따로 생성해서 스타일을 추가합니다.
+import Nav from '../Nav';
+import './CodeReviewEdit.css';
 
 const axiosInstance = axios.create({
   baseURL: '/api',
@@ -17,10 +17,10 @@ const CodeReviewEdit = () => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [contents, setContents] = useState('');
-  const [code, setCode] = useState(''); // 코드 필드 상태 추가
+  const [code, setCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
-  const [error, setError] = useState(null); // 에러 상태 추가
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -31,23 +31,21 @@ const CodeReviewEdit = () => {
         setCategory(review.category);
         setContents(review.contents);
         setCode(review.code);
-        setLoading(false); // 데이터 로딩 완료
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching the code review:', error);
         const errorMessage = error.response?.data?.message || 'Failed to fetch code review details.';
         setError(errorMessage);
-        setLoading(false); // 데이터 로딩 완료 (실패 상태)
-        // 페이지 새로 고침
+        setLoading(false);
         setTimeout(() => {
           window.location.reload();
-        }, 100); // 0.1초 후에 페이지 새로 고침
+        }, 100);
       }
     };
     fetchReview();
   }, [id]);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+    event.preventDefault();
 
     const updatedReview = {
       title,
@@ -56,32 +54,31 @@ const CodeReviewEdit = () => {
       code
     };
 
-    if (isSubmitting) return; // 이미 제출 중이면 아무 작업도 하지 않음
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
     try {
       const response = await axiosInstance.put(`/codereviews/${id}`, updatedReview);
       const { message } = response.data;
       alert(message);
-      navigate(`/codereviews/${id}`); // 수정된 리뷰 페이지로 이동
+      navigate(`/codereviews/${id}`);
     } catch (error) {
-      console.error('Error updating code review:', error);
       const errorMessage = error.response?.data?.message || 'Failed to update code review. Please try again.';
       alert(errorMessage);
     } finally {
-      setIsSubmitting(false); // 제출 상태를 false로 변경
+      setIsSubmitting(false);
     }
   };
 
   const handleBack = () => {
-    navigate(`/codereviews/${id}`); // 리뷰 상세 페이지로 이동
+    navigate(`/codereviews/${id}`);
   };
 
-  if (loading) return <div>Loading...</div>; // 로딩 상태 표시
+  if (loading) return <div>Loading...</div>;
 
   return (
       <div className="code-review-edit-container">
-        <Nav /> {/* 여기에 Nav 컴포넌트를 추가합니다. */}
+        <Nav />
         <div className="white-box">
           <h2>코드 리뷰 수정</h2>
           <form onSubmit={handleSubmit}>

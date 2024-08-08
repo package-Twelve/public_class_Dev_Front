@@ -5,19 +5,18 @@ body {
   background-color: #f0f2f5;
 }
 
-/* Main Content Styles */
 .article-container {
   width: 40%;
   padding: 20px;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: fixed; /* 화면의 특정 위치에 고정 */
-  top: 100px; /* 화면 상단에서 100px 떨어진 위치 */
-  left: 50%; /* 화면 중앙 */
-  transform: translateX(-50%); /* 중앙 정렬 */
-  max-width: calc(100% - 40px); /* 화면 너비를 넘어가지 않도록 설정 (여백 추가 고려) */
-  max-height: calc(100vh - 120px); /* 최대 높이를 설정하여 콘텐츠가 너무 많아질 때 화면을 넘지 않도록 설정 */
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 40px);
+  max-height: calc(100vh - 120px);
   overflow-y: auto;
 }
 
@@ -50,7 +49,6 @@ body {
 }
 
 
-/* Post Actions (Edit/Delete) */
 .post-actions{
   display: flex;
   justify-content: flex-start;
@@ -81,7 +79,6 @@ body {
 }
 
 
-/* Comments Section Styles */
 .comments-section {
   border-top: 1px solid #ddd;
   padding-top: 20px;
@@ -93,7 +90,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  resize: vertical; /* Allow vertical resizing */
+  resize: vertical;
 }
 
 .comment-form button {
@@ -127,14 +124,13 @@ body {
 }
 
 .comment-button-container {
-  display: flex; /* 수평 정렬을 위한 flexbox 설정 */
-  justify-content: flex-start; /* 버튼의 정렬 방식 조정 (필요에 따라 'center' 또는 'space-between'으로 변경 가능) */
+  display: flex;
+  justify-content: flex-start;
 }
 
 .comment-button-container button {
-  margin-right: 0.5em; /* 버튼 간의 간격을 주기 위해 margin 추가 */
+  margin-right: 0.5em;
 }
-
 
 .comment-content {
   margin: 0;
@@ -160,36 +156,40 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* 버튼 사이에 간격을 추가합니다. */
+  gap: 10px;
 }
 
 .pagination button {
   width: 70px;
-  height: 30px; /* 버튼의 높이도 지정합니다. */
+  height: 30px;
   display: flex;
   align-items: center;
   background-color: #DDE6ED;
   color: black;
   justify-content: center;
-  font-size: 16px; /* 버튼의 글자 크기를 조정합니다. */
+  font-size: 16px;
 }
 
 .pagination span {
-  font-size: 16px; /* 페이지 정보를 표시하는 글자 크기를 조정합니다. */
+  font-size: 16px;
 }
 
 .article-header h1{
   text-align: left;
 }
 
+.article-content p{
+  white-space: pre-line;
+}
+
 .back-btn {
-  background-color: #fff; /* 배경색을 흰색으로 설정 */
-  color: #0F1035; /* 글자색을 파란색으로 설정 */
-  border: 2px solid #0F1035; /* 테두리 색상을 파란색으로 설정 */
+  background-color: #fff;
+  color: #0F1035;
+  border: 2px solid #0F1035;
 }
 
 .back-btn:hover {
-  background-color: gray; /* 배경색을 회색으로 설정 */
-  color: #fff; /* 글자색을 흰색으로 설정 */
-  border: 2px solid gray; /* 테두리 색상은 회색으로 설정 */
+  background-color: gray;
+  color: #fff;
+  border: 2px solid gray;
 }

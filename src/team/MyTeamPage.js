@@ -6,7 +6,7 @@ import CodeRunPage from './CodeRunPage';
 import ChatRoomPage from './ChatRoomPage';
 import style from './MyTeamPage.module.css';
 
-const MyTeamPage = ({ userName, userRank }) => {
+const MyTeamPage = () => {
   const [team, setTeam] = useState(null);
   const [activeTab, setActiveTab] = useState('team');
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const MyTeamPage = ({ userName, userRank }) => {
       });
       setTeam(response.data.data);
     } catch (error) {
-      console.error('팀 정보를 불러오는 데 실패했습니다:', error);
+      alert('팀 정보를 불러오는 데 실패했습니다:');
     }
   };
 
@@ -64,8 +64,9 @@ const MyTeamPage = ({ userName, userRank }) => {
                     <ul>
                       {team.teamMembers.map((member, index) => (
                           <li key={index}>
-                            <span>{member}</span>
-                            {member === userName && <span> ({userRank})</span>}
+                            <span>{member.name}</span>
+                            <span>{member.rank}</span>
+                            <span>{formatDate(member.joinedAt)}</span>
                           </li>
                       ))}
                     </ul>
@@ -75,8 +76,8 @@ const MyTeamPage = ({ userName, userRank }) => {
                     <button onClick={() => handleTabClick('chatrooms')}>채팅방</button>
                   </div>
                   <div className={style["tab-content"]}>
-                    {activeTab === 'coderuns' && <CodeRunPage />}
-                    {activeTab === 'chatrooms' && <ChatRoomPage />}
+                    {activeTab === 'coderuns' && <CodeRunPage/>}
+                    {activeTab === 'chatrooms' && <ChatRoomPage/>}
                   </div>
                 </>
             ) : (

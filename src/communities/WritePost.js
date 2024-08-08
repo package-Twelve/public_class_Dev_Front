@@ -30,7 +30,6 @@ const WritePost = () => {
             Authorization: `${accessToken}`
           }
         });
-        console.log(response);
         if (response.status === 200 || response.status === 201) {
           alert('게시글이 성공적으로 등록되었습니다.');
           const pointResponse = await axios.patch('/api/users/points', 

@@ -17,7 +17,6 @@ const WinnersPage = () => {
         });
         setWinners(response.data.data);
       } catch (error) {
-        console.error('우승자 목록 조회 실패:', error);
       }
     };
 

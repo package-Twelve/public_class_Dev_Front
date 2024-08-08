@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import SockJS from 'sockjs-client';
-import { Client } from '@stomp/stompjs';
-import { useParams } from 'react-router-dom';
+import {Client} from '@stomp/stompjs';
+import {useParams} from 'react-router-dom';
 import style from './ChatRoomPage.module.css';
 import Nav from '../Nav';
 
 const ChatRoomPage = () => {
-  const { teamsId } = useParams();
+  const {teamsId} = useParams();
   const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const stompClient = useRef(null);
   const [userName, setUserName] = useState('');
-  const [isConnected, setIsConnected] = useState(false);
 
   const fetchUserProfile = useCallback(async () => {
     try {
@@ -26,7 +25,9 @@ const ChatRoomPage = () => {
       localStorage.setItem('userName', name);
       setUserName(name);
     } catch (err) {
-      console.error('프로필 정보를 가져오는데 실패했습니다.', err);
+      if (err.response.status === 403 || err.response.status === 401) {
+        alert('프로필 정보를 가져오는데 실패했습니다. 다시 로그인 해주세요.', err);
+      }
     }
   }, []);
 
@@ -40,7 +41,9 @@ const ChatRoomPage = () => {
           });
       setChatMessages(response.data);
     } catch (err) {
-      console.error('채팅 메시지를 가져오는데 실패했습니다.', err);
+      if (err.response.status === 403 || err.response.status === 401) {
+        alert('채팅 메시지를 가져오는데 실패했습니다. 다시 로그인 해주세요.', err);
+      }
     }
   }, [teamsId]);
 
@@ -54,10 +57,10 @@ const ChatRoomPage = () => {
         stompClient.current.subscribe(`/topic/chatrooms/${teamsId}`, onMessageReceived);
         stompClient.current.publish({
           destination: '/app/chat.addUser',
-          body: JSON.stringify({ sender: userName, type: 'JOIN', teamsId: teamsId }),
+          body: JSON.stringify({sender: userName, type: 'JOIN', teamsId: teamsId}),
           headers: {
-            Authorization: `${localStorage.getItem('accessToken')}`,
-          },
+            Authorization: `${localStorage.getItem('accessToken')}`
+          }
         });
       },
       onStompError: (error) => {
@@ -75,31 +78,20 @@ const ChatRoomPage = () => {
     stompClient.current.activate();
   }, [teamsId, userName, fetchChatMessages]);
 
-
-
   useEffect(() => {
     fetchUserProfile();
-  }, [fetchUserProfile]);
+    connectWebSocket();
 
-  useEffect(() => {
-    if (userName) {
-      connectWebSocket();
-    }
     return () => {
       if (stompClient.current) {
         stompClient.current.deactivate();
       }
     };
-  }, [teamsId, userName, connectWebSocket]);
+  }, [teamsId, userName, fetchUserProfile, connectWebSocket]);
 
   const onMessageReceived = (message) => {
     const newMessage = JSON.parse(message.body);
-    setChatMessages((prevMessages) => {
-      if (!prevMessages.some(msg => msg.id === newMessage.id)) {
-        return [...prevMessages, newMessage];
-      }
-      return prevMessages;
-    });
+    setChatMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
   const handleSendMessage = () => {
@@ -115,16 +107,15 @@ const ChatRoomPage = () => {
       timestamp: new Date().toISOString()
     };
 
-    if (stompClient.current) {
-      stompClient.current.publish({
-        destination: '/app/chat.sendMessage',
-        body: JSON.stringify(message),
-        headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`
-        }
-      });
-    }
+    stompClient.current.publish({
+      destination: '/app/chat.sendMessage',
+      body: JSON.stringify(message),
+      headers: {
+        Authorization: `${localStorage.getItem('accessToken')}`
+      }
+    });
 
+    setChatMessages((prevMessages) => [...prevMessages, message]);
     setChatMessage('');
   };
 
