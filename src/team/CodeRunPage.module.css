@@ -16,6 +16,7 @@
 .section {
   margin-top:30px;
   margin-bottom: 20px;
+  white-space: pre-line;
 }
 
 .section p{
