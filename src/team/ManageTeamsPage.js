@@ -86,7 +86,7 @@ const ManageTeamsPage = () => {
   const handleCreateWinner = async () => {
     if (window.confirm('오늘의 가장 빠른 기록으로 우승자를 생성하시겠습니까?')) {
       try {
-        const response = await axios.post('http://localhost:8080/api/winners/create/today', {}, {
+        const response = await axios.post('/api/winners/create/today', {}, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`
           }
@@ -101,7 +101,7 @@ const ManageTeamsPage = () => {
   const handleDeleteWinner = async (winnerId) => {
     if (window.confirm(`우승자 ID ${winnerId}를 삭제하시겠습니까?`)) {
       try {
-        await axios.delete(`http://localhost:8080/api/winners/delete/${winnerId}`, {
+        await axios.delete(`/api/winners/delete/${winnerId}`, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`
           }
