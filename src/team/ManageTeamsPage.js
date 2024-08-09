@@ -83,6 +83,35 @@ const ManageTeamsPage = () => {
       }
     }
   };
+  const handleCreateWinner = async () => {
+    if (window.confirm('오늘의 가장 빠른 기록으로 우승자를 생성하시겠습니까?')) {
+      try {
+        const response = await axios.post('http://localhost:8080/api/winners/create/today', {}, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`
+          }
+        });
+        alert(`우승자 생성 성공: ${response.data.data.teamName}`);
+      } catch (error) {
+        alert(error.response ? error.response.data.message : error.message);
+      }
+    }
+  };
+
+  const handleDeleteWinner = async (winnerId) => {
+    if (window.confirm(`우승자 ID ${winnerId}를 삭제하시겠습니까?`)) {
+      try {
+        await axios.delete(`http://localhost:8080/api/winners/delete/${winnerId}`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`
+          }
+        });
+        alert('우승자가 삭제되었습니다.');
+      } catch (error) {
+        alert(error.response ? error.response.data.message : error.message);
+      }
+    }
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -120,11 +149,22 @@ const ManageTeamsPage = () => {
                           </ul>
                           <span className={style["date-info"]}>생성일: {formatDate(
                               team.createdAt)}</span>
-                          <button onClick={() => handleDeleteTeam(team.id)}>팀 삭제</button>
+                          <button onClick={() => handleDeleteTeam(team.id)}>팀
+                            삭제
+                          </button>
                         </div>
                     ))}
                   </div>
-                  <button className={style["delete-all-button"]} onClick={handleDeleteAll}>모든 팀 삭제</button>
+                  <button className={style["delete-all-button"]}
+                          onClick={handleDeleteAll}>모든 팀 삭제
+                  </button>
+                  <button className={style["create-winner-button"]}
+                          onClick={handleCreateWinner}>우승자 생성
+                  </button>
+                  <button className={style["delete-winner-button"]}
+                          onClick={() => handleDeleteWinner(
+                              prompt('삭제할 우승자 ID를 입력하세요:'))}>우승자 삭제
+                  </button>
                 </>
             )}
           </div>
