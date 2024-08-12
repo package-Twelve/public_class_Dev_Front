@@ -25,6 +25,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # 빌드 단계에서 생성된 파일을 Nginx로 복사
 COPY --from=build /app/build /usr/share/nginx/html
 
+# 로그 파일을 호스트와 공유
+VOLUME ["/var/log/nginx"]
+
 # Nginx 포트 공개
 EXPOSE 80
 
